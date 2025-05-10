@@ -50,13 +50,15 @@ export const StockPage = () => {
     const [loading, setLoading] = useState<boolean>(true)
     const [filter, setFilter] = useState<string>("")
 
+    const [newProductFlag, setNewProductFlag] = useState<boolean>(false)
+
     useEffect(() => {
         const allProducts = getProducts().map(product => {
             return { ...product, stock: calculateProductStock(product.id, getLots()) }
         })
         setData(allProducts)
         setLoading(false)
-    }, [])
+    }, [newProductFlag])
 
     useEffect(() => {
         if (filter === "") {
@@ -69,6 +71,10 @@ export const StockPage = () => {
             setDisplayData(filteredData)
         }
     }, [filter, data])
+
+    const notifyNewProduct = () => {
+        setNewProductFlag(!newProductFlag)
+    }
 
     const openNotFoundModal = () => {
         notFoundProductRef.current?.showModal()
@@ -96,13 +102,12 @@ export const StockPage = () => {
             <StockNewProductModal 
                 ref={newProductRef}
                 closeModal={closeNewProductModal}
+                notifyNewProduct={notifyNewProduct}
             />
             <h1>Inventario</h1>
             <div className={styles["actions-container"]}>
                 <StockSearchBar 
-                    setFilter={setFilter} 
-                    // notFound={displayData.length === 0} 
-                    // openModal={openNotFoundModal} 
+                    setFilter={setFilter}
                 />
                 <button 
                     className={styles["new-product-button"]}

@@ -3,11 +3,9 @@ import styles from "./StockSearchBar.module.css"
 
 interface Props {
     setFilter: (filter: string) => void
-    // notFound: boolean
-    // openModal: () => void
 }
 
-export const StockSearchBar = ({ setFilter/* , notFound , openModal*/ }: Props) => {
+export const StockSearchBar = ({ setFilter }: Props) => {
 
     const [idOrName, setIdOrName] = useState<string>("")
 
@@ -18,11 +16,8 @@ export const StockSearchBar = ({ setFilter/* , notFound , openModal*/ }: Props) 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // if (notFound) openModal()
-        // else {
-            setFilter("")
-            setIdOrName("")
-        // }
+        setFilter("")
+        setIdOrName("")
     }
 
     return (

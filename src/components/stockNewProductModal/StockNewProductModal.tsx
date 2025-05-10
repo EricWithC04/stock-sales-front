@@ -5,6 +5,7 @@ import { useGeneralContext } from "../../context/GeneralContext"
 
 interface Props {
     closeModal: () => void
+    notifyNewProduct: () => void
 }
 
 interface NewProductData {
@@ -19,9 +20,9 @@ interface NewProductDataErrors {
     price: string
 }
 
-export const StockNewProductModal = forwardRef<HTMLDialogElement, Props> (({ closeModal }, ref) => {
+export const StockNewProductModal = forwardRef<HTMLDialogElement, Props> (({ closeModal, notifyNewProduct }, ref) => {
 
-    const { getProducts } = useGeneralContext()!
+    const { getProducts, uploadNewProduct } = useGeneralContext()!
 
     const [newProductData, setNewProductData] = useState<NewProductData>({
         id: "",
@@ -60,7 +61,10 @@ export const StockNewProductModal = forwardRef<HTMLDialogElement, Props> (({ clo
         setErrorsActive(true)
 
         if (!errors.id.length && !errors.description.length && !errors.price.length) {
+            uploadNewProduct({ ...newProductData, stock: 0 })
             setNewProductData({ id: "", description: "", price: 0 })
+            setErrorsActive(false)
+            notifyNewProduct()
             closeModal()
         }
     }
