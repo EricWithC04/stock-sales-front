@@ -4,4 +4,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.new-product-button {   
+    padding: 12px 16px;
+    font-size: 16px; 
+    background: linear-gradient(-90deg, #a7217f, #d3216a);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    outline: 1px solid #b3b3b353;
+}
+
+.new-product-button:hover {
+    cursor: pointer;
+    background: linear-gradient(-90deg, #c954af, #f5438c);
 }

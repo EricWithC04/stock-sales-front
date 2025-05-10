@@ -25,7 +25,7 @@ export const StockSearchBar = ({ setFilter }: Props) => {
             <form onSubmit={handleSubmit} className={styles["stock-search-bar"]}>
                 <input
                     type="text" 
-                    placeholder="Buscar..." 
+                    placeholder="Buscar por nombre o código..." 
                     value={idOrName}
                     onChange={handleChange} 
                 />

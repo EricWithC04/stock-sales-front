@@ -1,0 +1,22 @@
+.stock-search-bar-container {
+    height: 100%;
+    width: 20%;
+}
+
+.stock-search-bar {
+    height: 100%;
+    width: 100%;
+}
+
+.stock-search-bar input {
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    outline: 1px solid #b3b3b353;
+}
+
+.stock-search-bar input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #93939373; 
+}
