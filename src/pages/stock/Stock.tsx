@@ -76,9 +76,9 @@ export const StockPage = () => {
         setNewProductFlag(!newProductFlag)
     }
 
-    const openNotFoundModal = () => {
-        notFoundProductRef.current?.showModal()
-    }
+    // const openNotFoundModal = () => {
+    //     notFoundProductRef.current?.showModal()
+    // }
 
     const closeNotFoundModal = () => {
         notFoundProductRef.current?.close()

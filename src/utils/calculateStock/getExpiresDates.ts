@@ -27,11 +27,11 @@ export const calculateExpiresDates = (lots: Array<Lot>, days: number): Array<Exp
         const expiresDate = new Date(lot.expiresDate!);
 
         if (expiresDate >= now && expiresDate <= limitDate) {
-            const expiresLot: ExpiresLot | undefined = expiresLots.find(lotExpire => lotExpire.product === lot.productId);
+            const expiresLot: ExpiresLot | undefined = expiresLots.find(lotExpire => lotExpire.product === lot.productId && lotExpire.expiresDate === getDateString(expiresDate));
             if (!expiresLot) {
-                expiresLots.push({ product: lot.productId, quantity: lot.quantity, expiresDate: getDateString(expiresDate) });
+                expiresLots.push({ product: lot.productId, quantity: +lot.quantity, expiresDate: getDateString(expiresDate) });
             } else {
-                expiresLot.quantity += lot.quantity;
+                expiresLot.quantity += +lot.quantity;
             }
         }
     });

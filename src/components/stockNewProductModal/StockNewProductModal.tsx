@@ -5,7 +5,7 @@ import { useGeneralContext } from "../../context/GeneralContext"
 
 interface Props {
     closeModal: () => void
-    notifyNewProduct: () => void
+    notifyNewProduct?: () => void
 }
 
 interface NewProductData {
@@ -64,7 +64,7 @@ export const StockNewProductModal = forwardRef<HTMLDialogElement, Props> (({ clo
             uploadNewProduct({ ...newProductData, stock: 0 })
             setNewProductData({ id: "", description: "", price: 0 })
             setErrorsActive(false)
-            notifyNewProduct()
+            notifyNewProduct!()
             closeModal()
         }
     }
