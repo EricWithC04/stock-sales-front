@@ -1,0 +1,11 @@
+.notification-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 12px;
+    margin-top: 12px;
+    outline: 2px solid #d3216a26;
+    border-radius: 12px;
+    background: #f8d6db;
+    color: #721c24
+}

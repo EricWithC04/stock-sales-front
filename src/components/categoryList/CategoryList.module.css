@@ -1,0 +1,20 @@
+.categories-list {
+    margin-left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    max-width: 88%;
+    padding: 2px 1px;
+    overflow: scroll;
+}
+
+.categories-list::-webkit-scrollbar {
+    width: 8px;
+    height: 4px;
+    display: none;
+}
+
+.categories-list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}

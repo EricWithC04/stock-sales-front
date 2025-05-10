@@ -1,0 +1,30 @@
+import styles from "./ProductTotalSales.module.css"
+
+interface ItemSale {
+    id: string
+    description: string
+    quantity: number
+    price: number
+}
+
+interface Props {
+    itemSales: Array<ItemSale>
+}
+
+export const ProductTotalSales = ({ itemSales }: Props) => {
+
+    const calculateTotal = (): number => {
+        let total = 0
+        itemSales.forEach(item => {
+            total += item.quantity * item.price
+        })
+        return total
+    }
+
+    return (
+        <div className={styles["product-total-sales-container"]}>
+            <h1>Total: {calculateTotal()}</h1>
+            <button>Registrar Venta</button>
+        </div>
+    )
+}

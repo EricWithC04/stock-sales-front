@@ -1,0 +1,28 @@
+.category-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: 144px;
+    height: 144px;
+    max-width: 144px;
+    border-radius: 12px;
+    outline: 1px solid #b3b3b353;
+    background: #fff;
+}
+
+.category-card-container:hover {
+    cursor:pointer;
+    background: #e5e5e5;
+}
+
+.category-card-container img {
+    max-width: 50%;
+    max-height: 50%
+}
+
+.selected {
+    background: linear-gradient(90deg, #ffeafa, #f5eaf0) !important;
+    outline: 1px solid #f3418a !important;
+}

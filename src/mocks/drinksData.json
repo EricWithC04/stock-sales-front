@@ -1,0 +1,110 @@
+[
+    {
+        "id": "7790895005602",
+        "description": "Coca-Cola PET 250ml",
+        "stock": 20,
+        "price": 1000
+    },
+    {
+        "id": "7790895002656",
+        "description": "Coca-Cola PET 375ml",
+        "stock": 20,
+        "price": 1200
+    },
+    {
+        "id": "7790895000782",
+        "description": "Coca-Cola PET 500ml",
+        "stock": 20,
+        "price": 1400
+    },
+    {
+        "id": "7790895001413",
+        "description": "Coca-Cola PET 1L",
+        "stock": 20,
+        "price": 1700
+    },
+    {
+        "id": "7790895001598",
+        "description": "Coca-Cola Vidrio 1L",
+        "stock": 20,
+        "price": 1700
+    },
+    {
+        "id": "7790895005916",
+        "description": "Coca-Cola Vidrio 1.5L",
+        "stock": 20,
+        "price": 1900
+    },
+    {
+        "id": "7790895067556",
+        "description": "Coca-Cola PET 1.5L",
+        "stock": 20,
+        "price": 1900
+    },
+    {
+        "id": "5449000000286",
+        "description": "Coca-Cola PET 2L",
+        "stock": 20,
+        "price": 2100
+    },
+    {
+        "id": "7790895000997",
+        "description": "Coca-Cola PET 2.25L",
+        "stock": 20,
+        "price": 2300
+    },
+    {
+        "id": "7790895006418",
+        "description": "Coca-Cola PET 3L",
+        "stock": 20,
+        "price": 2500
+    },
+    {
+        "id": "5449000000729",
+        "description": "Sprite Lata 250ml",
+        "stock": 20,
+        "price": 1000
+    },
+    {
+        "id": "9300675008419",
+        "description": "Sprite Lata 375ml",
+        "stock": 20,
+        "price": 1200
+    },
+    {
+        "id": "7790895000829",
+        "description": "Sprite PET 500ml",
+        "stock": 20,
+        "price": 1400
+    },
+    {
+        "id": "7790895005015",
+        "description": "Sprite PET 1L",
+        "stock": 20,
+        "price": 1700
+    },
+    {
+        "id": "7790895000447",
+        "description": "Sprite PET 1.5L",
+        "stock": 20,
+        "price": 1900
+    },
+    {
+        "id": "7790895001000",
+        "description": "Sprite PET 2.25L",
+        "stock": 20,
+        "price": 2300
+    },
+    {
+        "id": "7790895646737",
+        "description": "Jugo Cepita Naranja 1.5L",
+        "stock": 20,
+        "price": 1500
+    },
+    {
+        "id": "7790036002125",
+        "description": "Agua Sabor. Vida Pomelo 1.5L",
+        "stock": 20,
+        "price": 1500
+    }
+]

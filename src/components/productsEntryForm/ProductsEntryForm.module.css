@@ -1,0 +1,54 @@
+.products-entry-form {
+    display: flex;
+    flex-direction: column;
+    padding: 2% 4%;
+    gap: 1rem;
+}
+
+.form-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: calc((100% - 2 * 2rem) / 3)
+}
+
+.form-field input {
+    height: 32px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid #b3b3b353;
+    outline: none;
+}
+
+.date-picker {
+    width: calc(100% - 1 * 2rem)
+}
+
+.submit-button {
+    width: 200px;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    background: linear-gradient(-90deg, #a7217f, #d3216a);
+    outline: 1px solid #b3b3b353;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    background: linear-gradient(-90deg, #c954af, #f5438c);
+}
+
+.error {
+    padding: 12px 12px;
+    margin-top: 12px;
+    outline: 2px solid #d3216a26;
+    border-radius: 12px;
+    background: #f8d6db;
+    color: #721c24
+}
