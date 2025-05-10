@@ -98,11 +98,17 @@ export const StockPage = () => {
                 closeModal={closeNewProductModal}
             />
             <h1>Inventario</h1>
-            <StockSearchBar 
-                setFilter={setFilter} 
-                notFound={displayData.length === 0} 
-                openModal={openNotFoundModal} 
-            />
+            <div className={styles["actions-container"]}>
+                <StockSearchBar 
+                    setFilter={setFilter} 
+                    // notFound={displayData.length === 0} 
+                    // openModal={openNotFoundModal} 
+                />
+                <button 
+                    className={styles["new-product-button"]}
+                    onClick={openNewProductModal}
+                >Nuevo Producto</button>
+            </div>
             <DataTable 
                 columns={columns} 
                 data={displayData}

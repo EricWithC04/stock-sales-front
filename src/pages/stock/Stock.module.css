@@ -1,0 +1,7 @@
+.actions-container {
+    width: 96%;
+    margin-left: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
