@@ -10,3 +10,5 @@ export { ProductEntryIcon } from "./normals/ProductEntryIcon";
 export { ProductEntryGradientIcon } from "./gradients/ProductEntryGradientIcon";
 export { ExpiresIcon } from "./normals/ExpiresIcon";
 export { ExpiresGradientIcon } from "./gradients/ExpiresGradientIcon";
+export { OfferIcon } from "./normals/OfferIcon";
+export { OfferGradientIcon } from "./gradients/OfferGradientIcon";

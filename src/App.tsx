@@ -6,6 +6,7 @@ import { StockPage } from './pages/stock/Stock'
 import { ProductsEntryPage } from './pages/productsEntry/ProductsEntry'
 import { ExpiresPage } from './pages/expires/Expires'
 import { SalesPage } from './pages/sales/Sales'
+import { OffersPage } from './pages/offers/Offers'
 
 function App() {
 
@@ -28,6 +29,8 @@ function App() {
           ) : selectedPage === 5 ? (
             <ProductsEntryPage></ProductsEntryPage>
           ) : selectedPage === 6 ? (
+            <OffersPage></OffersPage>
+          ) :  selectedPage === 7 ? (
             <ExpiresPage></ExpiresPage>
           ) : <h1>Pagina no disponible</h1>
         }

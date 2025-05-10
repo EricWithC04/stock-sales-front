@@ -11,7 +11,9 @@ import {
     ProductEntryIcon,
     ProductEntryGradientIcon,
     ExpiresIcon,
-    ExpiresGradientIcon
+    ExpiresGradientIcon,
+    OfferIcon,
+    OfferGradientIcon
 } from "../../utils/icons";
 import styles from "./NavBar.module.css";
 
@@ -36,7 +38,8 @@ export const NavigationBar = ({ children, selectPage }: Props) => {
         { id: 3, Icon: ReceiptIcon, SelectedIcon: ReceiptGradientIcon, title: "Ventas", selected: false },
         { id: 4, Icon: StockIcon, SelectedIcon: StockGradientIcon, title: "Inventario", selected: false },
         { id: 5, Icon: ProductEntryIcon, SelectedIcon: ProductEntryGradientIcon, title: "Ingresos", selected: false },
-        { id: 6, Icon: ExpiresIcon, SelectedIcon: ExpiresGradientIcon, title: "Vencimientos", selected: false },
+        { id: 6, Icon: OfferIcon, SelectedIcon: OfferGradientIcon, title: "Ofertas", selected: false },
+        { id: 7, Icon: ExpiresIcon, SelectedIcon: ExpiresGradientIcon, title: "Vencimientos", selected: false },
     ]);
 
     const handleNavigate = (id: number) => {
