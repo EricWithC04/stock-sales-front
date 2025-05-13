@@ -2,6 +2,7 @@
 import CategoriesData from "./categoriesData.json"
 import DrinksData from "./drinksData.json"
 import LotsData from "./lotsData.json"
+import OffersData from "./offersData.json"
 
 interface Category {
     id: number
@@ -22,6 +23,15 @@ interface Lot {
     expiresDate: string | null
 }
 
+interface Offer {
+    id: string
+    name: string
+    products: Array<{ id: number }>
+    regularPrice: number
+    price: number
+    available: boolean
+}
+
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export const getCategories =  async (): Promise<Array<Category>> => {
@@ -39,7 +49,7 @@ export const getLotsData = async (): Promise<Array<Lot>> => {
     return LotsData
 }
 
-// export const getExpiresLots = async (): Promise<Array<ExpiresLot>> => {
-//     await delay(1000)
-//     return getExpiresDates(LotsData, 7)
-// }
+export const getOffersData = async (): Promise<Array<Offer>> => {
+    await delay(1000)
+    return OffersData
+}

@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useState, useEffect } from 'react'
-import { getDrinks, getLotsData } from '../mocks/apiMock'
+import { getDrinks, getLotsData, getOffersData, } from '../mocks/apiMock'
 import { calculateExpiresDates } from '../utils/calculateStock/getExpiresDates'
 
 interface Props {
@@ -26,13 +26,25 @@ interface ExpiresLot {
     expiresDate: string
 }
 
+interface Offer {
+    id: string
+    name: string
+    products: Array<{ id: number }>
+    regularPrice: number
+    price: number
+    available: boolean
+}
+
 interface GeneralContextProps {
-    getProducts: () => Array<Drink>,
-    getLots: () => Array<Lot>,
-    getExpiresDates: () => Array<ExpiresLot>,
-    uploadNewProduct: (product: Drink) => void,
-    uploadNewLot: (lot: Lot) => void,
-    getProductsStock: () => any,
+    getProducts: () => Array<Drink>
+    getLots: () => Array<Lot>
+    getExpiresDates: () => Array<ExpiresLot>
+    getOffers: () => Array<Offer>
+    uploadNewProduct: (product: Drink) => void
+    uploadNewLot: (lot: Lot) => void
+    uploadNewOffer: (offer: Offer) => void
+    updateOfferStatus: (id: string) => void
+    getProductsStock: () => any
     discountProduct: () => any
 }
 
@@ -44,6 +56,7 @@ export const GeneralProvider = ({ children }: Props) => {
 
     const [products, setProducts] = useState<Array<Drink>>([])
     const [lots, setLots] = useState<Array<Lot>>([])
+    const [offers, setOffers] = useState<Array<Offer>>([])
 
     // Obtener todos los productos
     const getProducts = () => {
@@ -58,6 +71,10 @@ export const GeneralProvider = ({ children }: Props) => {
         return calculateExpiresDates(lots, 7)
     }
 
+    const getOffers = () => {
+        return offers
+    }
+
     // Cuando se registra un nuevo producto
     const uploadNewProduct = (product: Drink) => {
         setProducts([...products, product])
@@ -66,6 +83,22 @@ export const GeneralProvider = ({ children }: Props) => {
     // Cuando se registra un nuevo lote
     const uploadNewLot = (lot: Lot) => {
         setLots([...lots, lot])
+    }
+
+    const uploadNewOffer = (newOffer: Offer) => {
+        setOffers([...offers, newOffer])
+    }
+
+    const updateOfferStatus = (id: string) => {
+        const newOffers: Array<Offer> = []
+        offers.forEach(offer => {
+            if (offer.id === id) {
+                newOffers.push({ ...offer, available: !offer.available })
+            } else {
+                newOffers.push(offer)
+            }
+        })
+        setOffers(newOffers)
     }
 
     // Obtener listado de los productos con cantidad en stock
@@ -83,10 +116,23 @@ export const GeneralProvider = ({ children }: Props) => {
             .then(products => setProducts(products))
         getLotsData()
             .then(lots => setLots(lots))
+        getOffersData()
+            .then(offers => setOffers(offers))
     }, [])
 
     return (
-        <GeneralContext.Provider value={{ getProducts, getLots, getExpiresDates, uploadNewProduct, uploadNewLot, getProductsStock, discountProduct }}>
+        <GeneralContext.Provider value={{ 
+            getProducts, 
+            getLots, 
+            getExpiresDates,
+            getOffers, 
+            uploadNewProduct, 
+            uploadNewLot, 
+            uploadNewOffer,
+            updateOfferStatus,
+            getProductsStock, 
+            discountProduct 
+        }}>
             {children}
         </GeneralContext.Provider>
     )
