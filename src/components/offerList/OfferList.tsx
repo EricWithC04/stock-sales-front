@@ -10,7 +10,7 @@ import { useGeneralContext } from "../../context/GeneralContext"
 interface Offer {
     id: string
     name: string
-    products: Array<{ id: number }>
+    products: Array<{ id: string }>
     regularPrice: number
     price: number
     available: boolean

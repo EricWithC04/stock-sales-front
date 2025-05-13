@@ -29,7 +29,7 @@ interface ExpiresLot {
 interface Offer {
     id: string
     name: string
-    products: Array<{ id: number }>
+    products: Array<{ id: string }>
     regularPrice: number
     price: number
     available: boolean
@@ -37,6 +37,7 @@ interface Offer {
 
 interface GeneralContextProps {
     getProducts: () => Array<Drink>
+    getProductById: (id: string) => Drink | "Código Invalido"
     getLots: () => Array<Lot>
     getExpiresDates: () => Array<ExpiresLot>
     getOffers: () => Array<Offer>
@@ -44,6 +45,7 @@ interface GeneralContextProps {
     uploadNewLot: (lot: Lot) => void
     uploadNewOffer: (offer: Offer) => void
     updateOfferStatus: (id: string) => void
+    // validateProductIdExists: (id: string) => boolean
     getProductsStock: () => any
     discountProduct: () => any
 }
@@ -61,6 +63,12 @@ export const GeneralProvider = ({ children }: Props) => {
     // Obtener todos los productos
     const getProducts = () => {
         return products
+    }
+
+    const getProductById = (id: string) => {
+        const product = products.find(product => product.id === id)
+        if (product) return product
+        else return "Código Invalido"
     }
 
     const getLots = () => {
@@ -101,6 +109,12 @@ export const GeneralProvider = ({ children }: Props) => {
         setOffers(newOffers)
     }
 
+    // const validateProductIdExists = (id: string) => {
+    //     const product = products.find(p => p.id === id)
+    //     if (product) return true
+    //     else return false
+    // }
+
     // Obtener listado de los productos con cantidad en stock
     const getProductsStock = () => {
         alert("Funcionalidad en desarrollo")
@@ -123,6 +137,7 @@ export const GeneralProvider = ({ children }: Props) => {
     return (
         <GeneralContext.Provider value={{ 
             getProducts, 
+            getProductById,
             getLots, 
             getExpiresDates,
             getOffers, 
@@ -130,6 +145,7 @@ export const GeneralProvider = ({ children }: Props) => {
             uploadNewLot, 
             uploadNewOffer,
             updateOfferStatus,
+            // validateProductIdExists,
             getProductsStock, 
             discountProduct 
         }}>

@@ -26,7 +26,7 @@ interface Lot {
 interface Offer {
     id: string
     name: string
-    products: Array<{ id: number }>
+    products: Array<{ id: string }>
     regularPrice: number
     price: number
     available: boolean
