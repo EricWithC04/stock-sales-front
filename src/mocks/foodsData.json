@@ -1,0 +1,178 @@
+[
+    {
+        "id": "1",
+        "name": "Pancho",
+        "description": "Salchica y Mayonesa",
+        "category": "Pancho",
+        "ingredients": [
+            {
+                "id": "100",
+                "quantity": 1
+            },
+            {
+                "id": "101",
+                "quantity": 1
+            },
+            {
+                "id": "110",
+                "quantity": 1
+            }
+        ],
+        "price": 1500
+    },
+    {
+        "id": "2",
+        "name": "Super Pancho",
+        "description": "2 Salchicas, Mayonesa, Papas",
+        "category": "Pancho",
+        "ingredients": [
+            {
+                "id": "100",
+                "quantity": 2
+            },
+            {
+                "id": "101",
+                "quantity": 2
+            },
+            {
+                "id": "110",
+                "quantity": 1
+            }
+        ],
+        "price": 3000
+    },
+    {
+        "id": "3",
+        "name": "Super Pancho Gratinado",
+        "description": "",
+        "category": "Pancho",
+        "ingredients": [
+            {
+                "id": "100",
+                "quantity": 2
+            },
+            {
+                "id": "101",
+                "quantity": 2
+            },
+            {
+                "id": "106",
+                "quantity": 3
+            },
+            {
+                "id": "110",
+                "quantity": 1
+            }
+        ],
+        "price": 4000
+    },
+    {
+        "id": "4",
+        "name": "Burguer Junior",
+        "description": "",
+        "category": "Hamburguesa",
+        "ingredients": [
+            {
+                "id": "102",
+                "quantity": 1
+            },
+            {
+                "id": "104",
+                "quantity": 1
+            },
+            {
+                "id": "107",
+                "quantity": 1
+            },
+            {
+                "id": "110",
+                "quantity": 1
+            }
+        ],
+        "price": 4000
+    },
+    {
+        "id": "5",
+        "name": "Burguer Chupanchos",
+        "description": "",
+        "category": "Hamburguesa",
+        "ingredients": [
+            {
+                "id": "103",
+                "quantity": 1
+            },
+            {
+                "id": "104",
+                "quantity": 1
+            },
+            {
+                "id": "107",
+                "quantity": 1
+            },
+            {
+                "id": "108",
+                "quantity": 1
+            },
+            {
+                "id": "109",
+                "quantity": 1
+            },
+            {
+                "id": "110",
+                "quantity": 1
+            }
+        ],
+        "price": 5500
+    },
+    {
+        "id": "6",
+        "name": "Cheese Burguer",
+        "description": "",
+        "category": "Hamburguesa",
+        "ingredients": [
+            {
+                "id": "103",
+                "quantity": 1
+            },
+            {
+                "id": "104",
+                "quantity": 1
+            },
+            {
+                "id": "107",
+                "quantity": 1
+            },
+            {
+                "id": "110",
+                "quantity": 1
+            }
+        ],
+        "price": 6500
+    },
+    {
+        "id": "7",
+        "name": "Papas en Cono",
+        "description": "",
+        "category": "Papas Fritas",
+        "ingredients": [
+            {
+                "id": "105",
+                "quantity": 1
+            }
+        ],
+        "price": 3500
+    },
+    {
+        "id": "8",
+        "name": "Papas Fritas",
+        "description": "",
+        "category": "Papas Fritas",
+        "ingredients": [
+            {
+                "id": "105",
+                "quantity": 1
+            }
+        ],
+        "price": 3500
+    }
+]

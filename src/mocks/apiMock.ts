@@ -1,6 +1,7 @@
 // import { getExpiresDates } from "../utils/calculateStock/getExpiresDates"
 import CategoriesData from "./categoriesData.json"
 import DrinksData from "./drinksData.json"
+import foodsData from "./foodsData.json"
 import LotsData from "./lotsData.json"
 import OffersData from "./offersData.json"
 import IngredientsData from "./ingredientData.json"
@@ -13,6 +14,15 @@ interface Category {
 interface Ingredient {
     id: string
     description: string
+}
+
+interface Food {
+    id: string
+    name: string
+    description: string
+    category: string
+    ingredients: Array<{ id: string, quantity: number }>
+    price: number
 }
 
 interface Drink {
@@ -53,6 +63,11 @@ export const getIngredientsData = async (): Promise<Array<Ingredient>> => {
 export const getDrinks = async (): Promise<Array<Drink>> => {
     await delay(1000)
     return DrinksData
+}
+
+export const getFoodData = async (): Promise<Array<Food>> => {
+    await delay(1000)
+    return foodsData
 }
 
 export const getLotsData = async (): Promise<Array<Lot>> => {

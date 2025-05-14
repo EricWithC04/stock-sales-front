@@ -73,14 +73,14 @@ export const GeneralProvider = ({ children }: Props) => {
         return products
     }
 
-    const getIngredients = () => {
-        return ingredients
-    }
-
     const getProductById = (id: string) => {
         const product = products.find(product => product.id === id)
         if (product) return product
         else return "Código Invalido"
+    }
+
+    const getIngredients = () => {
+        return ingredients
     }
 
     const getLots = () => {

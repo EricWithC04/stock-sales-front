@@ -9,18 +9,38 @@
     },
     {
         "id": "102",
-        "description": "Medallon de Hamburguesas"
+        "description": "Medallon de Hamburguesas 70g"
     },
     {
         "id": "103",
-        "description": "Pan de Hamburguesas"
+        "description": "Medallon de Hamburguesas 100g"
     },
     {
         "id": "104",
-        "description": "Papas"
+        "description": "Pan de Hamburguesas"
     },
     {
         "id": "105",
+        "description": "Papas"
+    },
+    {
+        "id": "106",
         "description": "Queso"
+    },
+    {
+        "id": "107",
+        "description": "Queso Cheddar"
+    },
+    {
+        "id": "108",
+        "description": "Tomate"
+    },
+    {
+        "id": "109",
+        "description": "Lechuga"
+    },
+    {
+        "id": "110",
+        "description": "Mayonesa"
     }
 ]
