@@ -9,3 +9,7 @@
     "wdth" 100;
   flex-shrink: 0 !important; 
 }
+
+#root {
+  overflow-x: hidden !important
+}
