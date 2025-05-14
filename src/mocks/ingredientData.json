@@ -1,0 +1,26 @@
+[
+    {
+        "id": "100",
+        "description": "Salchicas"
+    },
+    { 
+        "id": "101",
+        "description": "Pan de Pancho"
+    },
+    {
+        "id": "102",
+        "description": "Medallon de Hamburguesas"
+    },
+    {
+        "id": "103",
+        "description": "Pan de Hamburguesas"
+    },
+    {
+        "id": "104",
+        "description": "Papas"
+    },
+    {
+        "id": "105",
+        "description": "Queso"
+    }
+]

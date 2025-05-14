@@ -1,9 +1,14 @@
 import React, { useContext, createContext, useState, useEffect } from 'react'
-import { getDrinks, getLotsData, getOffersData, } from '../mocks/apiMock'
+import { getDrinks, getIngredientsData, getLotsData, getOffersData, } from '../mocks/apiMock'
 import { calculateExpiresDates } from '../utils/calculateStock/getExpiresDates'
 
 interface Props {
     children: React.ReactNode
+}
+
+interface Ingredient {
+    id: string
+    description: string
 }
 
 interface Drink {
@@ -38,10 +43,12 @@ interface Offer {
 interface GeneralContextProps {
     getProducts: () => Array<Drink>
     getProductById: (id: string) => Drink | "Código Invalido"
+    getIngredients: () => Array<Ingredient>
     getLots: () => Array<Lot>
     getExpiresDates: () => Array<ExpiresLot>
     getOffers: () => Array<Offer>
     uploadNewProduct: (product: Drink) => void
+    uploadNewIngredient: (ingredient: Ingredient) => void
     uploadNewLot: (lot: Lot) => void
     uploadNewOffer: (offer: Offer) => void
     updateOfferStatus: (id: string) => void
@@ -57,12 +64,17 @@ export const useGeneralContext = () => useContext(GeneralContext)
 export const GeneralProvider = ({ children }: Props) => {
 
     const [products, setProducts] = useState<Array<Drink>>([])
+    const [ingredients, setIngredients] = useState<Array<Ingredient>>([])
     const [lots, setLots] = useState<Array<Lot>>([])
     const [offers, setOffers] = useState<Array<Offer>>([])
 
     // Obtener todos los productos
     const getProducts = () => {
         return products
+    }
+
+    const getIngredients = () => {
+        return ingredients
     }
 
     const getProductById = (id: string) => {
@@ -88,6 +100,10 @@ export const GeneralProvider = ({ children }: Props) => {
         setProducts([...products, product])
     }
 
+    const uploadNewIngredient = (ingredient: Ingredient) => {
+        setIngredients([...ingredients, ingredient])
+    }
+
     // Cuando se registra un nuevo lote
     const uploadNewLot = (lot: Lot) => {
         setLots([...lots, lot])
@@ -109,12 +125,6 @@ export const GeneralProvider = ({ children }: Props) => {
         setOffers(newOffers)
     }
 
-    // const validateProductIdExists = (id: string) => {
-    //     const product = products.find(p => p.id === id)
-    //     if (product) return true
-    //     else return false
-    // }
-
     // Obtener listado de los productos con cantidad en stock
     const getProductsStock = () => {
         alert("Funcionalidad en desarrollo")
@@ -132,20 +142,23 @@ export const GeneralProvider = ({ children }: Props) => {
             .then(lots => setLots(lots))
         getOffersData()
             .then(offers => setOffers(offers))
+        getIngredientsData()
+            .then(ingredients => setIngredients(ingredients))
     }, [])
 
     return (
         <GeneralContext.Provider value={{ 
             getProducts, 
             getProductById,
+            getIngredients,
             getLots, 
             getExpiresDates,
             getOffers, 
-            uploadNewProduct, 
+            uploadNewProduct,
+            uploadNewIngredient, 
             uploadNewLot, 
             uploadNewOffer,
             updateOfferStatus,
-            // validateProductIdExists,
             getProductsStock, 
             discountProduct 
         }}>

@@ -14,17 +14,18 @@ interface ItemStock {
     id: string;
     description: string;
     stock: number;
-    price: number;
+    type: "Bebida" | "Ingrediente";
+    price?: number;
 }
 
 export const StockPage = () => {
 
-    const { getProducts, getLots } = useGeneralContext()!
+    const { getProducts, getIngredients, getLots } = useGeneralContext()!
 
     const notFoundProductRef = useRef<HTMLDialogElement>(null)
     const newProductRef = useRef<HTMLDialogElement>(null)
 
-    const columns = [
+    const columnsDrinks = [
         {
             name: 'ID',
             selector: (row: ItemStock) => row.id,
@@ -40,35 +41,76 @@ export const StockPage = () => {
         },
         {
             name: 'Precio',
-            selector: (row: ItemStock) => row.price,
+            selector: (row: ItemStock) => row.price!,
         }
     ]
 
+    const columnsIngredients = [
+        {
+            name: 'ID',
+            selector: (row: ItemStock) => row.id,
+        },
+        {
+            name: 'Descripción',
+            selector: (row: ItemStock) => row.description,
+            sortable: true,
+        },
+        {
+            name: 'Stock',
+            selector: (row: ItemStock) => row.stock, 
+        }
+    ]
+
+    const [type, setType] = useState<"Bebidas" | "Ingredientes">("Bebidas")
+
     const [data, setData] = useState<Array<ItemStock>>([])
-    const [displayData, setDisplayData] = useState<Array<ItemStock>>([])
+    const [displayDataDrinks, setDisplayDataDrinks] = useState<Array<ItemStock>>([])
+    const [displayDataIngredients, setDisplayDataIngredients] = useState<Array<ItemStock>>([])
 
     const [loading, setLoading] = useState<boolean>(true)
     const [filter, setFilter] = useState<string>("")
 
     const [newProductFlag, setNewProductFlag] = useState<boolean>(false)
 
-    useEffect(() => {
-        const allProducts = getProducts().map(product => {
-            return { ...product, stock: calculateProductStock(product.id, getLots()) }
+    const obtainColumns = () => {
+        return type === "Bebidas" ? columnsDrinks : columnsIngredients
+    }
+
+    const obtainData = () => {
+        return type === "Bebidas" ? displayDataDrinks : displayDataIngredients
+    }
+
+    const setDataToDisplay = (dataToDisplay: Array<ItemStock>) => {
+        const dataDrinks: Array<ItemStock> = []
+        const dataIngredients: Array<ItemStock> = []
+        dataToDisplay.forEach(d => {
+            if (d.type === "Bebida") dataDrinks.push(d)
+            else dataIngredients.push(d)
         })
-        setData(allProducts)
+        setDisplayDataDrinks(dataDrinks)
+        setDisplayDataIngredients(dataIngredients)
+    }
+
+    useEffect(() => {
+        const allProducts: Array<ItemStock> = getProducts().map(product => {
+            return { ...product, stock: calculateProductStock(product.id, getLots()), type: "Bebida" }
+        })
+        const allIngredients: Array<ItemStock> = getIngredients().map(ingredient => {
+            return { ...ingredient, stock: calculateProductStock(ingredient.id, getLots()), type: "Ingrediente" }
+        })
+        setData([...allProducts, ...allIngredients])
         setLoading(false)
     }, [newProductFlag])
 
     useEffect(() => {
         if (filter === "") {
-            setDisplayData(data)
+            setDataToDisplay(data)
         } else {
             const appliedFilter = normalizeText(filter)
             const filteredData = data.filter(drink => (
                 normalizeText(drink.description).includes(appliedFilter) || normalizeText(drink.id).includes(appliedFilter)
             ))
-            setDisplayData(filteredData)
+            setDataToDisplay(filteredData)
         }
     }, [filter, data])
 
@@ -109,14 +151,25 @@ export const StockPage = () => {
                 <StockSearchBar 
                     setFilter={setFilter}
                 />
-                <button 
-                    className={styles["new-product-button"]}
-                    onClick={openNewProductModal}
-                >Nuevo Producto</button>
+                <div className={styles["buttons-container"]}>
+                    <button 
+                        className={`${styles["button"]} ${type === "Bebidas" ? styles["selected"] : ""}`} 
+                        onClick={() => setType("Bebidas")
+                    }>Bebidas</button>
+                    <button 
+                        className={`${styles["button"]} ${type === "Ingredientes" ? styles["selected"] : ""}`} 
+                        onClick={() => setType("Ingredientes")
+                    }>Ingredientes</button>
+                    <div className={styles["buttons-separator"]}></div>
+                    <button 
+                        className={styles["new-product-button"]}
+                        onClick={openNewProductModal}
+                    >Nuevo Producto</button>
+                </div>
             </div>
             <DataTable 
-                columns={columns} 
-                data={displayData}
+                columns={obtainColumns()} 
+                data={obtainData()}
                 pagination
                 progressPending={loading}
                 progressComponent={<LoadingSpinner />}
