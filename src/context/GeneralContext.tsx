@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useState, useEffect } from 'react'
-import { getDrinks, getIngredientsData, getLotsData, getOffersData, } from '../mocks/apiMock'
+import { getDrinks, getFoodData, getIngredientsData, getLotsData, getOffersData, } from '../mocks/apiMock'
 import { calculateExpiresDates } from '../utils/calculateStock/getExpiresDates'
 
 interface Props {
@@ -15,6 +15,15 @@ interface Drink {
     id: string
     description: string
     stock: number
+    price: number
+}
+
+interface Food {
+    id: string
+    name: string
+    description: string
+    category: string
+    ingredients: Array<{ id: string, quantity: number }>
     price: number
 }
 
@@ -44,6 +53,7 @@ interface GeneralContextProps {
     getProducts: () => Array<Drink>
     getProductById: (id: string) => Drink | "Código Invalido"
     getIngredients: () => Array<Ingredient>
+    getFoods: () => Array<Food>
     getLots: () => Array<Lot>
     getExpiresDates: () => Array<ExpiresLot>
     getOffers: () => Array<Offer>
@@ -65,6 +75,7 @@ export const GeneralProvider = ({ children }: Props) => {
 
     const [products, setProducts] = useState<Array<Drink>>([])
     const [ingredients, setIngredients] = useState<Array<Ingredient>>([])
+    const [foods, setFoods] = useState<Array<Food>>([])
     const [lots, setLots] = useState<Array<Lot>>([])
     const [offers, setOffers] = useState<Array<Offer>>([])
 
@@ -81,6 +92,10 @@ export const GeneralProvider = ({ children }: Props) => {
 
     const getIngredients = () => {
         return ingredients
+    }
+
+    const getFoods = () => {
+        return foods
     }
 
     const getLots = () => {
@@ -144,6 +159,8 @@ export const GeneralProvider = ({ children }: Props) => {
             .then(offers => setOffers(offers))
         getIngredientsData()
             .then(ingredients => setIngredients(ingredients))
+        getFoodData()
+            .then(foods => setFoods(foods))
     }, [])
 
     return (
@@ -151,6 +168,7 @@ export const GeneralProvider = ({ children }: Props) => {
             getProducts, 
             getProductById,
             getIngredients,
+            getFoods,
             getLots, 
             getExpiresDates,
             getOffers, 

@@ -1,0 +1,33 @@
+.pagination-container {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.pagination-container button {
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid #b3b3b3;
+    background: #fff;
+}
+
+.pagination-container button:hover {
+    cursor: pointer;
+    background: #e5e5e5;
+}
+
+.disabled-button {
+    color: #b3b3b3;
+    pointer-events: none;
+    cursor: not-allowed;
+    border: 1px solid #b3b3b353 !important
+}
+
+.selected-button {
+    color: white;
+    background: linear-gradient(-90deg, #a7217f, #d3216a) !important;
+    outline: 1px solid #b3b3b353 !important;
+    pointer-events: none;
+}

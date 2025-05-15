@@ -1,90 +1,58 @@
 import styles from "./FoodList.module.css"
 import { FoodCard } from "../foodCard/FoodCard"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+import { useGeneralContext } from "../../context/GeneralContext"
+import { FoodListPagination } from "../foodListPagination/FoodListPagination"
+import { LoadingSpinner } from "../loadingSpinner/LoadingSpinner"
+
+interface Food {
+    id: string
+    name: string
+    description: string
+    category: string
+    ingredients: Array<{ id: string, quantity: number }>
+    price: number
+}
 
 export const FoodList = () => {
 
-    const [foods, setFoods] = useState([
-        {
-            id: 1,
-            name: "Pancho",
-            description: "Salchica y Mayonesa",
-            category: "Pancho",
-            ingredients: [
-                {
-                    id: "100",
-                    quantity: 1
-                },
-                {
-                    id: "101",
-                    quantity: 1
-                },
-                {
-                    id: "110",
-                    quantity: 1
-                }
-            ],
-            price: 1500
-        },
-        {
-            id: 2,
-            name: "Super Pancho",
-            description: "2 Salchicas, Mayonesa, Papas",
-            category: "Pancho",
-            ingredients: [
-                {
-                    id: "100",
-                    quantity: 2
-                },
-                {
-                    id: "101",
-                    quantity: 2
-                },
-                {
-                    id: "110",
-                    quantity: 1
-                }
-            ],
-            price: 3000
-        },
-        {
-            id: 3,
-            name: "Super Pancho Gratinado",
-            description: "Super Pancho Gratinado",
-            category: "Pancho",
-            ingredients: [
-                {
-                    id: "100",
-                    quantity: 2
-                },
-                {
-                    id: "101",
-                    quantity: 2
-                },
-                {
-                    id: "105",
-                    quantity: 3
-                },
-                {
-                    id: "110",
-                    quantity: 1
-                }
-            ],
-            price: 4000
-        }
-    ])
+    const { getFoods } = useGeneralContext()!
+
+    const [foods, setFoods] = useState<Array<Food>>([])
+
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const itemsPerPage = 6
+
+    const lastItem = currentPage * itemsPerPage;
+    const firstItem = lastItem - itemsPerPage;
+    
+    useEffect(() => {
+        setFoods(getFoods())
+    }, [])
+
+    const handleSelectPage = (page: number) => {
+        setCurrentPage(page)
+    }
 
     return (
-        <div className={styles["food-list"]}>
-            {
-                foods.map(food => (
-                    <FoodCard
-                        name={food.name}
-                        description={food.description}
-                        price={food.price}
-                    />
-                ))
-            }
-        </div>
+        <>
+            <div className={styles["food-list"]}>
+                {
+                    foods.length ? foods.slice(firstItem, lastItem).map(food => (
+                        <FoodCard
+                            name={food.name}
+                            description={food.description}
+                            price={food.price}
+                        />
+                    )) : <LoadingSpinner />
+                }
+            </div>
+            <FoodListPagination 
+                pagesQuantity={Math.ceil(foods.length / itemsPerPage)}
+                handleSelectPage={handleSelectPage}
+                currentPage={currentPage}
+            />
+        </>
     )
 }

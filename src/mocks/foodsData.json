@@ -69,7 +69,7 @@
     {
         "id": "4",
         "name": "Burguer Junior",
-        "description": "",
+        "description": "Carne 70g, Queso",
         "category": "Hamburguesa",
         "ingredients": [
             {
@@ -94,7 +94,7 @@
     {
         "id": "5",
         "name": "Burguer Chupanchos",
-        "description": "",
+        "description": "Carne 100g, Lechuga, Tomate y Mayonesa",
         "category": "Hamburguesa",
         "ingredients": [
             {
@@ -127,7 +127,7 @@
     {
         "id": "6",
         "name": "Cheese Burguer",
-        "description": "",
+        "description": "Carne 100g y Queso",
         "category": "Hamburguesa",
         "ingredients": [
             {
