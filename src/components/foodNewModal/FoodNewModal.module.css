@@ -1,0 +1,127 @@
+.food-new-modal-container {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    padding: 2%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #b3b3b353;
+    border-radius: 12px;
+}
+
+.food-new-modal-container::backdrop {
+    background-color: rgb(0, 0, 0, 0.5);
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 600px;
+}
+
+.field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+}
+
+.field-container label {
+    font-weight: 500;
+}
+
+.field-container input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #b3b3b353;
+    outline: none;
+}
+
+.field-container textarea {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #b3b3b353;
+    outline: none;
+}
+
+.ingredient-container-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ingredient-container-header button {
+    padding: 8px 12px;
+    font-size: 16px;
+    background: linear-gradient(-90deg, #a7217f, #d3216a);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    outline: 1px solid #b3b3b353;
+}
+
+.ingredient-container-header button:hover {
+    cursor: pointer;
+    background: linear-gradient(-90deg, #c954af, #f5438c);
+}
+
+.ingredient-container {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.ingredient-container input {
+    width: 40%;
+}
+
+.remove-ingredient {
+    background-color: #fff;
+    border: 1px solid #b3b3b353;
+    border-radius: 8px;
+    padding: 12px 18px;
+}
+
+.remove-ingredient:hover {
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+
+.buttons-container {
+    margin-top: 12px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.buttons-container button {
+    padding: 12px 16px;
+    font-size: 16px;
+}
+
+.cancel-button {
+    background-color: #fff;
+    border: 1px solid #c3c3c3;
+    border-radius: 8px;
+}
+
+.cancel-button:hover {
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+
+.submit-button {
+    background: linear-gradient(-90deg, #a7217f, #d3216a);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    outline: 1px solid #b3b3b353;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    background: linear-gradient(-90deg, #c954af, #f5438c);
+}
