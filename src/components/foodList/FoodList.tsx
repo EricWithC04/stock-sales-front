@@ -78,10 +78,10 @@ export const FoodList = () => {
         <div className={styles["food-list"]}>
             {
                 foods.map(food => (
-                    <FoodCard 
+                    <FoodCard
                         name={food.name}
                         description={food.description}
-                        price={food.price}  
+                        price={food.price}
                     />
                 ))
             }
