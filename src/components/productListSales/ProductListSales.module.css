@@ -1,0 +1,17 @@
+.quantity-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quantity-container button {
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px solid #b3b3b353;
+    background: #fff;
+}
+
+.quantity-container button:hover {
+    cursor: pointer;
+    background: #e5e5e5;
+}

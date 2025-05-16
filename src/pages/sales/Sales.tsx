@@ -29,6 +29,14 @@ export const SalesPage = () => {
         }
     }
 
+    const handleReduceItem = (id: string) => {
+        const findedItem = itemSales.find(item => item.id === id)
+        if (findedItem && findedItem.quantity > 1) {
+            const updatedItemSales = itemSales.map(item => item.id === id ? {...item, quantity: item.quantity - 1} : item)
+            setItemSales(updatedItemSales)
+        }
+    }
+
     return (
         <div className={styles["sales-container"]}>
             <h1>Registro de ventas</h1>
@@ -37,6 +45,8 @@ export const SalesPage = () => {
             />
             <ProductListSales 
                 productsData={itemSales}
+                handleIncludeItem={handleIncludeItem}
+                handleReduceItem={handleReduceItem}
             />
             <ProductTotalSales 
                 itemSales={itemSales}

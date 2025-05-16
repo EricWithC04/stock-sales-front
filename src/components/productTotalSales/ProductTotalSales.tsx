@@ -21,10 +21,14 @@ export const ProductTotalSales = ({ itemSales }: Props) => {
         return total
     }
 
+    const handleSubmitSale = () => {
+        
+    }
+
     return (
         <div className={styles["product-total-sales-container"]}>
             <h1>Total: {calculateTotal()}</h1>
-            <button>Registrar Venta</button>
+            <button onClick={handleSubmitSale}>Registrar Venta</button>
         </div>
     )
 }
