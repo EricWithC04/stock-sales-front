@@ -9,9 +9,16 @@ interface ItemSale {
 
 interface Props {
     itemSales: Array<ItemSale>
+    insufficientStock: boolean
+    openInsufficientModal: () => void
+    openSuccessModal: () => void
 }
 
-export const ProductTotalSales = ({ itemSales }: Props) => {
+export const ProductTotalSales = ({ 
+    itemSales, 
+    insufficientStock, 
+    openInsufficientModal, 
+    openSuccessModal }: Props) => {
 
     const calculateTotal = (): number => {
         let total = 0
@@ -22,7 +29,8 @@ export const ProductTotalSales = ({ itemSales }: Props) => {
     }
 
     const handleSubmitSale = () => {
-        
+        if (insufficientStock) openInsufficientModal()
+        else openSuccessModal()
     }
 
     return (

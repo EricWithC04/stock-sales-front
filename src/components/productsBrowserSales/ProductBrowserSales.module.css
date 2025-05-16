@@ -1,0 +1,12 @@
+.browser {
+    width: 20%;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    outline: 1px solid #b3b3b353;
+}
+
+.browser:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #93939373; 
+}

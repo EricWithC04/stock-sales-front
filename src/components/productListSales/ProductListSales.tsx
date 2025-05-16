@@ -1,5 +1,5 @@
 import DataTable from "react-data-table-component"
-import { TriangleAlert } from "lucide-react"
+import { Trash2, TriangleAlert } from "lucide-react"
 import { Tooltip } from "react-tooltip"
 import { calculateProductStock } from "../../utils/calculateStock/calculateProductStock"
 import styles from "./ProductListSales.module.css"
@@ -24,10 +24,17 @@ interface Stock {
 interface Props {
     productsData: Array<ItemSale>
     handleIncludeItem: (id: string) => void
+    handleDeleteItem: (id: string) => void
     handleReduceItem: (id: string) => void
+    setInsufficientStock: (b: boolean) => void
 }
 
-export const ProductListSales = ({ productsData, handleIncludeItem, handleReduceItem }: Props) => {
+export const ProductListSales = ({ 
+    productsData, 
+    handleIncludeItem, 
+    handleReduceItem, 
+    setInsufficientStock, 
+    handleDeleteItem }: Props) => {
 
     const { getLots } = useGeneralContext()!
 
@@ -73,6 +80,17 @@ export const ProductListSales = ({ productsData, handleIncludeItem, handleReduce
             name: 'Subtotal',
             selector: (row: ItemSale) => row.quantity * row.price
         },
+        {
+            name: 'Acciones',
+            cell: (row: ItemSale) => (
+                <div className={styles["actions-container"]}>
+                    <Trash2 
+                        onClick={() => handleDeleteItem(row.id)}
+                        color={"red"}
+                    />
+                </div>
+            )
+        }
     ]
 
     useEffect(() => {
@@ -83,12 +101,17 @@ export const ProductListSales = ({ productsData, handleIncludeItem, handleReduce
                 stock: calculateProductStock(id, getLots())
             })
             setStocks(newStocks)
+            // Si hay alguno de los productos con stock insufficiente automaticamente se activa el estado
+            productsData.some(({ id, quantity }: ItemSale) => newStocks[id] && newStocks[id].stock < quantity) ? 
+            setInsufficientStock(true) : 
+            setInsufficientStock(false)
         }
     }, [productsData])
 
     return (
         <div className={styles["product-list-sales-container"]}>
             <DataTable 
+                className={styles["product-list-sales-table"]}
                 pagination
                 columns={columns}
                 data={productsData}

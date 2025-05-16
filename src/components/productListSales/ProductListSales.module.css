@@ -1,3 +1,11 @@
+.product-list-sales-container {
+    scrollbar-width: none;
+}
+
+.product-list-sales-table {
+    scrollbar-width: none;
+}
+
 .quantity-container {
     display: flex;
     align-items: center;

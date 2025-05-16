@@ -52,7 +52,7 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
     const renderSuggestion = (suggestion: Drink) => {
         return (
             <div onClick={() => setSelectedProduct(suggestion)}>
-                <span>{`${suggestion.id} ${suggestion.description}`}</span>
+                <span>{`${suggestion.description}`}</span>
             </div>
         )
     }
@@ -63,6 +63,7 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
 
     const inputProps = {
         placeholder: "Buscar...",
+        className: styles["browser"],
         value: browsedValue,
         onChange: handleInputChange,
         onKeyDown: (e: any) => {

@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { ProductListSales } from "../../components/productListSales/ProductListSales"
 import { ProductBrowserSales } from "../../components/productsBrowserSales/ProductBrowserSales"
 import styles from "./Sales.module.css"
 import { getProductDataById } from "../../utils/getProductDataById"
 import { ProductTotalSales } from "../../components/productTotalSales/ProductTotalSales"
+import { ProductInsufficientModal } from "../../components/productsInsufficientModal/ProductInsufficientModal"
+import { SuccessSaleModal } from "../../components/successSaleModal/SuccessSaleModal"
 
 interface ItemSale {
     id: string
@@ -14,7 +16,11 @@ interface ItemSale {
 
 export const SalesPage = () => {
 
+    const insufficientRef = useRef<HTMLDialogElement>(null)
+    const successRef = useRef<HTMLDialogElement>(null)
+
     const [itemSales, setItemSales] = useState<Array<ItemSale>>([])
+    const [insufficientStock, setInsufficientStock] = useState<boolean>(false)
 
     const handleIncludeItem = (id: string) => {
         const findedItem = itemSales.find(item => item.id === id)
@@ -29,6 +35,11 @@ export const SalesPage = () => {
         }
     }
 
+    const handleDeleteItem = (id: string) => {
+        const updatedItemSales = itemSales.filter(item => item.id !== id)
+        setItemSales(updatedItemSales)
+    }
+
     const handleReduceItem = (id: string) => {
         const findedItem = itemSales.find(item => item.id === id)
         if (findedItem && findedItem.quantity > 1) {
@@ -37,19 +48,53 @@ export const SalesPage = () => {
         }
     }
 
+    const openInsufficientModal = () => {
+        insufficientRef.current?.showModal()
+    }
+
+    const closeInsufficientModal = () => {
+        insufficientRef.current?.close()
+    }
+
+    const openSuccessModal = () => {
+        successRef.current?.showModal()
+    }
+
+    const closeSuccessModal = () => {
+        successRef.current?.close()
+    }
+
     return (
         <div className={styles["sales-container"]}>
-            <h1>Registro de ventas</h1>
-            <ProductBrowserSales 
-                handleIncludeItem={handleIncludeItem}
+            <ProductInsufficientModal
+                ref={insufficientRef}
+                closeModal={closeInsufficientModal}
             />
+            <SuccessSaleModal
+                closeModal={closeSuccessModal}
+                items={itemSales.map(item => (
+                    { description: item.description, quantity: item.quantity, price: item.price * item.quantity }
+                ))}
+                ref={successRef}
+            />
+            <h1>Registro de ventas</h1>
+            <div className={styles["sales-browser-container"]}>
+                <ProductBrowserSales 
+                    handleIncludeItem={handleIncludeItem}
+                />
+            </div>
             <ProductListSales 
                 productsData={itemSales}
                 handleIncludeItem={handleIncludeItem}
+                handleDeleteItem={handleDeleteItem}
                 handleReduceItem={handleReduceItem}
+                setInsufficientStock={(b: boolean) => setInsufficientStock(b)}
             />
             <ProductTotalSales 
                 itemSales={itemSales}
+                insufficientStock={insufficientStock}
+                openInsufficientModal={openInsufficientModal}
+                openSuccessModal={openSuccessModal}
             />
         </div>
     )
