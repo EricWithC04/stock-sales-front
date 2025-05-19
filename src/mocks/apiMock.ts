@@ -6,6 +6,8 @@ import LotsData from "./lotsData.json"
 import OffersData from "./offersData.json"
 import IngredientsData from "./ingredientData.json"
 
+type TypeProduct = "Bebida" | "Ingrediente" | "Comida" | "Oferta"
+
 interface Category {
     id: number
     name: string
@@ -13,6 +15,7 @@ interface Category {
 
 interface Ingredient {
     id: string
+    type: TypeProduct
     description: string
 }
 
@@ -20,6 +23,7 @@ interface Food {
     id: string
     name: string
     description: string
+    type: TypeProduct
     category: string
     ingredients: Array<{ id: string, quantity: number }>
     price: number
@@ -28,6 +32,7 @@ interface Food {
 interface Drink {
     id: string
     description: string
+    type: TypeProduct
     stock: number
     price: number
 }
@@ -42,6 +47,7 @@ interface Lot {
 interface Offer {
     id: string
     name: string
+    type: TypeProduct
     products: Array<{ id: string }>
     regularPrice: number
     price: number
@@ -56,18 +62,21 @@ export const getCategories =  async (): Promise<Array<Category>> => {
 }
 
 export const getIngredientsData = async (): Promise<Array<Ingredient>> => {
+    const ingredientsCompleteData = IngredientsData.map(i => { return { ...i, type: "Ingrediente" as TypeProduct } })
     await delay(1000)
-    return IngredientsData
+    return ingredientsCompleteData
 }
 
 export const getDrinks = async (): Promise<Array<Drink>> => {
+    const drinksCompleteData = DrinksData.map(i => { return { ...i, type: "Bebida" as TypeProduct } })
     await delay(1000)
-    return DrinksData
+    return drinksCompleteData
 }
 
 export const getFoodData = async (): Promise<Array<Food>> => {
+    const foodsCompleteData = foodsData.map(i => { return { ...i, type: "Comida" as TypeProduct } })
     await delay(1000)
-    return foodsData
+    return foodsCompleteData
 }
 
 export const getLotsData = async (): Promise<Array<Lot>> => {
@@ -76,6 +85,7 @@ export const getLotsData = async (): Promise<Array<Lot>> => {
 }
 
 export const getOffersData = async (): Promise<Array<Offer>> => {
+    const offersCompleteData = OffersData.map(i => { return { ...i, type: "Oferta" as TypeProduct } })
     await delay(1000)
-    return OffersData
+    return offersCompleteData
 }

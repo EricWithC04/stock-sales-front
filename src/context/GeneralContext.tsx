@@ -6,14 +6,18 @@ interface Props {
     children: React.ReactNode
 }
 
+type TypeProduct = "Bebida" | "Ingrediente" | "Comida" | "Oferta"
+
 interface Ingredient {
     id: string
+    type?: TypeProduct
     description: string
 }
 
 interface Drink {
     id: string
     description: string
+    type?: TypeProduct
     stock: number
     price: number
 }
@@ -22,6 +26,7 @@ interface Food {
     id: string
     name: string
     description: string
+    type?: TypeProduct
     category: string
     ingredients: Array<{ id: string, quantity: number }>
     price: number
@@ -43,6 +48,7 @@ interface ExpiresLot {
 interface Offer {
     id: string
     name: string
+    type?: TypeProduct
     products: Array<{ id: string }>
     regularPrice: number
     price: number
@@ -51,7 +57,7 @@ interface Offer {
 
 interface GeneralContextProps {
     getProducts: () => Array<Drink>
-    getProductById: (id: string) => Drink | "Código Invalido"
+    getProductById: (id: string) => Drink | Food | Offer | "Código Invalido"
     getIngredients: () => Array<Ingredient>
     getFoods: () => Array<Food>
     getLots: () => Array<Lot>
@@ -59,6 +65,7 @@ interface GeneralContextProps {
     getOffers: () => Array<Offer>
     uploadNewProduct: (product: Drink) => void
     uploadNewIngredient: (ingredient: Ingredient) => void
+    uploadNewFood: (food: Food) => void
     uploadNewLot: (lot: Lot) => void
     uploadNewOffer: (offer: Offer) => void
     updateOfferStatus: (id: string) => void
@@ -85,7 +92,7 @@ export const GeneralProvider = ({ children }: Props) => {
     }
 
     const getProductById = (id: string) => {
-        const product = products.find(product => product.id === id)
+        const product = [...products, ...foods, ...offers].find(product => product.id === id)
         if (product) return product
         else return "Código Invalido"
     }
@@ -112,11 +119,15 @@ export const GeneralProvider = ({ children }: Props) => {
 
     // Cuando se registra un nuevo producto
     const uploadNewProduct = (product: Drink) => {
-        setProducts([...products, product])
+        setProducts([...products, { ...product, type: "Bebida" }])
     }
 
     const uploadNewIngredient = (ingredient: Ingredient) => {
-        setIngredients([...ingredients, ingredient])
+        setIngredients([...ingredients, {...ingredient, type: "Ingrediente"}])
+    }
+
+    const uploadNewFood = (food: Food) => {
+        setFoods([...foods, {...food, type: "Comida"}])
     }
 
     // Cuando se registra un nuevo lote
@@ -125,7 +136,7 @@ export const GeneralProvider = ({ children }: Props) => {
     }
 
     const uploadNewOffer = (newOffer: Offer) => {
-        setOffers([...offers, newOffer])
+        setOffers([...offers, { ...newOffer, type: "Oferta" }])
     }
 
     const updateOfferStatus = (id: string) => {
@@ -173,7 +184,8 @@ export const GeneralProvider = ({ children }: Props) => {
             getExpiresDates,
             getOffers, 
             uploadNewProduct,
-            uploadNewIngredient, 
+            uploadNewIngredient,
+            uploadNewFood,
             uploadNewLot, 
             uploadNewOffer,
             updateOfferStatus,

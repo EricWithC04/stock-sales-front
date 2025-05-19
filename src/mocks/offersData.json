@@ -1,6 +1,6 @@
 [
     {
-        "id": "1",
+        "id": "1001",
         "name": "Panchos X2",
         "products": [
             { "id": "1" },
@@ -11,18 +11,18 @@
         "available": true
     },
     {
-        "id": "2",
+        "id": "1002",
         "name": "Hamburguesas X2",
         "products": [
-            { "id": "2" },
-            { "id": "2" }
+            { "id": "4" },
+            { "id": "4" }
         ],
         "regularPrice": 6000,
         "price": 5000,
         "available": true
     },
     {
-        "id": "3",
+        "id": "1003",
         "name": "Hamburguesa + Fernet",
         "products": [
             { "id": "1" },
@@ -33,7 +33,7 @@
         "available": true
     },
     {
-        "id": "4",
+        "id": "1004",
         "name": "Panchos + Papas",
         "products": [
             { "id": "1" },

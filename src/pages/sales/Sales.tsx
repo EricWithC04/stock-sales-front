@@ -6,6 +6,7 @@ import { getProductDataById } from "../../utils/getProductDataById"
 import { ProductTotalSales } from "../../components/productTotalSales/ProductTotalSales"
 import { ProductInsufficientModal } from "../../components/productsInsufficientModal/ProductInsufficientModal"
 import { SuccessSaleModal } from "../../components/successSaleModal/SuccessSaleModal"
+import { SalesListPage } from "../../components/salesListPage/SalesListPage"
 
 interface ItemSale {
     id: string
@@ -15,6 +16,8 @@ interface ItemSale {
 }
 
 export const SalesPage = () => {
+
+    const [option, setOption] = useState<"Registro" | "Listado">("Registro")
 
     const insufficientRef = useRef<HTMLDialogElement>(null)
     const successRef = useRef<HTMLDialogElement>(null)
@@ -77,25 +80,45 @@ export const SalesPage = () => {
                 ))}
                 ref={successRef}
             />
-            <h1>Registro de ventas</h1>
-            <div className={styles["sales-browser-container"]}>
-                <ProductBrowserSales 
-                    handleIncludeItem={handleIncludeItem}
-                />
+            <div className={styles["sales-header"]}>
+                <h1>Ventas</h1>
+                <button 
+                    className={`${option === "Registro" ? styles["option-selected"]: "" }`}
+                    onClick={() => setOption("Registro")}
+                >Ver registro</button>
+                <button 
+                    className={`${option === "Listado" ? styles["option-selected"]: "" }`}
+                    onClick={() => setOption("Listado")}
+                >Ver listado</button>
             </div>
-            <ProductListSales 
-                productsData={itemSales}
-                handleIncludeItem={handleIncludeItem}
-                handleDeleteItem={handleDeleteItem}
-                handleReduceItem={handleReduceItem}
-                setInsufficientStock={(b: boolean) => setInsufficientStock(b)}
-            />
-            <ProductTotalSales 
-                itemSales={itemSales}
-                insufficientStock={insufficientStock}
-                openInsufficientModal={openInsufficientModal}
-                openSuccessModal={openSuccessModal}
-            />
+            {
+                option === "Registro" ? (
+                    <>
+                        <div className={styles["sales-browser-container"]}>
+                            <ProductBrowserSales 
+                                handleIncludeItem={handleIncludeItem}
+                            />
+                        </div>
+                        <ProductListSales 
+                            productsData={itemSales}
+                            handleIncludeItem={handleIncludeItem}
+                            handleDeleteItem={handleDeleteItem}
+                            handleReduceItem={handleReduceItem}
+                            setInsufficientStock={(b: boolean) => setInsufficientStock(b)}
+                        />
+                        <ProductTotalSales 
+                            itemSales={itemSales}
+                            insufficientStock={insufficientStock}
+                            openInsufficientModal={openInsufficientModal}
+                            openSuccessModal={openSuccessModal}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <SalesListPage />
+                    </>
+                )
+            }
         </div>
     )
 }

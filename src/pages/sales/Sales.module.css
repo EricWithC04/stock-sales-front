@@ -1,3 +1,35 @@
+.sales-header {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 2%;
+    display: flex;
+    align-items: center;
+    gap: 12px
+}
+
+.sales-header button {
+    padding: 12px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    outline: 1px solid #b3b3b353;
+    background-color: #fff
+}
+
+.sales-header button:hover {
+    cursor: pointer;
+    background-color: #e5e5e5
+}
+
+.option-selected {
+    background: linear-gradient(-90deg, #a7217f, #d3216a) !important;
+    color: #fff !important;
+}
+
+.option-selected:hover {
+    background: linear-gradient(-90deg, #c954af, #f5438c) !important;
+}
+
 .sales-container {
     width: 100%;
 }
