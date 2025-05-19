@@ -5,6 +5,7 @@ import foodsData from "./foodsData.json"
 import LotsData from "./lotsData.json"
 import OffersData from "./offersData.json"
 import IngredientsData from "./ingredientData.json"
+import SalesData from "./salesData.json"
 
 type TypeProduct = "Bebida" | "Ingrediente" | "Comida" | "Oferta"
 
@@ -54,6 +55,15 @@ interface Offer {
     available: boolean
 }
 
+interface Sale {
+    id: number
+    client: string
+    products: Array<{ id: string, quantity: number }>
+    total: number
+    date: string
+    payMethod: "Efectivo" | "Transferencia"
+}
+
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export const getCategories =  async (): Promise<Array<Category>> => {
@@ -88,4 +98,9 @@ export const getOffersData = async (): Promise<Array<Offer>> => {
     const offersCompleteData = OffersData.map(i => { return { ...i, type: "Oferta" as TypeProduct } })
     await delay(1000)
     return offersCompleteData
+}
+
+export const getSalesData = async (): Promise<Array<Sale>> => {
+    await delay(1000)
+    return SalesData as Array<Sale>
 }

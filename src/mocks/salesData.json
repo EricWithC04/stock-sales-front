@@ -3,35 +3,85 @@
         "id": 1,
         "client": "Juán Pérez",
         "total": 1,
+        "products": [
+            {
+                "id": "2",
+                "quantity": 1
+            },
+            {
+                "id": "7790895005916",
+                "quantity": 1
+            }
+        ],
         "date": "2025/04/16",
-        "pay_method": "cash"
+        "payMethod": "Efectivo"
     },
     {
         "id": 2,
         "client": "María Lezcano",
         "total": 1,
+        "products": [
+            {
+                "id": "1002",
+                "quantity": 1
+            },
+            {
+                "id": "7790895000447",
+                "quantity": 1
+            }
+        ],
         "date": "2025/04/17",
-        "pay_method": "transfer"
+        "payMethod": "Transferencia"
     },
     {
         "id": 3,
         "client": "",
         "total": 1,
+        "products": [
+            {
+                "id": "2",
+                "quantity": 1
+            },
+            {
+                "id": "7790895005916",
+                "quantity": 1
+            }
+        ],
         "date": "2025/04/16",
-        "pay_method": "transfer"
+        "payMethod": "Transferencia"
     },
     {
         "id": 4,
         "client": "",
         "total": 1,
+        "products": [
+            {
+                "id": "1002",
+                "quantity": 1
+            },
+            {
+                "id": "7790895000447",
+                "quantity": 1
+            }
+        ],
         "date": "2025/04/16",
-        "pay_method": "cash"
+        "payMethod": "Efectivo"
     },
     {
         "id": 5,
         "client": "",
         "total": 1,
+        "products": [
+            {
+                "id": "2",
+                "quantity": 1
+            },
+            {
+                "id": "7790895005916",
+                "quantity": 1
+            }
+        ],
         "date": "2025/04/18",
-        "pay_method": "cash"
+        "payMethod": "Efectivo"
     }
 ]

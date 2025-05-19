@@ -1,7 +1,7 @@
 import DataTable from "react-data-table-component"
 import styles from "./SalesListPage.module.css"
 import { ChevronDown } from "lucide-react"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useGeneralContext } from "../../context/GeneralContext";
 
@@ -77,6 +77,9 @@ const ExpandedComponent = ({ data }: { data: Sale }) => {
 
 export const SalesListPage = () => {
 
+    const { getSales } = useGeneralContext()!
+
+    const [listSales, setListSales] = useState<Array<Sale>>([])
     const [expandedRow, setExpandedRow] = useState<number | null>(null)
 
     const handleExpandedRow = (id: number) => {
@@ -113,42 +116,9 @@ export const SalesListPage = () => {
         },
     ]
 
-    const data = [
-        {
-            id: 1,
-            date: "2025/05/16",
-            client: "Juán Pérez",
-            payMethod: "Efectivo",
-            products: [
-                {
-                    id: "2",
-                    quantity: 1
-                },
-                {
-                    id: "7790895005916",
-                    quantity: 1
-                }
-            ],
-            total: 7900
-        },
-        {
-            id: 2,
-            date: "2025/05/16",
-            client: "María Lezcano",
-            payMethod: "Transferencia",
-            products: [
-                {
-                    id: "1002",
-                    quantity: 1
-                },
-                {
-                    id: "7790895000447",
-                    quantity: 1
-                }
-            ],
-            total: 6900
-        }
-    ]
+    useEffect(() => {
+        setListSales(getSales())
+    }, [])
 
     return (
         <div className={styles["sales-list-page-container"]}>
@@ -161,7 +131,7 @@ export const SalesListPage = () => {
             </div>
             <DataTable
                 columns={columns}
-                data={data}
+                data={listSales}
                 expandableRows
                 expandableRowsHideExpander={true}
                 expandableRowsComponent={ExpandedComponent}

@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useState, useEffect } from 'react'
-import { getDrinks, getFoodData, getIngredientsData, getLotsData, getOffersData, } from '../mocks/apiMock'
+import { getDrinks, getFoodData, getIngredientsData, getLotsData, getOffersData, getSalesData, } from '../mocks/apiMock'
 import { calculateExpiresDates } from '../utils/calculateStock/getExpiresDates'
 
 interface Props {
@@ -55,6 +55,15 @@ interface Offer {
     available: boolean
 }
 
+interface Sale {
+    id: number
+    client: string
+    products: Array<{ id: string, quantity: number }>
+    total: number
+    date: string
+    payMethod: "Efectivo" | "Transferencia"
+}
+
 interface GeneralContextProps {
     getProducts: () => Array<Drink>
     getProductById: (id: string) => Drink | Food | Offer | "Código Invalido"
@@ -63,11 +72,13 @@ interface GeneralContextProps {
     getLots: () => Array<Lot>
     getExpiresDates: () => Array<ExpiresLot>
     getOffers: () => Array<Offer>
+    getSales: () => Array<Sale>
     uploadNewProduct: (product: Drink) => void
     uploadNewIngredient: (ingredient: Ingredient) => void
     uploadNewFood: (food: Food) => void
     uploadNewLot: (lot: Lot) => void
     uploadNewOffer: (offer: Offer) => void
+    uploadNewSale: (sale: Sale) => void
     updateOfferStatus: (id: string) => void
     // validateProductIdExists: (id: string) => boolean
     getProductsStock: () => any
@@ -85,6 +96,7 @@ export const GeneralProvider = ({ children }: Props) => {
     const [foods, setFoods] = useState<Array<Food>>([])
     const [lots, setLots] = useState<Array<Lot>>([])
     const [offers, setOffers] = useState<Array<Offer>>([])
+    const [sales, setSales] = useState<Array<Sale>>([])
 
     // Obtener todos los productos
     const getProducts = () => {
@@ -117,6 +129,10 @@ export const GeneralProvider = ({ children }: Props) => {
         return offers
     }
 
+    const getSales = () => {
+        return sales
+    }
+
     // Cuando se registra un nuevo producto
     const uploadNewProduct = (product: Drink) => {
         setProducts([...products, { ...product, type: "Bebida" }])
@@ -137,6 +153,10 @@ export const GeneralProvider = ({ children }: Props) => {
 
     const uploadNewOffer = (newOffer: Offer) => {
         setOffers([...offers, { ...newOffer, type: "Oferta" }])
+    }
+
+    const uploadNewSale = (newSale: Sale) => {
+        setSales([...sales, newSale])
     }
 
     const updateOfferStatus = (id: string) => {
@@ -172,6 +192,8 @@ export const GeneralProvider = ({ children }: Props) => {
             .then(ingredients => setIngredients(ingredients))
         getFoodData()
             .then(foods => setFoods(foods))
+        getSalesData()
+            .then(sales => setSales(sales))
     }, [])
 
     return (
@@ -182,12 +204,14 @@ export const GeneralProvider = ({ children }: Props) => {
             getFoods,
             getLots, 
             getExpiresDates,
-            getOffers, 
+            getOffers,
+            getSales,
             uploadNewProduct,
             uploadNewIngredient,
             uploadNewFood,
             uploadNewLot, 
             uploadNewOffer,
+            uploadNewSale,
             updateOfferStatus,
             getProductsStock, 
             discountProduct 
