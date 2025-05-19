@@ -1,4 +1,4 @@
-import { forwardRef } from "react"
+import { forwardRef, useState } from "react"
 import styles from "./SuccessSaleModal.module.css"
 import DataTable from "react-data-table-component"
 
@@ -14,6 +14,10 @@ interface Props {
 }
 
 export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, closeModal }, ref) => {
+
+    const [discount, setDiscount] = useState<number>(0)
+    const [discountType, setDiscountType] = useState<string>("$")
+    const [method, setMethod] = useState<"Efectivo" | "Transferencia" | "">("")
 
     const columns = [
         {
@@ -31,8 +35,8 @@ export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, 
     ]
 
     return (
-        <dialog ref={ref}>
-            <div className={styles["success-sale-modal-container"]}>
+        <dialog ref={ref} className={styles["success-sale-modal"]}>
+            <form className={styles["data-container"]}>
                 <h2>Finalizar Venta</h2>
                 <DataTable 
                     columns={columns}
@@ -44,7 +48,7 @@ export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, 
                 </div>
                 <div className={styles["discount"]}>
                     <h3>Descuento:</h3>
-                    <input type="text" />
+                    <input type="text" placeholder="Cantidad" />
                     <select name="" defaultValue="1">
                         <option value="1">$</option>
                         <option value="2">%</option>
@@ -56,16 +60,27 @@ export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, 
                 </div>
                 <div className={styles["pay-method"]}>
                     <h2>Metodo de Pago:</h2>
-                    <div className="methods-container">
-                        <button>Efectivo</button>
-                        <button>Transferencia</button>
+                    <div className={styles["methods-container"]}>
+                        <button 
+                            type="button" 
+                            className={`${method === "Efectivo" ? styles["method-selected"] : ""}`}
+                            onClick={() => setMethod("Efectivo")}
+                        >Efectivo</button>
+                        <button 
+                            type="button" 
+                            className={`${method === "Transferencia" ? styles["method-selected"] : ""}`}
+                            onClick={() => setMethod("Transferencia")}
+                        >Transferencia</button>
                     </div>
                 </div>
                 <div className={styles["buttons-container"]}>
-                    <button className={styles["cancel-button"]} onClick={closeModal}>Cancelar</button>
-                    <button className={styles["confirm-button"]}>Confirmar Venta</button>
+                    <button type="button" onClick={closeModal}>Cancelar</button>
+                    <button 
+                        type="button" 
+                        className={method === "" ? styles["confirm-inactive"] : styles["confirm-active"]}
+                    >Confirmar Venta</button>
                 </div>
-            </div>
+            </form>
         </dialog>
     )
 })
