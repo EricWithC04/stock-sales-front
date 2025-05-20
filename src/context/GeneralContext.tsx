@@ -56,7 +56,7 @@ interface Offer {
 }
 
 interface Sale {
-    id: number
+    id?: number
     client: string
     products: Array<{ id: string, quantity: number }>
     total: number
@@ -156,7 +156,7 @@ export const GeneralProvider = ({ children }: Props) => {
     }
 
     const uploadNewSale = (newSale: Sale) => {
-        setSales([...sales, newSale])
+        setSales([...sales, {...newSale, id: sales.length+1}])
     }
 
     const updateOfferStatus = (id: string) => {

@@ -76,8 +76,9 @@ export const SalesPage = () => {
             <SuccessSaleModal
                 closeModal={closeSuccessModal}
                 items={itemSales.map(item => (
-                    { description: item.description, quantity: item.quantity, price: item.price * item.quantity }
+                    { id: item.id, description: item.description, quantity: item.quantity, price: item.price * item.quantity }
                 ))}
+                clearItems={() => setItemSales([])}
                 ref={successRef}
             />
             <div className={styles["sales-header"]}>
