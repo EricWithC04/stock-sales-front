@@ -203,10 +203,42 @@ export const GeneralProvider = ({ children }: Props) => {
     }
 
     // Descontar la cantidad de stock priorizando las fechas de vencimiento más recientes
-    const discountProduct = (_itemProducts: Array<ItemSale>) => {
+    const discountProduct = (itemProducts: Array<ItemSale>) => {
         // TODO : Agregar conexión con el servidor "DESCONTAR STOCK"
-        // TODO : Descontar stock del estado
-        alert("Funcionalidad en desarrollo")
+        // TODO : Agregar que el descuento funcione también para comidas y ofertas, solamente funciona para bebidas
+
+        let newLots: Array<Lot> = []
+        let lotsDiscount: Array<{ id: number, quantity: number }> = []
+        itemProducts.forEach(product => {
+            const allLots = lots.filter(lot => lot.productId === product.id)
+            const currentDate = new Date();
+
+            const sortedLots: Array<Lot> = allLots
+                .filter(item => new Date(item.expiresDate!) > currentDate)
+                .filter(item => item.quantity > 0)
+                .sort((a, b) => new Date(a.expiresDate!).getTime() - new Date(b.expiresDate!).getTime());
+            
+            let quantityDiscount: number = 0 + product.quantity
+            // lotToDiscount ? lotsDiscount.push({ id: lotToDiscount.id, quantity: product.quantity }) : null
+            for (const l of sortedLots) {
+                if (quantityDiscount <= 0) break;
+
+                const discountedQuantity = Math.min(l.quantity, quantityDiscount)
+                lotsDiscount.push({ id: l.id, quantity: discountedQuantity })
+                quantityDiscount -= discountedQuantity
+            }
+        })
+
+        lots.forEach(lot => {
+            const findLot = lotsDiscount.find(lotDiscount => lotDiscount.id === lot.id)
+            if (findLot) {
+                newLots.push({...lot, quantity: lot.quantity - findLot.quantity})
+            } else {
+                newLots.push(lot)
+            }
+        })
+        
+        setLots(newLots)
     }
 
     useEffect(() => {

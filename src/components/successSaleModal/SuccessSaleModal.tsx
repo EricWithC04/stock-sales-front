@@ -20,7 +20,7 @@ interface Props {
 
 export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, closeModal, clearItems }, ref) => {
 
-    const { uploadNewSale } = useGeneralContext()!
+    const { uploadNewSale, discountProduct } = useGeneralContext()!
 
     const [discount, setDiscount] = useState<number | null>(null)
     const [discountType, setDiscountType] = useState<string>("1")
@@ -76,6 +76,7 @@ export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, 
             products: items.map(i => ({ id: i.id, quantity: i.quantity })),
             total: handleCalculateTotal(subtotal, discount, discountType)
         })
+        discountProduct(items)
         handleCloseModal()
     }
 

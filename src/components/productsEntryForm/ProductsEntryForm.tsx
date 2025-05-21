@@ -106,7 +106,7 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
 
         const entryProduct = {
             id: lotData.product,
-            quantity: lotData.quantity,
+            quantity: +lotData.quantity,
             expiresDate: lotData.expiresDate
         }
         

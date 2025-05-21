@@ -1,7 +1,7 @@
 import DataTable from "react-data-table-component"
 import { Trash2, TriangleAlert } from "lucide-react"
 import { Tooltip } from "react-tooltip"
-import { calculateProductStock, calculateItemStock } from "../../utils/calculateStock/calculateProductStock"
+import { calculateItemStock } from "../../utils/calculateStock/calculateProductStock"
 import styles from "./ProductListSales.module.css"
 
 import { useGeneralContext } from "../../context/GeneralContext"
