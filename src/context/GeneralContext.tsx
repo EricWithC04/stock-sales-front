@@ -64,6 +64,14 @@ interface Sale {
     payMethod: "Efectivo" | "Transferencia"
 }
 
+interface ItemSale {
+    // El id del ItemSale es el mismo que el del producto
+    id: string
+    description: string
+    quantity: number
+    price: number
+}
+
 interface GeneralContextProps {
     getProducts: () => Array<Drink>
     getProductById: (id: string) => Drink | Food | Offer | "Código Invalido"
@@ -82,7 +90,7 @@ interface GeneralContextProps {
     updateOfferStatus: (id: string) => void
     // validateProductIdExists: (id: string) => boolean
     getProductsStock: () => any
-    discountProduct: () => any
+    discountProduct: (_itemProducts: Array<ItemSale>) => void
 }
 
 const GeneralContext = createContext<GeneralContextProps | null>(null)
@@ -195,7 +203,9 @@ export const GeneralProvider = ({ children }: Props) => {
     }
 
     // Descontar la cantidad de stock priorizando las fechas de vencimiento más recientes
-    const discountProduct = () => {
+    const discountProduct = (_itemProducts: Array<ItemSale>) => {
+        // TODO : Agregar conexión con el servidor "DESCONTAR STOCK"
+        // TODO : Descontar stock del estado
         alert("Funcionalidad en desarrollo")
     }
 

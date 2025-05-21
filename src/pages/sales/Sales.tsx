@@ -2,11 +2,12 @@ import { useState, useRef } from "react"
 import { ProductListSales } from "../../components/productListSales/ProductListSales"
 import { ProductBrowserSales } from "../../components/productsBrowserSales/ProductBrowserSales"
 import styles from "./Sales.module.css"
-import { getProductDataById } from "../../utils/getProductDataById"
 import { ProductTotalSales } from "../../components/productTotalSales/ProductTotalSales"
 import { ProductInsufficientModal } from "../../components/productsInsufficientModal/ProductInsufficientModal"
 import { SuccessSaleModal } from "../../components/successSaleModal/SuccessSaleModal"
 import { SalesListPage } from "../../components/salesListPage/SalesListPage"
+
+import { useGeneralContext } from "../../context/GeneralContext"
 
 interface ItemSale {
     id: string
@@ -16,6 +17,8 @@ interface ItemSale {
 }
 
 export const SalesPage = () => {
+
+    const { getProductById } = useGeneralContext()!
 
     const [option, setOption] = useState<"Registro" | "Listado">("Registro")
 
@@ -31,9 +34,13 @@ export const SalesPage = () => {
             const updatedItemSales = itemSales.map(item => item.id === id ? {...item, quantity: item.quantity + 1} : item)
             setItemSales(updatedItemSales)
         } else {
-            const data = getProductDataById(id)
-            if (data !== "Producto desconocido") {
-                setItemSales([...itemSales, { id: data.id, description: data.description, quantity: 1, price: data.price }])
+            const data = getProductById(id)
+            if (data !== "Código Invalido") {
+                if (data.type === "Bebida") {
+                    setItemSales([...itemSales, { id: data.id, description: (data as any).description, quantity: 1, price: data.price }])
+                } else {
+                    setItemSales([...itemSales, { id: data.id, description: (data as any).name, quantity: 1, price: data.price }])
+                }
             }
         }
     }
