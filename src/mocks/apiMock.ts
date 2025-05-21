@@ -1,4 +1,3 @@
-// import { getExpiresDates } from "../utils/calculateStock/getExpiresDates"
 import CategoriesData from "./categoriesData.json"
 import DrinksData from "./drinksData.json"
 import foodsData from "./foodsData.json"
