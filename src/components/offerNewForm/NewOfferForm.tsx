@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react"
+import React, { forwardRef, useEffect, useState } from "react"
 import DataTable from "react-data-table-component"
 import { Plus } from "lucide-react"
 import styles from "./NewOfferForm.module.css"
@@ -46,14 +46,15 @@ interface OfferErrors {
 
 interface Props {
     closeModal: () => void
+    updateOffers: () => void
 }
 
-export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal }, ref) => {
+export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal, updateOffers }, ref) => {
 
     const { getProductById, getOffers, uploadNewOffer } = useGeneralContext()!
 
     const [newOfferData, setNewOfferData] = useState<Offer>({
-        id: (getOffers().length + 1).toString(),
+        id: (getOffers().length + 1001).toString(),
         name: "",
         products: [],
         price: 0
@@ -62,7 +63,11 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
 
     const [productId, setProductId] = useState<string>("")
 
-    const [errors, setErrors] = useState<Array<OfferErrors>>([])
+    const [errors, setErrors] = useState<OfferErrors>({
+        name: "",
+        products: "",
+        price: "",
+    })
     const [errorsActive, setErrorsActive] = useState<boolean>(false)
 
     const changeQuantity = (id: string, op: string) => {
@@ -156,7 +161,21 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
         }
     }
 
+    const validateErrors = (data: { products: Array<Product>, fields: { name: string, price: number } }) => {
+        const currentErrors: OfferErrors = { name: "", products: "", price: "" }
+        if (!data.fields.name) currentErrors.name = "El nombre de la oferta es obligatorio"
+        if (!data.fields.price) currentErrors.price = "El precio de la oferta es obligatorio"
+        else if (data.fields.price <= 0) currentErrors.price = "El precio debe ser mayor a 0"
+        if (!data.products.length) currentErrors.products = "Debes seleccionar al menos un producto"
+        return currentErrors
+    }
+
     const handleSubmit = () => {
+        const currentErrors = validateErrors({ products: selectedProducts, fields: newOfferData })
+        if (currentErrors.name.length || currentErrors.products.length || currentErrors.price.length) {
+            setErrorsActive(true)
+            return
+        }
         const newOffer = { ...newOfferData }
         const newOfferRegularPrice = selectedProducts.reduce((acc, p) => acc + p.price * p.quantity, 0)
         const newOfferProducts: Array<{ id: string }> = []
@@ -177,13 +196,20 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
 
         uploadNewOffer(newOfferFinal)
         setNewOfferData({
-            id: getOffers().length.toString(),
+            id: (getOffers().length + 1001).toString(),
             name: "",
             products: [],
             price: 0
         })
+        setErrorsActive(false)
         closeModal()
+        updateOffers()
     }
+
+    useEffect(() => {
+        const currentErrors = validateErrors({ products: selectedProducts, fields: newOfferData })
+        setErrors(currentErrors)
+    }, [newOfferData, selectedProducts])
 
     return (
         <dialog ref={ref} className={styles["new-offer-form-container"]}>
@@ -192,8 +218,9 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
                 <p>Crea una nueva oferta seleccionando los productos y el precio.</p>
                 <div className={styles["fields-container"]}>
                     <label>Nombre de la oferta</label>
-                    <input type="text" name="name" onChange={handleChange} />
+                    <input type="text" name="name" onChange={handleChange} autoComplete="off" />
                 </div>
+                { errorsActive && errors.name.length ? (<div className={styles["error-message"]}>{errors.name}</div>) : null }
                 <div className={styles["fields-container"]}>
                     <label>Buscar y agregar productos</label>
                     <div className={styles["search-container"]}>
@@ -214,11 +241,14 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
                 <DataTable 
                     columns={columns}
                     data={selectedProducts}
+                    noDataComponent="Ningun producto seleccionado"
                 />
+                { errorsActive && errors.products.length ? (<div className={styles["error-message"]}>{errors.products}</div>) : null }
                 <div className={styles["fields-container"]}>
                     <label>Precio de la oferta</label>
                     <input type="number" name="price" onChange={handleChange} />
                 </div>
+                { errorsActive && errors.price.length ? (<div className={styles["error-message"]}>{errors.price}</div>) : null }
                 <div className={styles["buttons-container"]}>
                     <button type="button" onClick={closeModal} className={styles["cancel-button"]}>Cancelar</button>
                     <button type="button" onClick={handleSubmit} className={styles["submit-button"]}>Guardar</button>

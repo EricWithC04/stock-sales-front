@@ -9,6 +9,11 @@ export const OffersPage = () => {
     const newOfferRef = useRef<HTMLDialogElement>(null)
 
     const [browser, setBrowser] = useState<string>("")
+    const [offersFlag, setOffersFlag] = useState<boolean>(false)
+
+    const updateOffers = () => {
+        setOffersFlag(!offersFlag)
+    }
 
     const openNewOfferModal = () => {
         newOfferRef.current?.showModal()
@@ -26,18 +31,21 @@ export const OffersPage = () => {
         <div className={styles["offers-container"]}>
             <NewOfferForm
                 closeModal={closeNewOfferModal}
+                updateOffers={updateOffers}
                 ref={newOfferRef}
             />
             <h1>Ofertas Disponibles</h1>
             <p>Gestiona las ofertas disponibles</p>
             <div className={styles["action-container"]}>
-                <input type="text" value={browser} onChange={handleChange} />
+                <input type="text" value={browser} onChange={handleChange} placeholder="Nombre de la oferta" />
                 <button
                     className={styles["new-offer-button"]}
                     onClick={openNewOfferModal}
                 >Nueva Oferta</button>
             </div>
             <OfferList
+                updateOffers={updateOffers}
+                offersFlag={offersFlag}
                 browser={browser}
             />
         </div>

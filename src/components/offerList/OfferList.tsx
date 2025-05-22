@@ -18,19 +18,20 @@ interface Offer {
 
 interface Props {
     browser: string
+    updateOffers: () => void
+    offersFlag: boolean
 }
 
-export const OfferList = ({ browser }: Props) => {
+export const OfferList = ({ browser, updateOffers, offersFlag }: Props) => {
 
     const { getOffers, updateOfferStatus } = useGeneralContext()!
 
     const [offers, setOffers] = useState<Array<Offer>>([])
     const [displayOffers, setDisplayOffers] = useState<Array<Offer>>([])
-    const [offersFlag, setOffersFlag] = useState<boolean>(false)
 
     const handleUpdateStatus = (row: Offer) => {
         updateOfferStatus(row.id)
-        setOffersFlag(!offersFlag)
+        updateOffers()
     }
 
     const columns = [
