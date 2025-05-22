@@ -1,5 +1,6 @@
 import React, { forwardRef, useState } from "react"
 import DataTable from "react-data-table-component"
+import { Plus } from "lucide-react"
 import styles from "./NewOfferForm.module.css"
 
 import { useGeneralContext } from "../../context/GeneralContext"
@@ -10,6 +11,24 @@ interface Product {
     description: string
     price: number
     quantity: number
+}
+
+interface Drink {
+    id: string
+    description: string
+    type?: string
+    stock: number
+    price: number
+}
+
+interface Food {
+    id: string
+    name: string
+    description: string
+    type?: string
+    category: string
+    ingredients: Array<{ id: string, quantity: number }>
+    price: number
 }
 
 interface Offer {
@@ -46,6 +65,23 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
     const [errors, setErrors] = useState<Array<OfferErrors>>([])
     const [errorsActive, setErrorsActive] = useState<boolean>(false)
 
+    const changeQuantity = (id: string, op: string) => {
+        const newSelectedProducts = selectedProducts.map(p => {
+            if (p.id === id) {
+                return { ...p, quantity: op === "+" ? p.quantity + 1 : p.quantity > 1 ? p.quantity - 1 : 1 }
+            } else return p
+        })
+        setSelectedProducts(newSelectedProducts)
+    }
+
+    const handleDeleteProduct = (id: string) => {
+        const newSelectedProducts: Array<Product> = [] 
+        selectedProducts.forEach(product => {
+            if (product.id !== id) newSelectedProducts.push(product)
+        })
+        setSelectedProducts(newSelectedProducts)
+    }
+
     const columns = [
         {
             name: "Producto",
@@ -57,7 +93,13 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
         },
         {
             name: "Cantidad",
-            selector: (row: Product) => row.quantity
+            cell: (row: Product) => (
+                <div className={styles["quantity-container"]}>
+                    <button type="button" onClick={() => changeQuantity(row.id, "-")}>-</button>
+                    <span>{row.quantity}</span>
+                    <button type="button" onClick={() => changeQuantity(row.id, "+")}>+</button>
+                </div>
+            )
         },
         {
             name: "Subtotal",
@@ -65,8 +107,8 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
         },
         {
             name: "",
-            cell: (_row: Product) => (
-                <div>
+            cell: (row: Product) => (
+                <div onClick={() => handleDeleteProduct(row.id)}>
                     <Trash2 
                         color={"red"}
                     />
@@ -82,9 +124,8 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
         })
     }
 
-    const handleEnterProduct = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            const product = getProductById(productId)
+    const includeProduct = () => {
+        const product = getProductById(productId) as Drink | Food | "Código Invalido"
             if (product !== "Código Invalido") {
                 setProductId("")
                 if (selectedProducts.find(p => p.id === product.id)) {
@@ -98,7 +139,7 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
                         ...selectedProducts, 
                         { 
                             id: product.id, 
-                            description: product.description, 
+                            description: product.type === "Bebida" ? product.description : (product as Food).name, 
                             price: product.price, 
                             quantity: 1 
                         }
@@ -107,6 +148,11 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
             } else {
                 alert(product)
             }
+    }
+
+    const handleEnterProduct = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            includeProduct()
         }
     }
 
@@ -150,12 +196,20 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
                 </div>
                 <div className={styles["fields-container"]}>
                     <label>Buscar y agregar productos</label>
-                    <input 
-                        type="text"
-                        value={productId}
-                        onChange={(e) => setProductId(e.target.value)}
-                        onKeyDown={handleEnterProduct} 
-                    />
+                    <div className={styles["search-container"]}>
+                        <input 
+                            type="text"
+                            value={productId}
+                            onChange={(e) => setProductId(e.target.value)}
+                            onKeyDown={handleEnterProduct} 
+                        />
+                        <button type="button" className={styles["add-item-button"]} onClick={includeProduct}>
+                            <Plus 
+                                color="#fff"
+                                size={22}
+                            />
+                        </button>
+                    </div>
                 </div>
                 <DataTable 
                     columns={columns}
@@ -166,8 +220,8 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal 
                     <input type="number" name="price" onChange={handleChange} />
                 </div>
                 <div className={styles["buttons-container"]}>
-                    <button type="button" onClick={closeModal} >Cancelar</button>
-                    <button type="button" onClick={handleSubmit}>Guardar</button>
+                    <button type="button" onClick={closeModal} className={styles["cancel-button"]}>Cancelar</button>
+                    <button type="button" onClick={handleSubmit} className={styles["submit-button"]}>Guardar</button>
                 </div>
             </form>
         </dialog>

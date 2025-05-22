@@ -242,10 +242,6 @@ export const GeneralProvider = ({ children }: Props) => {
         
         const newLots: Array<Lot> = lots.map(lot => ({...lot, quantity: lot.quantity - (lotsIndexes.get(lot.id) || 0)}))
         
-        console.log(`Info de los lotes: ${JSON.stringify(lotsIndexes.get(10))}`);
-        console.log(`Info de los descuentos: ${JSON.stringify(lotsDiscount)}`);
-        console.log(`Info del nuevo estado: ${JSON.stringify(newLots)}`);
-        
         setLots(newLots)
     }
 
