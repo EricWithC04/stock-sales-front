@@ -1,6 +1,31 @@
 .action-container {
     margin-left: 2%;
+    margin-top: 12px;
+    margin-bottom: 12px;
     width: 96%;
     display: flex;
     justify-content: space-between;
+}
+
+.action-container input {
+    width: 30%;
+    padding: 10px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #b3b3b353;
+    outline: none;
+}
+
+.action-container button {
+    padding: 8px 16px;
+    background: linear-gradient(-90deg, #a7217f, #d3216a);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    outline: 1px solid #b3b3b353;
+}
+
+.action-container button:hover {
+    cursor: pointer;
+    background: linear-gradient(-90deg, #c954af, #f5438c);
 }
