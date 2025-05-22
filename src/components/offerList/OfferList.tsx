@@ -4,6 +4,7 @@ import styles from "./OfferList.module.css"
 import { calculatePercentDiscount } from "../../utils/calculatePercentDiscount"
 import { useEffect, useState } from "react"
 import { normalizeText } from "../../utils/normalizeText"
+import { customStyles } from "../../styles/customStylesTables"
 
 import { useGeneralContext } from "../../context/GeneralContext"
 
@@ -37,7 +38,11 @@ export const OfferList = ({ browser, updateOffers, offersFlag }: Props) => {
     const columns = [
         {
             name: "Nombre",
-            selector: (row: Offer) => row.name
+            cell: (row: Offer) => (
+                <div className={styles["item-name"]}>
+                    <span>{row.name}</span>
+                </div>
+            )
         },
         {
             name: "Productos",
@@ -53,7 +58,11 @@ export const OfferList = ({ browser, updateOffers, offersFlag }: Props) => {
         },
         {
             name: "Descuento",
-            selector: (row: Offer) => `${calculatePercentDiscount(row.regularPrice, row.price)}%`
+            cell: (row: Offer) => (
+                <div className={styles["percent-discount"]}>
+                    <span>{`${calculatePercentDiscount(row.regularPrice, row.price)}%`}</span>
+                </div>
+            )
         },
         {
             name: "Estado",
@@ -104,6 +113,7 @@ export const OfferList = ({ browser, updateOffers, offersFlag }: Props) => {
             <DataTable
                 columns={columns}
                 data={displayOffers}
+                customStyles={customStyles}
             />
         </div>
     )

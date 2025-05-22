@@ -1,5 +1,6 @@
 .offer-list-container {
-    width: 90%
+    width: 96%;
+    margin-left: 2%;
 }
 
 .actions-container {
@@ -15,4 +16,32 @@
 .action:hover {
     cursor: pointer;
     background-color: #f5f5f5; 
+}
+
+.item-name {
+    max-width: 100%;
+}
+
+.percent-discount span {
+    font-weight: 600;
+    color: #12a112c5;
+}
+
+.offer-status {
+    border-radius: 5px;
+    padding: 4px 6px;
+}
+
+.offer-status:hover {
+    cursor: pointer
+}
+
+.active {
+    outline: 1px solid #12a112c5;
+    color: #12a112c5
+}
+
+.inactive {
+    outline: 1px solid #a11212c5;
+    color: #a11212c5
 }
