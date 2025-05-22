@@ -8,6 +8,7 @@ import { getDateString } from "../../utils/getDateString"
 interface ItemResume {
     id: string
     description: string
+    type?: string
     quantity: number
     price: number
 }

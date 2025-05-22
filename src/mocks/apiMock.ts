@@ -93,6 +93,14 @@ export const getLotsData = async (): Promise<Array<Lot>> => {
     return LotsData
 }
 
+export const getLotsDataFiltered = async (): Promise<Array<Lot>> => {
+    const filterData = LotsData
+        .filter(lot => lot.quantity > 0)
+        .filter(lot => new Date(lot.expiresDate!) > new Date())
+    await delay(1000)
+    return filterData
+}
+
 export const getOffersData = async (): Promise<Array<Offer>> => {
     const offersCompleteData = OffersData.map(i => { return { ...i, type: "Oferta" as TypeProduct } })
     await delay(1000)

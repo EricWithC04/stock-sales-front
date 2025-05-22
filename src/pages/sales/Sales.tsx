@@ -12,6 +12,7 @@ import { useGeneralContext } from "../../context/GeneralContext"
 interface ItemSale {
     id: string
     description: string
+    type?: string
     quantity: number
     price: number
 }
@@ -38,8 +39,10 @@ export const SalesPage = () => {
             if (data !== "Código Invalido") {
                 if (data.type === "Bebida") {
                     setItemSales([...itemSales, { id: data.id, description: (data as any).description, quantity: 1, price: data.price }])
+                } else if (data.type === "Comida") {
+                    setItemSales([...itemSales, { id: data.id, description: (data as any).name, type: "Comida", quantity: 1, price: data.price }])
                 } else {
-                    setItemSales([...itemSales, { id: data.id, description: (data as any).name, quantity: 1, price: data.price }])
+                    setItemSales([...itemSales, { id: data.id, description: (data as any).name, type: "Oferta", quantity: 1, price: data.price }])
                 }
             }
         }
@@ -83,7 +86,7 @@ export const SalesPage = () => {
             <SuccessSaleModal
                 closeModal={closeSuccessModal}
                 items={itemSales.map(item => (
-                    { id: item.id, description: item.description, quantity: item.quantity, price: item.price * item.quantity }
+                    { id: item.id, description: item.description, type: item.type || "", quantity: item.quantity, price: item.price * item.quantity }
                 ))}
                 clearItems={() => setItemSales([])}
                 ref={successRef}

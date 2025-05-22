@@ -1,6 +1,14 @@
 import React, { useContext, createContext, useState, useEffect } from 'react'
-import { getDrinks, getFoodData, getIngredientsData, getLotsData, getOffersData, getSalesData, } from '../mocks/apiMock'
+import { 
+    getDrinks, 
+    getFoodData, 
+    getIngredientsData, 
+    getLotsDataFiltered, 
+    getOffersData, 
+    getSalesData, 
+} from '../mocks/apiMock'
 import { calculateExpiresDates } from '../utils/calculateStock/getExpiresDates'
+import { calculateDiscountLots } from '../utils/calculateStock/calculateDiscountLots'
 
 interface Props {
     children: React.ReactNode
@@ -68,6 +76,7 @@ interface ItemSale {
     // El id del ItemSale es el mismo que el del producto
     id: string
     description: string
+    type?: string
     quantity: number
     price: number
 }
@@ -205,38 +214,37 @@ export const GeneralProvider = ({ children }: Props) => {
     // Descontar la cantidad de stock priorizando las fechas de vencimiento más recientes
     const discountProduct = (itemProducts: Array<ItemSale>) => {
         // TODO : Agregar conexión con el servidor "DESCONTAR STOCK"
-        // TODO : Agregar que el descuento funcione también para comidas y ofertas, solamente funciona para bebidas
+        // TODO : Agregar que el descuento funcione también para las ofertas, solamente funciona para bebidas y comidas
 
-        let newLots: Array<Lot> = []
-        let lotsDiscount: Array<{ id: number, quantity: number }> = []
+        const lotsDiscount: Array<{ id: number, quantity: number }> = []
         itemProducts.forEach(product => {
-            const allLots = lots.filter(lot => lot.productId === product.id)
-            const currentDate = new Date();
+            if (product.type && product.type === "Comida") {
+                const productData = getProductById(product.id)
+                if (productData === "Código Invalido") throw new Error("Error en el manejo de los id");
 
-            const sortedLots: Array<Lot> = allLots
-                .filter(item => new Date(item.expiresDate!) > currentDate)
-                .filter(item => item.quantity > 0)
-                .sort((a, b) => new Date(a.expiresDate!).getTime() - new Date(b.expiresDate!).getTime());
-            
-            let quantityDiscount: number = 0 + product.quantity
-            // lotToDiscount ? lotsDiscount.push({ id: lotToDiscount.id, quantity: product.quantity }) : null
-            for (const l of sortedLots) {
-                if (quantityDiscount <= 0) break;
+                (productData as Food).ingredients.forEach(ingredient => {
+                    const ingredientQuantity = ingredient.quantity * product.quantity
+                    const discountLots = calculateDiscountLots(ingredient.id, ingredientQuantity, lots)
+                    lotsDiscount.push(...discountLots)
+                })
 
-                const discountedQuantity = Math.min(l.quantity, quantityDiscount)
-                lotsDiscount.push({ id: l.id, quantity: discountedQuantity })
-                quantityDiscount -= discountedQuantity
-            }
-        })
-
-        lots.forEach(lot => {
-            const findLot = lotsDiscount.find(lotDiscount => lotDiscount.id === lot.id)
-            if (findLot) {
-                newLots.push({...lot, quantity: lot.quantity - findLot.quantity})
             } else {
-                newLots.push(lot)
+                const discountLots = calculateDiscountLots(product.id, product.quantity, lots)
+                lotsDiscount.push(...discountLots)
             }
+
         })
+
+        const lotsIndexes = new Map<number, number>()
+        for (const d of lotsDiscount) {
+            lotsIndexes.set(d.id, (lotsIndexes.get(d.id) || 0) + d.quantity);
+        }
+        
+        const newLots: Array<Lot> = lots.map(lot => ({...lot, quantity: lot.quantity - (lotsIndexes.get(lot.id) || 0)}))
+        
+        console.log(`Info de los lotes: ${JSON.stringify(lotsIndexes.get(10))}`);
+        console.log(`Info de los descuentos: ${JSON.stringify(lotsDiscount)}`);
+        console.log(`Info del nuevo estado: ${JSON.stringify(newLots)}`);
         
         setLots(newLots)
     }
@@ -246,7 +254,7 @@ export const GeneralProvider = ({ children }: Props) => {
         getDrinks()
             .then(products => setProducts(products))
         // TODO : Crear conexión de los lotes con el servidor
-        getLotsData()
+        getLotsDataFiltered()
             .then(lots => setLots(lots))
         // TODO : Crear conexión de las ofertas con el servidor
         getOffersData()
