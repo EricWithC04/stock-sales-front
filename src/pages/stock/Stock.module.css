@@ -7,9 +7,9 @@
     margin-bottom: 12px;
 }
 
-.new-product-button {   
+.new-product-button {
     padding: 12px 16px;
-    font-size: 16px; 
+    font-size: 16px;
     background: linear-gradient(-90deg, #a7217f, #d3216a);
     color: white;
     border: none;
@@ -36,7 +36,7 @@
     padding: 12px 16px;
     font-size: 16px;
     background-color: white;
-    color: black; 
+    color: black;
     border: none;
     border-radius: 8px;
     outline: 1px solid #b3b3b353;
@@ -54,4 +54,9 @@
 
 .selected:hover {
     background: linear-gradient(-90deg, #c954af, #f5438c);
+}
+
+.data-table {
+    width: 100% !important;
+    margin-top: 12px;
 }

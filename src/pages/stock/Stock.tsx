@@ -9,6 +9,7 @@ import { StockProductModal } from '../../components/stockProductModal/StockProdu
 import { StockNewProductModal } from '../../components/stockNewProductModal/StockNewProductModal';
 
 import { useGeneralContext } from '../../context/GeneralContext';
+import { customStylesWithPagination } from '../../styles/customStylesTables';
 
 interface ItemStock {
     id: string;
@@ -118,10 +119,6 @@ export const StockPage = () => {
         setNewProductFlag(!newProductFlag)
     }
 
-    // const openNotFoundModal = () => {
-    //     notFoundProductRef.current?.showModal()
-    // }
-
     const closeNotFoundModal = () => {
         notFoundProductRef.current?.close()
     }
@@ -168,11 +165,13 @@ export const StockPage = () => {
                 </div>
             </div>
             <DataTable 
+                className={styles["data-table"]}
                 columns={obtainColumns()} 
                 data={obtainData()}
                 pagination
                 progressPending={loading}
                 progressComponent={<LoadingSpinner />}
+                customStyles={customStylesWithPagination}
             />
         </div>
     )
