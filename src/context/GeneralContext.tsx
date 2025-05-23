@@ -98,7 +98,7 @@ interface GeneralContextProps {
     uploadNewSale: (sale: Sale) => void
     updateOfferStatus: (id: string) => void
     updateOfferPrice: (id: string, newPrice: number) => void
-    // validateProductIdExists: (id: string) => boolean
+    deleteOffer: (id: string) => void
     getProductsStock: () => any
     discountProduct: (_itemProducts: Array<ItemSale>) => void
 }
@@ -219,6 +219,12 @@ export const GeneralProvider = ({ children }: Props) => {
         setOffers(newOffers)
     }
 
+    const deleteOffer = (id: string) => {
+        // TODO : Agregar conexión con el servidor "ELIMINAR OFERTA"
+        const newOffers = offers.filter(offer => offer.id !== id)
+        setOffers(newOffers)
+    }
+
     // Obtener listado de los productos con cantidad en stock
     const getProductsStock = () => {
         alert("Funcionalidad en desarrollo")
@@ -297,6 +303,7 @@ export const GeneralProvider = ({ children }: Props) => {
             uploadNewSale,
             updateOfferStatus,
             updateOfferPrice,
+            deleteOffer,
             getProductsStock, 
             discountProduct 
         }}>

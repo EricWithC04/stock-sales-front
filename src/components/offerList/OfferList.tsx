@@ -21,10 +21,11 @@ interface Props {
     browser: string
     updateOffers: () => void
     openUpdateOfferModal: (offer: Offer) => void
+    openDeleteOfferModal: (id: string) => void
     offersFlag: boolean
 }
 
-export const OfferList = ({ browser, updateOffers, offersFlag, openUpdateOfferModal }: Props) => {
+export const OfferList = ({ browser, updateOffers, offersFlag, openUpdateOfferModal, openDeleteOfferModal }: Props) => {
 
     const { getOffers, updateOfferStatus } = useGeneralContext()!
 
@@ -83,7 +84,7 @@ export const OfferList = ({ browser, updateOffers, offersFlag, openUpdateOfferMo
                     <div className={styles["action"]} onClick={() => openUpdateOfferModal(row)}>
                         <SquarePen color="#000" />
                     </div>
-                    <div className={styles["action"]}>
+                    <div className={styles["action"]} onClick={() => openDeleteOfferModal(row.id)}>
                         <Trash2 color="red"/>
                     </div>
                 </div>

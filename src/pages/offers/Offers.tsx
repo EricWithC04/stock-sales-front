@@ -4,6 +4,7 @@ import { OfferList } from "../../components/offerList/OfferList"
 import styles from "./Offer.module.css"
 import { NewOfferForm } from "../../components/offerNewForm/NewOfferForm"
 import { UpdatePriceOfferModal } from "../../components/updatePriceOfferModal/UpdatePriceOfferModal"
+import { OfferDeleteModal } from "../../components/offerDeleteModal/OfferDeleteModal"
 
 interface Offer {
     id: string
@@ -18,11 +19,13 @@ export const OffersPage = () => {
 
     const newOfferRef = useRef<HTMLDialogElement>(null)
     const updateOfferRef = useRef<HTMLDialogElement>(null)
+    const deleteOfferRef = useRef<HTMLDialogElement>(null)
 
     const [browser, setBrowser] = useState<string>("")
     const [offersFlag, setOffersFlag] = useState<boolean>(false)
 
     const [offerToChange, setOfferToChange] = useState<Offer | null>(null)
+    const [idToDelete, setIdToDelete] = useState<string | null>(null)
 
     const updateOffers = () => {
         setOffersFlag(!offersFlag)
@@ -50,12 +53,27 @@ export const OffersPage = () => {
         setOfferToChange(null)
     }
 
+    const openDeleteModal = (id: string) => {
+        setIdToDelete(id)
+        deleteOfferRef.current?.showModal()
+    }
+
+    const closeDeleteModal = () => {
+        deleteOfferRef.current?.close()
+    }
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBrowser(e.target.value)
     }
 
     return (
         <div className={styles["offers-container"]}>
+            <OfferDeleteModal
+                id={idToDelete}
+                ref={deleteOfferRef}
+                updateOffers={updateOffers}
+                closeModal={closeDeleteModal}
+            />
             <UpdatePriceOfferModal
                 closeModal={closeUpdateOfferModal}
                 offerData={offerToChange}
@@ -80,6 +98,7 @@ export const OffersPage = () => {
             <OfferList
                 updateOffers={updateOffers}
                 openUpdateOfferModal={openUpdateOfferModal}
+                openDeleteOfferModal={openDeleteModal}
                 offersFlag={offersFlag}
                 browser={browser}
             />
