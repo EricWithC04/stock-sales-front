@@ -17,6 +17,14 @@ interface Props {
 
 export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
 
+    const autoSuggestionTheme = {
+        container: styles["auto-suggestion-container"],
+        input: styles["auto-suggestion-input"],
+        suggestionsContainer: styles["suggestions-container"],
+        suggestion: styles['suggestion'],
+        suggestionHighlighted: styles['suggestionHighlighted']
+    }
+
     const [allProducts, setAllProducts] = useState<Array<Drink>>([])
     const [displayProducts, setDisplayProducts] = useState<Array<Drink>>([])
     const [browsedValue, setBrowsedValue] = useState<string>("")
@@ -46,13 +54,14 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
     }
 
     const getSuggestionValue = (suggestion: Drink) => {
-        return `${suggestion.id} ${suggestion.description}`
+        return `${suggestion.id}`
     }
 
     const renderSuggestion = (suggestion: Drink) => {
         return (
             <div onClick={() => setSelectedProduct(suggestion)}>
-                <span>{`${suggestion.description}`}</span>
+                <span>{suggestion.description}</span>
+                <span className={styles["price"]}>{`$${suggestion.price}`}</span>
             </div>
         )
     }
@@ -88,6 +97,7 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
             onSuggestionSelected={onSuggestionSelected}
+            theme={autoSuggestionTheme}
         />
     )
 }

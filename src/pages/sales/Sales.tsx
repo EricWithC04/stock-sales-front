@@ -44,14 +44,11 @@ export const SalesPage = () => {
 
     const handleIncludeItem = (id: string) => {
         const findedItem = itemSales.find(item => item.id === id)
-        console.log(`Producto encontrado: ${findedItem}`);
         if (findedItem) {
             const updatedItemSales = itemSales.map(item => item.id === id ? {...item, quantity: item.quantity + 1} : item)
             setItemSales(updatedItemSales)
         } else {
             const data = getProductById(id)
-            console.log(`Datos del producto: ${data}`);
-            
             if (data !== "Código Invalido") {
                 if (data.type === "Bebida") {
                     setItemSales([...itemSales, { id: data.id, description: (data as any).description, quantity: 1, price: data.price }])
@@ -61,8 +58,6 @@ export const SalesPage = () => {
                     setItemSales([...itemSales, { id: data.id, description: (data as any).name, type: "Oferta", quantity: 1, price: data.price }])
                 }
             } else {
-                console.log("Abriendo Modal");
-                
                 openNotFoundModal()
             }
         }
