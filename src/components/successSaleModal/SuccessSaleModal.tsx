@@ -63,9 +63,7 @@ export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, 
     const handleCloseModal = () => {
         setDiscount(null)
         setDiscountType("1")
-        setSubtotal(0)
         setMethod("")
-        clearItems()
         closeModal()
     }
 
@@ -78,6 +76,8 @@ export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, 
             total: handleCalculateTotal(subtotal, discount, discountType)
         })
         discountProduct(items)
+        setSubtotal(0)
+        clearItems()
         handleCloseModal()
     }
 
