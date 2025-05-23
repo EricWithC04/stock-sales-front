@@ -8,6 +8,7 @@ import { SuccessSaleModal } from "../../components/successSaleModal/SuccessSaleM
 import { SalesListPage } from "../../components/salesListPage/SalesListPage"
 
 import { useGeneralContext } from "../../context/GeneralContext"
+import { StockProductModal } from "../../components/stockProductModal/StockProductModal"
 
 interface ItemSale {
     id: string
@@ -25,17 +26,32 @@ export const SalesPage = () => {
 
     const insufficientRef = useRef<HTMLDialogElement>(null)
     const successRef = useRef<HTMLDialogElement>(null)
+    const notFoundProductRef = useRef<HTMLDialogElement>(null)
 
     const [itemSales, setItemSales] = useState<Array<ItemSale>>([])
     const [insufficientStock, setInsufficientStock] = useState<boolean>(false)
 
+    
+    const openNotFoundModal = () => {
+        setTimeout(() => {
+            notFoundProductRef.current?.showModal()
+        }, 0)
+    }
+
+    const closeNotFoundModal = () => {
+        notFoundProductRef.current?.close()
+    }
+
     const handleIncludeItem = (id: string) => {
         const findedItem = itemSales.find(item => item.id === id)
+        console.log(`Producto encontrado: ${findedItem}`);
         if (findedItem) {
             const updatedItemSales = itemSales.map(item => item.id === id ? {...item, quantity: item.quantity + 1} : item)
             setItemSales(updatedItemSales)
         } else {
             const data = getProductById(id)
+            console.log(`Datos del producto: ${data}`);
+            
             if (data !== "Código Invalido") {
                 if (data.type === "Bebida") {
                     setItemSales([...itemSales, { id: data.id, description: (data as any).description, quantity: 1, price: data.price }])
@@ -44,6 +60,10 @@ export const SalesPage = () => {
                 } else {
                     setItemSales([...itemSales, { id: data.id, description: (data as any).name, type: "Oferta", quantity: 1, price: data.price }])
                 }
+            } else {
+                console.log("Abriendo Modal");
+                
+                openNotFoundModal()
             }
         }
     }
@@ -79,6 +99,11 @@ export const SalesPage = () => {
 
     return (
         <div className={styles["sales-container"]}>
+            <StockProductModal 
+                closeModal={closeNotFoundModal}
+                ref={notFoundProductRef}
+                openNewProductModal={closeNotFoundModal}
+            />
             <ProductInsufficientModal
                 ref={insufficientRef}
                 closeModal={closeInsufficientModal}
