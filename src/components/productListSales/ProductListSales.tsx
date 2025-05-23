@@ -118,6 +118,8 @@ export const ProductListSales = ({
             <DataTable 
                 className={styles["product-list-sales-table"]}
                 pagination
+                paginationPerPage={10}
+                paginationRowsPerPageOptions={[10]}
                 customStyles={customStylesForSales}
                 noDataComponent={<div style={{ margin: "30px" }}>Ningun producto seleccionado</div>}
                 columns={columns}

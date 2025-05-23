@@ -1,0 +1,38 @@
+.product-total-sales-container {
+    width: 96%;
+    margin-left: 2%;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 12px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.product-total-sales-container h1 {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.product-total-sales-container button {
+    padding: 12px 16px;
+    font-size: 16px;
+    background: linear-gradient(-90deg, #a7217f, #d3216a);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    outline: 1px solid #b3b3b353;
+}
+
+.product-total-sales-container button:hover {
+    cursor: pointer;
+    background: linear-gradient(-90deg, #c954af, #f5438c);
+}
+
+.inactive {
+    color: #b3b3b3 !important;
+    pointer-events: none !important;
+    background: #fff !important;
+}

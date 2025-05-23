@@ -29,14 +29,19 @@ export const ProductTotalSales = ({
     }
 
     const handleSubmitSale = () => {
-        if (insufficientStock) openInsufficientModal()
-        else openSuccessModal()
+        if (itemSales.length) {
+            if (insufficientStock) openInsufficientModal()
+            else openSuccessModal()
+        }
     }
 
     return (
         <div className={styles["product-total-sales-container"]}>
             <h1>Total: {calculateTotal()}</h1>
-            <button onClick={handleSubmitSale}>Registrar Venta</button>
+            <button 
+                onClick={handleSubmitSale} 
+                className={`${itemSales.length ? "" : styles["inactive"]}`}
+            >Registrar Venta</button>
         </div>
     )
 }
