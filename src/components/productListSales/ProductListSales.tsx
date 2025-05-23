@@ -6,7 +6,7 @@ import styles from "./ProductListSales.module.css"
 
 import { useGeneralContext } from "../../context/GeneralContext"
 import { useEffect, useState } from "react"
-import { customStylesWithPagination } from "../../styles/customStylesTables"
+import { customStylesForSales, customStylesWithPagination } from "../../styles/customStylesTables"
 
 interface ItemSale {
     id: string
@@ -118,7 +118,7 @@ export const ProductListSales = ({
             <DataTable 
                 className={styles["product-list-sales-table"]}
                 pagination
-                customStyles={customStylesWithPagination}
+                customStyles={customStylesForSales}
                 noDataComponent={<div style={{ margin: "30px" }}>Ningun producto seleccionado</div>}
                 columns={columns}
                 data={productsData}
