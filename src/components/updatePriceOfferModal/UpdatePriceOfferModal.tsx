@@ -44,14 +44,14 @@ export const UpdatePriceOfferModal = forwardRef<HTMLDialogElement, Props>(({
 
     return (
         <dialog ref={ref} className={styles["update-price-offer-modal-container"]}>
-            <form>
+            <form className={styles["update-price-offer-modal"]}>
                 <h2>Cambiar precio de oferta</h2>
-                <div className="field-container">
-                    <input type="number" onChange={(e) => setCurrentPrice(e.target.value)} value={currentPrice!} />
+                <div className={styles["fields-container"]}>
+                    <input type="number" onChange={(e) => setCurrentPrice(e.target.value)} value={currentPrice!} placeholder="Precio" />
                 </div>
-                <div className="buttons-container">
-                    <button type="button" onClick={closeModal}>Cancelar</button>
-                    <button type="button" onClick={handleSubmit}>Actualizar</button>
+                <div className={styles["buttons-container"]}>
+                    <button type="button" onClick={closeModal} className={styles["cancel-button"]}>Cancelar</button>
+                    <button type="button" onClick={handleSubmit} className={styles["update-button"]}>Actualizar</button>
                 </div>
             </form>
         </dialog>
