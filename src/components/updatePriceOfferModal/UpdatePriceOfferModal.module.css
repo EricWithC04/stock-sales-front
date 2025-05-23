@@ -73,6 +73,6 @@
     background: linear-gradient(-90deg, #c954af, #f5438c);
 }
 
-.stock-product-modal-container::backdrop {
+.update-price-offer-modal-container::backdrop {
     background-color: rgb(0, 0, 0, 0.5);
 }

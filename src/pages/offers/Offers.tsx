@@ -1,4 +1,3 @@
-// import { NewOfferForm } from "../../components/newOfferForm/NewOfferForm"
 import { useState, useRef } from "react"
 import { OfferList } from "../../components/offerList/OfferList"
 import styles from "./Offer.module.css"

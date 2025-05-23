@@ -32,10 +32,9 @@ interface Food {
 }
 
 interface Offer {
-    id: string
     name: string
     products: Array<Product>
-    price: number
+    price: string
 }
 
 interface OfferErrors {
@@ -54,10 +53,9 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal,
     const { getProductById, getOffers, uploadNewOffer } = useGeneralContext()!
 
     const [newOfferData, setNewOfferData] = useState<Offer>({
-        id: (getOffers().length + 1001).toString(),
         name: "",
         products: [],
-        price: 0
+        price: ""
     })
     const [selectedProducts, setSelectedProducts] = useState<Array<Product>>([])
 
@@ -161,11 +159,11 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal,
         }
     }
 
-    const validateErrors = (data: { products: Array<Product>, fields: { name: string, price: number } }) => {
+    const validateErrors = (data: { products: Array<Product>, fields: { name: string, price: string } }) => {
         const currentErrors: OfferErrors = { name: "", products: "", price: "" }
         if (!data.fields.name) currentErrors.name = "El nombre de la oferta es obligatorio"
         if (!data.fields.price) currentErrors.price = "El precio de la oferta es obligatorio"
-        else if (data.fields.price <= 0) currentErrors.price = "El precio debe ser mayor a 0"
+        else if (+data.fields.price <= 0) currentErrors.price = "El precio debe ser mayor a 0"
         if (!data.products.length) currentErrors.products = "Debes seleccionar al menos un producto"
         return currentErrors
     }
@@ -189,6 +187,8 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal,
         })
         const newOfferFinal = { 
             ...newOffer,
+            id: (getOffers().length + 1001).toString(),
+            price: +newOffer.price,
             regularPrice: newOfferRegularPrice, 
             products: newOfferProducts, 
             available: true 
@@ -196,11 +196,11 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal,
 
         uploadNewOffer(newOfferFinal)
         setNewOfferData({
-            id: (getOffers().length + 1001).toString(),
             name: "",
             products: [],
-            price: 0
+            price: ""
         })
+        setSelectedProducts([])
         setErrorsActive(false)
         closeModal()
         updateOffers()
@@ -218,7 +218,7 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal,
                 <p>Crea una nueva oferta seleccionando los productos y el precio.</p>
                 <div className={styles["fields-container"]}>
                     <label>Nombre de la oferta</label>
-                    <input type="text" name="name" onChange={handleChange} autoComplete="off" />
+                    <input type="text" name="name" onChange={handleChange} value={newOfferData.name} autoComplete="off" />
                 </div>
                 { errorsActive && errors.name.length ? (<div className={styles["error-message"]}>{errors.name}</div>) : null }
                 <div className={styles["fields-container"]}>
@@ -246,7 +246,7 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal,
                 { errorsActive && errors.products.length ? (<div className={styles["error-message"]}>{errors.products}</div>) : null }
                 <div className={styles["fields-container"]}>
                     <label>Precio de la oferta</label>
-                    <input type="number" name="price" onChange={handleChange} />
+                    <input type="number" name="price" value={newOfferData.price} onChange={handleChange} />
                 </div>
                 { errorsActive && errors.price.length ? (<div className={styles["error-message"]}>{errors.price}</div>) : null }
                 <div className={styles["buttons-container"]}>
