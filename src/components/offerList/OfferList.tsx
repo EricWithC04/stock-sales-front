@@ -20,10 +20,11 @@ interface Offer {
 interface Props {
     browser: string
     updateOffers: () => void
+    openUpdateOfferModal: (offer: Offer) => void
     offersFlag: boolean
 }
 
-export const OfferList = ({ browser, updateOffers, offersFlag }: Props) => {
+export const OfferList = ({ browser, updateOffers, offersFlag, openUpdateOfferModal }: Props) => {
 
     const { getOffers, updateOfferStatus } = useGeneralContext()!
 
@@ -77,9 +78,9 @@ export const OfferList = ({ browser, updateOffers, offersFlag }: Props) => {
         },
         {
             name: "Acciones",
-            cell: (_row: Offer) => (
+            cell: (row: Offer) => (
                 <div className={styles["actions-container"]}>
-                    <div className={styles["action"]}>
+                    <div className={styles["action"]} onClick={() => openUpdateOfferModal(row)}>
                         <SquarePen color="#000" />
                     </div>
                     <div className={styles["action"]}>

@@ -97,6 +97,7 @@ interface GeneralContextProps {
     uploadNewOffer: (offer: Offer) => void
     uploadNewSale: (sale: Sale) => void
     updateOfferStatus: (id: string) => void
+    updateOfferPrice: (id: string, newPrice: number) => void
     // validateProductIdExists: (id: string) => boolean
     getProductsStock: () => any
     discountProduct: (_itemProducts: Array<ItemSale>) => void
@@ -206,6 +207,18 @@ export const GeneralProvider = ({ children }: Props) => {
         setOffers(newOffers)
     }
 
+    const updateOfferPrice = (id: string, newPrice: number) => {
+        const newOffers: Array<Offer> = []
+        offers.forEach(offer => {
+            if (offer.id === id) {
+                newOffers.push({ ...offer, price: newPrice })
+            } else {
+                newOffers.push(offer)
+            }
+        })
+        setOffers(newOffers)
+    }
+
     // Obtener listado de los productos con cantidad en stock
     const getProductsStock = () => {
         alert("Funcionalidad en desarrollo")
@@ -283,6 +296,7 @@ export const GeneralProvider = ({ children }: Props) => {
             uploadNewOffer,
             uploadNewSale,
             updateOfferStatus,
+            updateOfferPrice,
             getProductsStock, 
             discountProduct 
         }}>
