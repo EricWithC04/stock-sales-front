@@ -4,6 +4,7 @@ import { ChevronDown } from "lucide-react"
 import { useEffect, useState } from "react";
 
 import { useGeneralContext } from "../../context/GeneralContext";
+import { customStylesWithPagination } from "../../styles/customStylesTables";
 
 interface Sale {
     id: number
@@ -117,7 +118,7 @@ export const SalesListPage = () => {
     ]
 
     useEffect(() => {
-        setListSales(getSales())
+        setListSales(getSales() as Array<Sale>)
     }, [])
 
     return (
@@ -136,6 +137,7 @@ export const SalesListPage = () => {
                 expandableRowsHideExpander={true}
                 expandableRowsComponent={ExpandedComponent}
                 expandableRowExpanded={row => expandedRow === row.id}
+                customStyles={customStylesWithPagination}
             />
         </div>
     )
