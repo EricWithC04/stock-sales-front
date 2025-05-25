@@ -1,10 +1,11 @@
 import DataTable from "react-data-table-component"
 import styles from "./SalesListPage.module.css"
 import { ChevronDown } from "lucide-react"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useGeneralContext } from "../../context/GeneralContext";
 import { customStylesWithPagination } from "../../styles/customStylesTables";
+import { SalesResumeModal } from "../salesResumeModal/SalesResumeModal";
 
 interface Sale {
     id: number
@@ -80,6 +81,8 @@ export const SalesListPage = () => {
 
     const { getSales } = useGeneralContext()!
 
+    const resumeRef = useRef<HTMLDialogElement>(null)
+
     const [listSales, setListSales] = useState<Array<Sale>>([])
     const [expandedRow, setExpandedRow] = useState<number | null>(null)
 
@@ -121,11 +124,24 @@ export const SalesListPage = () => {
         setListSales(getSales() as Array<Sale>)
     }, [])
 
+    const openResumeModal = () => {
+        resumeRef.current?.showModal()
+    }
+
+    const closeResumeModal = () => {
+        resumeRef.current?.close()
+    }
+
     return (
         <div className={styles["sales-list-page-container"]}>
+            <SalesResumeModal 
+                ref={resumeRef}
+                closeModal={closeResumeModal}
+            />
             <div className="sales-list-header">
                 <input type="text" />
                 <div className="actions-container">
+                    <button onClick={openResumeModal}>Resumen</button>
                     <button>Imprimir</button>
                     <button>Exportar</button>
                 </div>
