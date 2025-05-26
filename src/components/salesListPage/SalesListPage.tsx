@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component"
 import styles from "./SalesListPage.module.css"
-import { ChevronDown } from "lucide-react"
+import { ChartColumnIncreasing, ChevronDown, Download, Printer } from "lucide-react"
 import { useEffect, useRef, useState } from "react";
 
 import { useGeneralContext } from "../../context/GeneralContext";
@@ -138,12 +138,12 @@ export const SalesListPage = () => {
                 ref={resumeRef}
                 closeModal={closeResumeModal}
             />
-            <div className="sales-list-header">
-                <input type="text" />
-                <div className="actions-container">
-                    <button onClick={openResumeModal}>Resumen</button>
-                    <button>Imprimir</button>
-                    <button>Exportar</button>
+            <div className={styles["sales-list-header"]}>
+                <input type="text" placeholder="Buscar..." />
+                <div className={styles["actions-container"]}>
+                    <button onClick={openResumeModal}><ChartColumnIncreasing size={18}/> Resumen</button>
+                    <button><Printer size={18}/> Imprimir</button>
+                    <button><Download size={18} /> Exportar</button>
                 </div>
             </div>
             <DataTable
