@@ -2,7 +2,7 @@
     {
         "id": 1,
         "client": "Juán Pérez",
-        "total": 1,
+        "total": 4900,
         "products": [
             {
                 "id": "2",
@@ -19,7 +19,7 @@
     {
         "id": 2,
         "client": "María Lezcano",
-        "total": 1,
+        "total": 6900,
         "products": [
             {
                 "id": "1002",
@@ -36,7 +36,7 @@
     {
         "id": 3,
         "client": "",
-        "total": 1,
+        "total": 4900,
         "products": [
             {
                 "id": "2",
@@ -53,7 +53,7 @@
     {
         "id": 4,
         "client": "",
-        "total": 1,
+        "total": 6900,
         "products": [
             {
                 "id": "1002",
@@ -70,7 +70,7 @@
     {
         "id": 5,
         "client": "",
-        "total": 1,
+        "total": 4900,
         "products": [
             {
                 "id": "2",

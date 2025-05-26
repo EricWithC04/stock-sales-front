@@ -1,12 +1,28 @@
-import { forwardRef, useState } from "react"
+import { forwardRef, useEffect, useState } from "react"
 import styles from "./SalesResumeModal.module.css"
 import { CreditCard } from "lucide-react"
+
+import { useGeneralContext } from "../../context/GeneralContext"
+import { calculatePercent } from "../../utils/calculatePercentDiscount"
+
+interface Sale {
+    id?: number
+    client: string
+    products: Array<{ id: string, quantity: number }>
+    total: number
+    date: string
+    payMethod: "Efectivo" | "Transferencia"
+}
 
 interface Props {
     closeModal: () => void
 }
 
 export const SalesResumeModal = forwardRef<HTMLDialogElement, Props> (({ closeModal }, ref) => {
+
+    const { getSales } = useGeneralContext()!
+
+    const [sales, setSales] = useState<Array<Sale>>([])
 
     const [filter, setFilter] = useState<number>(4)
 
@@ -16,6 +32,22 @@ export const SalesResumeModal = forwardRef<HTMLDialogElement, Props> (({ closeMo
         "Últimos 90 dias",
         "Limpiar Filtros",
     ]
+
+    useEffect(() => {
+        setSales(getSales())
+    }, [])
+
+    const getSalesTransfer = (s: Array<Sale>) => {
+        return s.filter((sale) => sale.payMethod === "Transferencia")
+    }
+
+    const getSalesCash = (s: Array<Sale>) => {
+        return s.filter((sale) => sale.payMethod === "Efectivo")
+    }
+
+    const getTotal = (s: Array<Sale>): number => {
+        return s.reduce((acc, sale) => acc + sale.total, 0)
+    }
 
     return (
         <dialog ref={ref} className={styles["sales-resume-modal-container"]}>
@@ -38,11 +70,11 @@ export const SalesResumeModal = forwardRef<HTMLDialogElement, Props> (({ closeMo
                 <div className={styles["totals"]}>
                     <div className={styles["one-total"]}>
                         <h4>Ingresos Totales</h4>
-                        <h2>$ 12700</h2>
+                        <h2>$ {getTotal(sales)}</h2>
                     </div>
                     <div className={styles["one-total"]}>
                         <h4>Total de ventas</h4>
-                        <h2>4</h2>
+                        <h2>{sales.length}</h2>
                     </div>
                 </div>
                 <div className={styles["total-per-method"]}>
@@ -54,21 +86,21 @@ export const SalesResumeModal = forwardRef<HTMLDialogElement, Props> (({ closeMo
                         <div className={styles["method"]}>
                             <div className={styles["method-row-up"]}>
                                 <span>Transferencia</span>
-                                <span className={styles["money"]}>$8000</span>
+                                <span className={styles["money"]}>${getTotal(getSalesTransfer(sales))}</span>
                             </div>
                             <div className={styles["method-row-down"]}>
-                                <span>2 ventas</span>
-                                <span>62.99%</span>
+                                <span>{getSalesTransfer(sales).length} ventas</span>
+                                <span>{calculatePercent(getTotal(sales), getTotal(getSalesTransfer(sales)))}%</span>
                             </div>
                         </div>
                         <div className={styles["method"]}>
                             <div className={styles["method-row-up"]}>
                                 <span>Efectivo</span>
-                                <span className={styles["money"]}>$4700</span>
+                                <span className={styles["money"]}>${getTotal(getSalesCash(sales))}</span>
                             </div>
                             <div className={styles["method-row-down"]}>
-                                <span>2 Ventas</span>
-                                <span>37.01%</span>
+                                <span>{getSalesCash(sales).length} Ventas</span>
+                                <span>{calculatePercent(getTotal(sales), getTotal(getSalesCash(sales)))}%</span>
                             </div>
                         </div>
                     </div>
