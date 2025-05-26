@@ -4,6 +4,7 @@ import { CreditCard } from "lucide-react"
 
 import { useGeneralContext } from "../../context/GeneralContext"
 import { calculatePercent } from "../../utils/calculatePercentDiscount"
+import { filterLatestDays } from "../../utils/filterDate"
 
 interface Sale {
     id?: number
@@ -22,30 +23,64 @@ export const SalesResumeModal = forwardRef<HTMLDialogElement, Props> (({ closeMo
 
     const { getSales } = useGeneralContext()!
 
+    const [allSales, setAllSales] = useState<Array<Sale>>([])
     const [sales, setSales] = useState<Array<Sale>>([])
 
     const [filter, setFilter] = useState<number>(4)
 
     const filters = [
-        "Últimos 7 dias",
-        "Últimos 30 dias",
-        "Últimos 90 dias",
-        "Limpiar Filtros",
+        {
+            text: "Últimos 7 dias",
+            days: 7
+        },
+        {
+            text: "Últimos 30 dias",
+            days: 30
+        },
+        {
+            text: "Últimos 90 dias",
+            days: 90
+        },
+        {
+            text: "Limpiar Filtros",
+            days: null
+        },
     ]
 
     useEffect(() => {
-        setSales(getSales())
+        setAllSales(getSales())
     }, [])
 
+    useEffect(() => {
+        if (!sales.length) {
+            setSales([...allSales])
+        }
+    }, [allSales])
+
+    const handleFilter = (filter: number, days: number | null) => {
+        if (days) {
+            const filteredSales: Array<Sale> = filterLatestDays(allSales, days, "date")
+            
+            setSales(filteredSales)
+            setFilter(filter)
+        } else {
+            setSales([...allSales])
+            setFilter(filter)
+        }
+    }
+
     const getSalesTransfer = (s: Array<Sale>) => {
+        if (s.length === 0) return []
         return s.filter((sale) => sale.payMethod === "Transferencia")
     }
 
     const getSalesCash = (s: Array<Sale>) => {
+        if (s.length === 0) return []
         return s.filter((sale) => sale.payMethod === "Efectivo")
     }
 
     const getTotal = (s: Array<Sale>): number => {
+        if (s.length === 0) return 0
         return s.reduce((acc, sale) => acc + sale.total, 0)
     }
 
@@ -60,9 +95,11 @@ export const SalesResumeModal = forwardRef<HTMLDialogElement, Props> (({ closeMo
                             filters.map((f, index) => (
                                 <button 
                                     key={index}
-                                    onClick={() => setFilter(index+1)}
-                                    className={`${filter === index+1 && index !== filters.length-1 ? styles["selected-filter"] : ""}`}
-                                >{f}</button>
+                                    onClick={() => handleFilter(index+1, f.days)}
+                                    className={`${
+                                        filter === index+1 && index !== filters.length-1 ? styles["selected-filter"] : ""
+                                    }`}
+                                >{f.text}</button>
                             ))
                         }
                     </div>
