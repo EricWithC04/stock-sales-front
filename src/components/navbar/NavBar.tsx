@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { 
-    ChartLineIcon,
-    ChartLineGradientIcon,
+    // ChartLineIcon,
+    // ChartLineGradientIcon,
     UtensilsIcon,
     UtensilsGradientIcon,
     ReceiptIcon,

@@ -57,6 +57,15 @@
     box-shadow: 0 0 0 3px #93939373; 
 }
 
+.form-field select {
+    width: 60%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #b3b3b3;
+    border-radius: 8px;
+    outline: none;
+}
+
 .form-field p {
     font-weight: 600;
 }

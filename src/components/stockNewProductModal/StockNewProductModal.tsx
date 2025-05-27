@@ -12,6 +12,7 @@ interface NewProductData {
     id: string
     description: string
     price: number
+    category: "Bebida" | "Ingrediente"
 }
 
 interface NewProductDataErrors {
@@ -22,11 +23,12 @@ interface NewProductDataErrors {
 
 export const StockNewProductModal = forwardRef<HTMLDialogElement, Props> (({ closeModal, notifyNewProduct }, ref) => {
 
-    const { getProducts, uploadNewProduct } = useGeneralContext()!
+    const { getProducts, uploadNewProduct, uploadNewIngredient } = useGeneralContext()!
 
     const [newProductData, setNewProductData] = useState<NewProductData>({
         id: "",
         description: "",
+        category: "Bebida",
         price: 0
     })
     const [errors, setErrors] = useState<NewProductDataErrors>({
@@ -57,12 +59,32 @@ export const StockNewProductModal = forwardRef<HTMLDialogElement, Props> (({ clo
         setNewProductData(newProduct)
     }
 
+    const handleSelectCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newProduct: NewProductData = {
+            ...newProductData,
+            category: e.target.value as "Bebida" | "Ingrediente"
+        }
+        setNewProductData(newProduct)
+    }
+
     const handleSubmit = () => {
         setErrorsActive(true)
 
         if (!errors.id.length && !errors.description.length && !errors.price.length) {
-            uploadNewProduct({ ...newProductData, stock: 0 })
-            setNewProductData({ id: "", description: "", price: 0 })
+            if (newProductData.category === "Bebida") {
+                uploadNewProduct({ 
+                    id: newProductData.id, 
+                    description: newProductData.description, 
+                    price: newProductData.price, 
+                    stock: 0 
+                })
+            } else {
+                uploadNewIngredient({ 
+                    id: newProductData.id, 
+                    description: newProductData.description 
+                })
+            }
+            setNewProductData({ id: "", description: "", price: 0, category: "Bebida" })
             setErrorsActive(false)
             notifyNewProduct!()
             closeModal()
@@ -86,10 +108,25 @@ export const StockNewProductModal = forwardRef<HTMLDialogElement, Props> (({ clo
                     </div>
                     { errorsActive && errors.description.length ? <span className={styles["error-message"]}>{errors.description}</span> : null }
                     <div className={styles["form-field"]}>
-                        <label>Precio</label>
-                        <input name="price" onChange={handleChange} type="number" value={newProductData.price} />
+                        <label>Tipo: </label>
+                        {/* <input name="price" onChange={handleChange} type="number" value={newProductData.price} /> */}
+                        <select name="category" id="" defaultValue={"Bebida"} onChange={handleSelectCategory}>
+                            <option value="Bebida">Bebida</option>
+                            <option value="Ingrediente">Ingrediente</option>
+                        </select>
                     </div>
                     { errorsActive && errors.price.length ? <span className={styles["error-message"]}>{errors.price}</span> : null }
+                    {
+                        newProductData.category === "Bebida" ? (
+                            <>
+                                <div className={styles["form-field"]}>
+                                    <label>Precio</label>
+                                    <input name="price" onChange={handleChange} type="number" value={newProductData.price} />
+                                </div>
+                                { errorsActive && errors.price.length ? <span className={styles["error-message"]}>{errors.price}</span> : null }
+                            </>
+                            ) : null
+                    }
                 </div>
                 <div className={styles["buttons-container"]}>
                     <button type="button" className={styles["cancel-button"]} onClick={closeModal}>Cancelar</button>
