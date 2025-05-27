@@ -19,9 +19,10 @@ interface Ingredient {
 
 interface Props {
     handleSetValue: (value: string) => void
+    entryFlag: boolean
 }
 
-export const ProductEntryBrowser = ({ handleSetValue }: Props) => {
+export const ProductEntryBrowser = ({ handleSetValue, entryFlag }: Props) => {
 
     const { getProducts, getIngredients } = useGeneralContext()!
 
@@ -42,6 +43,10 @@ export const ProductEntryBrowser = ({ handleSetValue }: Props) => {
         const allOptions: Array<Drink | Ingredient> = [...getProducts(), ...getIngredients()]
         setAllProducts(allOptions)
     }, [])
+
+    useEffect(() => {
+        setBrowsedValue("")
+    }, [entryFlag])
 
     const filterProducts = (value: string) => {
         const inputValue = value.trim().toLowerCase()

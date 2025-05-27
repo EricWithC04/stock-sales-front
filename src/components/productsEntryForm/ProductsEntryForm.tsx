@@ -54,6 +54,11 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
         expiresDate: ""
     }) 
     const [errorsActive, setErrorsActive] = useState<boolean>(false)
+    const [entryFlag, setEntryFlag] = useState<boolean>(false)
+
+    const changeFlag = () => {
+        setEntryFlag(!entryFlag)
+    }
 
     const validateIdExists = (id: string) => {
         const product = [...getProducts(), ...getIngredients()].find((product) => product.id === id)
@@ -121,6 +126,7 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
                     quantity: 1,
                     expiresDate: null
                 })
+                changeFlag()
             }
         } else {
             openModal()
@@ -140,6 +146,7 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
                     <label htmlFor="product">Producto</label>
                     <ProductEntryBrowser
                         handleSetValue={handleSelectProduct}
+                        entryFlag={entryFlag}
                     />
                     { errorsActive && errors.product.length ? <span className={styles["error"]}>{errors.product}</span> : null }
                 </div>
