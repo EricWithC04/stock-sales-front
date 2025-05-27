@@ -39,6 +39,10 @@ export const OfferList = ({ browser, updateOffers, offersFlag, openUpdateOfferMo
 
     const columns = [
         {
+            name: "Codigo",
+            selector: (row: Offer) => row.id
+        },
+        {
             name: "Nombre",
             cell: (row: Offer) => (
                 <div className={styles["item-name"]}>
