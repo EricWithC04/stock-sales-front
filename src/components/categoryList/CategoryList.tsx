@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import styles from "./CategoryList.module.css"
 import { CategoryCard } from "../categoryCard/CategoryCard"
-import { getCategories } from "../../mocks/apiMock"
+
+import { useGeneralContext } from "../../context/GeneralContext"
 
 import All from "../../assets/food/all.png"
 import HotDog from "../../assets/food/hot-dog.png"
@@ -24,6 +25,8 @@ interface CategoryCard {
 
 export const CategoryList = () => {
 
+    const { getCategories } = useGeneralContext()!
+
     const icons = {
         "Todo": All,
         "Panchos": HotDog,
@@ -36,16 +39,13 @@ export const CategoryList = () => {
     ])
 
     useEffect(() => {
-        getCategories()
-            .then((res: Array<Category>) => {
-                const categoriesCards = res.map(category => ({
-                    id: category.id,
-                    name: category.name,
-                    icon: icons[category.name as CategoryName],
-                    selected: false
-                }))
-                setCategories((prev) => [...prev, ...categoriesCards])
-            })
+        const categoriesCards = getCategories().map(category => ({
+            id: category.id,
+            name: category.name,
+            icon: icons[category.name as CategoryName],
+            selected: false
+        }))
+        setCategories((prev) => [...prev, ...categoriesCards])
     }, [])
 
     const handleSelectCategory = (id: number) => {

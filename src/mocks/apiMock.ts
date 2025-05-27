@@ -65,7 +65,7 @@ interface Sale {
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-export const getCategories =  async (): Promise<Array<Category>> => {
+export const getCategoriesData =  async (): Promise<Array<Category>> => {
     await delay(1000)
     return CategoriesData
 }

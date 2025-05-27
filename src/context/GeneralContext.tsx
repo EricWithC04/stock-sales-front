@@ -1,5 +1,6 @@
 import React, { useContext, createContext, useState, useEffect } from 'react'
 import { 
+    getCategoriesData,
     getDrinks, 
     getFoodData, 
     getIngredientsData, 
@@ -15,6 +16,11 @@ interface Props {
 }
 
 type TypeProduct = "Bebida" | "Ingrediente" | "Comida" | "Oferta"
+
+interface Category {
+    id: number
+    name: string
+}
 
 interface Ingredient {
     id: string
@@ -82,6 +88,7 @@ interface ItemSale {
 }
 
 interface GeneralContextProps {
+    getCategories: () => Array<Category>
     getProducts: () => Array<Drink>
     getProductById: (id: string) => Drink | Food | Offer | "Código Invalido"
     getIngredients: () => Array<Ingredient>
@@ -109,12 +116,17 @@ export const useGeneralContext = () => useContext(GeneralContext)
 
 export const GeneralProvider = ({ children }: Props) => {
 
+    const [categories, setCategories] = useState<Array<Category>>([])
     const [products, setProducts] = useState<Array<Drink>>([])
     const [ingredients, setIngredients] = useState<Array<Ingredient>>([])
     const [foods, setFoods] = useState<Array<Food>>([])
     const [lots, setLots] = useState<Array<Lot>>([])
     const [offers, setOffers] = useState<Array<Offer>>([])
     const [sales, setSales] = useState<Array<Sale>>([])
+
+    const getCategories = () => {
+        return categories
+    }
 
     // Obtener todos los productos
     const getProducts = () => {
@@ -265,6 +277,9 @@ export const GeneralProvider = ({ children }: Props) => {
     }
 
     useEffect(() => {
+        // TODO : Crear conexión de las categorías con el servidor
+        getCategoriesData()
+            .then(categories => setCategories(categories))
         // TODO : Crear conexión de las bebidas con el servidor
         getDrinks()
             .then(products => setProducts(products))
@@ -287,6 +302,7 @@ export const GeneralProvider = ({ children }: Props) => {
 
     return (
         <GeneralContext.Provider value={{ 
+            getCategories,
             getProducts, 
             getProductById,
             getIngredients,
