@@ -22,7 +22,7 @@ export const MenuPage = () => {
                 closeModal={closeNewFoodModal}
                 ref={newFoodRef}
             />
-            <h1>Menú</h1>
+            <h1 className={styles["title"]}>Menú</h1>
             <div className={styles["categories-container"]}>
                 <h2>Categoría</h2>
                 <CategoryList></CategoryList>

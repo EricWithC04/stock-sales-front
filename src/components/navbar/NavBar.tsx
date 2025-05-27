@@ -33,8 +33,8 @@ interface Pages {
 export const NavigationBar = ({ children, selectPage }: Props) => {
 
     const [pages, setPages] = useState<Array<Pages>>([
-        { id: 1, Icon: ChartLineIcon, SelectedIcon: ChartLineGradientIcon, title: "Estadísticas", selected: true },
-        { id: 2, Icon: UtensilsIcon, SelectedIcon: UtensilsGradientIcon, title: "Menú", selected: false },
+        // { id: 1, Icon: ChartLineIcon, SelectedIcon: ChartLineGradientIcon, title: "Estadísticas", selected: true },
+        { id: 2, Icon: UtensilsIcon, SelectedIcon: UtensilsGradientIcon, title: "Menú", selected: true },
         { id: 3, Icon: ReceiptIcon, SelectedIcon: ReceiptGradientIcon, title: "Ventas", selected: false },
         { id: 4, Icon: StockIcon, SelectedIcon: StockGradientIcon, title: "Inventario", selected: false },
         { id: 5, Icon: ProductEntryIcon, SelectedIcon: ProductEntryGradientIcon, title: "Ingresos", selected: false },

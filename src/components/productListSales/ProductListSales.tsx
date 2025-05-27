@@ -6,7 +6,7 @@ import styles from "./ProductListSales.module.css"
 
 import { useGeneralContext } from "../../context/GeneralContext"
 import { useEffect, useState } from "react"
-import { customStylesForSales, customStylesWithPagination } from "../../styles/customStylesTables"
+import { customStylesForSales } from "../../styles/customStylesTables"
 
 interface ItemSale {
     id: string

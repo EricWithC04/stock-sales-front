@@ -143,7 +143,7 @@ export const StockPage = () => {
                 closeModal={closeNewProductModal}
                 notifyNewProduct={notifyNewProduct}
             />
-            <h1>Inventario</h1>
+            <h1 className={styles["title"]}>Inventario</h1>
             <div className={styles["actions-container"]}>
                 <StockSearchBar 
                     setFilter={setFilter}

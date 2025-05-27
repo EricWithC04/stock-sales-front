@@ -10,7 +10,7 @@ import { OffersPage } from './pages/offers/Offers'
 
 function App() {
 
-  const [selectedPage, setSelectedPage] = useState(1)
+  const [selectedPage, setSelectedPage] = useState(2)
 
   const selectPage = (id: number) => {
     setSelectedPage(id)

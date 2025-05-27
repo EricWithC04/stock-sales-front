@@ -85,8 +85,10 @@ export const OffersPage = () => {
                 updateOffers={updateOffers}
                 ref={newOfferRef}
             />
-            <h1>Ofertas Disponibles</h1>
-            <p>Gestiona las ofertas disponibles</p>
+            <div className={styles["header"]}>
+                <h1>Ofertas Disponibles</h1>
+                <p>Gestiona las ofertas disponibles</p>
+            </div>
             <div className={styles["action-container"]}>
                 <input type="text" value={browser} onChange={handleChange} placeholder="Nombre de la oferta" />
                 <button

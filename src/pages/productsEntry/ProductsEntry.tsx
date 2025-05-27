@@ -54,7 +54,7 @@ export const ProductsEntryPage = () => {
 
     return (
         <div className={styles["products-entry-container"]}>
-            <h1>Ingresos</h1>
+            <h1 className={styles["title"]}>Ingresos</h1>
             <StockProductModal
                 ref={notFoundProductRef}
                 openNewProductModal={openNewProductModal}

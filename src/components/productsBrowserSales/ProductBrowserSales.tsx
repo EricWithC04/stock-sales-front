@@ -28,7 +28,7 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
     const [allProducts, setAllProducts] = useState<Array<Drink>>([])
     const [displayProducts, setDisplayProducts] = useState<Array<Drink>>([])
     const [browsedValue, setBrowsedValue] = useState<string>("")
-    const [selectedProduct, setSelectedProduct] = useState<Drink | null>(null)
+    const [_selectedProduct, setSelectedProduct] = useState<Drink | null>(null)
 
     useEffect(() => {
         getDrinks()

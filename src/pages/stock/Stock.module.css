@@ -1,3 +1,9 @@
+.stock-container .title {
+    margin-left: 2%;
+    margin-top: 1%;
+    margin-bottom: 12px;
+}
+
 .actions-container {
     width: 96%;
     margin-left: 2%;

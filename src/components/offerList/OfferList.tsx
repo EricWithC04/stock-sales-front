@@ -4,7 +4,7 @@ import styles from "./OfferList.module.css"
 import { calculatePercentDiscount } from "../../utils/calculatePercentDiscount"
 import { useEffect, useState } from "react"
 import { normalizeText } from "../../utils/normalizeText"
-import { customStyles, customStylesWithPagination } from "../../styles/customStylesTables"
+import { customStylesWithPagination } from "../../styles/customStylesTables"
 
 import { useGeneralContext } from "../../context/GeneralContext"
 
