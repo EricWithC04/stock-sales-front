@@ -18,9 +18,10 @@ interface Food {
 interface Props {
     selectedCategory: string
     categoryFlag: boolean
+    foodFlag: boolean
 }
 
-export const FoodList = ({ selectedCategory, categoryFlag }: Props) => {
+export const FoodList = ({ selectedCategory, categoryFlag, foodFlag }: Props) => {
 
     const { getFoods } = useGeneralContext()!
 
@@ -35,7 +36,7 @@ export const FoodList = ({ selectedCategory, categoryFlag }: Props) => {
     
     useEffect(() => {
         setAllFoods(getFoods())
-    }, [])
+    }, [foodFlag])
 
     useEffect(() => {
         if (allFoods.length) {

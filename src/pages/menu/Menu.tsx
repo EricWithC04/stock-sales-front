@@ -10,6 +10,11 @@ export const MenuPage = () => {
 
     const [selectedCategory, setSelectedCategory] = useState<string>("")
     const [categoryFlag, setCategoryFlag] = useState<boolean>(false)
+    const [foodFlag, setFoodFlag] = useState<boolean>(false)
+
+    const changeFoods = () => {
+        setFoodFlag(!foodFlag)
+    }
 
     const changeCategory = () => {
         setCategoryFlag(!categoryFlag)
@@ -26,6 +31,7 @@ export const MenuPage = () => {
     return (
         <div className={styles["menu-container"]}>
             <FoodNewModal 
+                changeFoods={changeFoods}
                 closeModal={closeNewFoodModal}
                 ref={newFoodRef}
             />
@@ -45,6 +51,7 @@ export const MenuPage = () => {
                 <FoodList
                     selectedCategory={selectedCategory}
                     categoryFlag={categoryFlag}
+                    foodFlag={foodFlag}
                 />
             </div>
         </div>
