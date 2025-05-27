@@ -4,6 +4,7 @@ import styles from "./ProductsEntryForm.module.css"
 import "react-datepicker/dist/react-datepicker.css";
 import { getDateString } from "../../utils/getDateString";
 import { useGeneralContext } from "../../context/GeneralContext";
+import { ProductEntryBrowser } from "../productEntryBrowser/ProductEntryBrowser";
 
 interface LotData {
     product: string,
@@ -24,7 +25,7 @@ interface Props {
 
 export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
 
-    const { getProducts, uploadNewLot } = useGeneralContext()!
+    const { getProducts, getIngredients, uploadNewLot } = useGeneralContext()!
 
     const years = [2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033];
     const months = [
@@ -55,7 +56,7 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
     const [errorsActive, setErrorsActive] = useState<boolean>(false)
 
     const validateIdExists = (id: string) => {
-        const product = getProducts().find((product) => product.id === id)
+        const product = [...getProducts(), ...getIngredients()].find((product) => product.id === id)
         if (product) return true
         else return false
     }
@@ -126,6 +127,10 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
         }
     }
 
+    const handleSelectProduct = (id: string) => {
+        setLotData({...lotData, product: id})
+    }
+
     return (
         <form className={styles["products-entry-form"]} onSubmit={handleSubmit}>
             <h1>Registro de Ingresos</h1>
@@ -133,13 +138,16 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
             <div className={styles["form-container"]}>
                 <div className={styles["form-field"]}>
                     <label htmlFor="product">Producto</label>
-                    <input
+                    {/* <input
                         name="product"
                         type="text"
                         onChange={handleChange}
                         value={lotData.product}
                         autoComplete="off"
                         placeholder="Ingrese el código del producto"
+                    /> */}
+                    <ProductEntryBrowser
+                        handleSetValue={handleSelectProduct}
                     />
                     { errorsActive && errors.product.length ? <span className={styles["error"]}>{errors.product}</span> : null }
                 </div>

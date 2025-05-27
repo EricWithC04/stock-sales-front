@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Autosuggest from "react-autosuggest"
-import styles from "./ProductBrowserSales.module.css"
+import styles from "./ProductEntryBrowser.module.css"
 import { normalizeText } from "../../utils/normalizeText"
 
 import { useGeneralContext } from "../../context/GeneralContext"
@@ -12,13 +12,18 @@ interface Drink {
     price: number
 }
 
-interface Props {
-    handleIncludeItem: (id: string) => void
+interface Ingredient {
+    id: string,
+    description: string
 }
 
-export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
+interface Props {
+    handleSetValue: (value: string) => void
+}
 
-    const { getProducts } = useGeneralContext()!
+export const ProductEntryBrowser = ({ handleSetValue }: Props) => {
+
+    const { getProducts, getIngredients } = useGeneralContext()!
 
     const autoSuggestionTheme = {
         container: styles["auto-suggestion-container"],
@@ -28,13 +33,14 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
         suggestionHighlighted: styles['suggestionHighlighted']
     }
 
-    const [allProducts, setAllProducts] = useState<Array<Drink>>([])
-    const [displayProducts, setDisplayProducts] = useState<Array<Drink>>([])
+    const [allProducts, setAllProducts] = useState<Array<Drink | Ingredient>>([])
+    const [displayProducts, setDisplayProducts] = useState<Array<Drink | Ingredient>>([])
     const [browsedValue, setBrowsedValue] = useState<string>("")
-    const [_selectedProduct, setSelectedProduct] = useState<Drink | null>(null)
+    const [_selectedProduct, setSelectedProduct] = useState<Drink | Ingredient | null>(null)
 
     useEffect(() => {
-        setAllProducts(getProducts())
+        const allOptions: Array<Drink | Ingredient> = [...getProducts(), ...getIngredients()]
+        setAllProducts(allOptions)
     }, [])
 
     const filterProducts = (value: string) => {
@@ -55,15 +61,23 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
         setDisplayProducts([])
     }
 
-    const getSuggestionValue = (suggestion: Drink) => {
+    const getSuggestionValue = (suggestion: Drink | Ingredient) => {
         return `${suggestion.id}`
     }
 
-    const renderSuggestion = (suggestion: Drink) => {
+    const renderSuggestion = (suggestion: Drink | Ingredient) => {
+        const isDrink = (s: Drink | Ingredient): s is Drink => {
+            return (s as Drink).price !== undefined;
+        };
+
         return (
             <div onClick={() => setSelectedProduct(suggestion)}>
                 <span>{suggestion.description}</span>
-                <span className={styles["price"]}>{`$${suggestion.price}`}</span>
+                {
+                    isDrink(suggestion) ? (
+                        <span className={styles["price"]}>{`$${suggestion.price}`}</span>
+                    ) : null
+                }
             </div>
         )
     }
@@ -79,15 +93,13 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
         onChange: handleInputChange,
         onKeyDown: (e: any) => {
             if (e.key === "Enter") {
-                handleIncludeItem(e.target.value)
-                setBrowsedValue("")
+                handleSetValue(e.target.value)
             }
         }
     }
 
-    const onSuggestionSelected = (_e: any, { suggestion }: { suggestion: Drink }) => {
-        handleIncludeItem(suggestion.id)
-        setBrowsedValue("")
+    const onSuggestionSelected = (_e: any, { suggestion }: { suggestion: Drink | Ingredient }) => {
+        handleSetValue(suggestion.id)
     }
 
     return (

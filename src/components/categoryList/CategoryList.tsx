@@ -11,12 +11,7 @@ import FriedPotatoes from "../../assets/food/fried-potatoes.png"
 
 type CategoryName = 'Todo' | 'Panchos' | 'Hamburguesas' | 'Papas Fritas';
 
-interface Category {
-    id: number
-    name: string
-}
-
-interface CategoryCard {
+interface ICategoryCard {
     id: number
     name: string
     icon: string | null
@@ -34,7 +29,7 @@ export const CategoryList = () => {
         "Papas Fritas": FriedPotatoes
     }
 
-    const [categories, setCategories] = useState<Array<CategoryCard>>([
+    const [categories, setCategories] = useState<Array<ICategoryCard>>([
         { id: 0, name: "Todo", icon: All, selected: true },
     ])
 
