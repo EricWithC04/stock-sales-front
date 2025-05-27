@@ -1,7 +1,7 @@
 .products-entry-form {
     display: flex;
     flex-direction: column;
-    padding: 2% 4%;
+    padding: 2%;
     gap: 1rem;
 }
 

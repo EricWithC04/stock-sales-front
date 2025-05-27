@@ -63,14 +63,10 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
     const validateFormErrors = (data: LotData) => {
         const currentErrors = { product: "", quantity: "", expiresDate: "" }
 
-        if (!data.product) currentErrors.product = "Debes colocar el codigo del producto"
+        if (data.product.length === 0) currentErrors.product = "Debes colocar el codigo del producto"
         if (!data.quantity) currentErrors.quantity = "Debes colocar la cantidad"
         else if (data.quantity <= 0) currentErrors.quantity = "La cantidad debe ser mayor a 0"
-        if (!data.expiresDate) {
-            currentErrors.expiresDate = "El campo es requerido"
-            console.log(data.expiresDate);
-            
-        }
+        if (!data.expiresDate) currentErrors.expiresDate = "El campo es requerido"
         else {
             const today = new Date()
             today.setHours(0, 0, 0, 0)
@@ -84,6 +80,7 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
         }
         
         setErrors(currentErrors)
+        return currentErrors
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,12 +107,14 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
             expiresDate: lotData.expiresDate
         }
         
-        if (validateIdExists(entryProduct.id)) {
+        if (validateIdExists(entryProduct.id) || lotData.product.length === 0) {
             setErrorsActive(true)
-            if (!errors.product.length && !errors.quantity.length && !errors.expiresDate.length) {
+            const currentErrors = validateFormErrors(lotData)
+            if (!currentErrors.product.length && !currentErrors.quantity.length && !currentErrors.expiresDate.length) {
                 entryProducts(entryProduct)
                 uploadNewLot({ ...entryProduct, id: Date.now(), productId: entryProduct.id })
         
+                setErrorsActive(false)
                 setLotData({
                     product: "",
                     quantity: 1,
@@ -139,6 +138,7 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
                         type="text"
                         onChange={handleChange}
                         value={lotData.product}
+                        autoComplete="off"
                         placeholder="Ingrese el código del producto"
                     />
                     { errorsActive && errors.product.length ? <span className={styles["error"]}>{errors.product}</span> : null }
@@ -194,7 +194,8 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
                         )}
                         name="expiresDate"
                         showYearDropdown
-                        selected={new Date()}
+                        selected={undefined}
+                        autoComplete="off"
                         minDate={new Date()}
                         value={lotData.expiresDate === null ? undefined : `${getDateString(new Date(lotData.expiresDate))}`}
                         placeholderText="Indica la fecha de vencimiento"

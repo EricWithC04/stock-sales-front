@@ -1,5 +1,6 @@
 import DataTable from "react-data-table-component"
 import styles from "./ProductsEntryList.module.css"
+import { customStylesWithPagination } from "../../styles/customStylesTables"
 
 interface Props {
     entriesData: Array<any>
@@ -32,6 +33,9 @@ export const ProductsEntryList = ({ entriesData }: Props) => {
             <DataTable 
                 columns={columns}
                 data={entriesData}
+                pagination
+                noDataComponent="Ningún lote ingresado"
+                customStyles={customStylesWithPagination}
             />
         </div>
     )
