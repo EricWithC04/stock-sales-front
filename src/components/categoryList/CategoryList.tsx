@@ -18,7 +18,12 @@ interface ICategoryCard {
     selected: boolean
 }
 
-export const CategoryList = () => {
+interface Props {
+    setSelectedCategory: (id: string) => void
+    changeCategory: () => void
+}
+
+export const CategoryList = ({ setSelectedCategory, changeCategory }: Props) => {
 
     const { getCategories } = useGeneralContext()!
 
@@ -44,13 +49,17 @@ export const CategoryList = () => {
     }, [])
 
     const handleSelectCategory = (id: number) => {
+        let categorySelect = ""
         const newCategories = categories.map(category => {
             if (category.id === id) {
+                categorySelect = category.name
                 return { ...category, selected: true }
             } else {
                 return { ...category, selected: false }
             }
         })
+        setSelectedCategory(categorySelect !== "Todo" ? categorySelect : "")
+        changeCategory()
         setCategories(newCategories)
     }
 

@@ -15,10 +15,16 @@ interface Food {
     price: number
 }
 
-export const FoodList = () => {
+interface Props {
+    selectedCategory: string
+    categoryFlag: boolean
+}
+
+export const FoodList = ({ selectedCategory, categoryFlag }: Props) => {
 
     const { getFoods } = useGeneralContext()!
 
+    const [allFoods, setAllFoods] = useState<Array<Food>>([])
     const [foods, setFoods] = useState<Array<Food>>([])
 
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -28,8 +34,23 @@ export const FoodList = () => {
     const firstItem = lastItem - itemsPerPage;
     
     useEffect(() => {
-        setFoods(getFoods())
+        setAllFoods(getFoods())
     }, [])
+
+    useEffect(() => {
+        if (allFoods.length) {
+            if (selectedCategory.length) {
+                const filteredFoods = allFoods.filter(f => f.category === selectedCategory)
+                setFoods(filteredFoods)
+            } else {
+                setFoods(allFoods)
+            }
+        }
+    }, [allFoods, selectedCategory])
+
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [categoryFlag])
 
     const handleSelectPage = (page: number) => {
         setCurrentPage(page)

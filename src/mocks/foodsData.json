@@ -3,7 +3,7 @@
         "id": "1",
         "name": "Pancho",
         "description": "Salchica y Mayonesa",
-        "category": "Pancho",
+        "category": "Panchos",
         "ingredients": [
             {
                 "id": "100",
@@ -24,7 +24,7 @@
         "id": "2",
         "name": "Super Pancho",
         "description": "2 Salchicas, Mayonesa, Papas",
-        "category": "Pancho",
+        "category": "Panchos",
         "ingredients": [
             {
                 "id": "100",
@@ -45,7 +45,7 @@
         "id": "3",
         "name": "Super Pancho Gratinado",
         "description": "",
-        "category": "Pancho",
+        "category": "Panchos",
         "ingredients": [
             {
                 "id": "100",
@@ -70,7 +70,7 @@
         "id": "4",
         "name": "Burguer Junior",
         "description": "Carne 70g, Queso",
-        "category": "Hamburguesa",
+        "category": "Hamburguesas",
         "ingredients": [
             {
                 "id": "102",
@@ -95,7 +95,7 @@
         "id": "5",
         "name": "Burguer Chupanchos",
         "description": "Carne 100g, Lechuga, Tomate y Mayonesa",
-        "category": "Hamburguesa",
+        "category": "Hamburguesas",
         "ingredients": [
             {
                 "id": "103",
@@ -128,7 +128,7 @@
         "id": "6",
         "name": "Cheese Burguer",
         "description": "Carne 100g y Queso",
-        "category": "Hamburguesa",
+        "category": "Hamburguesas",
         "ingredients": [
             {
                 "id": "103",

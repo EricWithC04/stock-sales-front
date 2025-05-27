@@ -138,14 +138,6 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
             <div className={styles["form-container"]}>
                 <div className={styles["form-field"]}>
                     <label htmlFor="product">Producto</label>
-                    {/* <input
-                        name="product"
-                        type="text"
-                        onChange={handleChange}
-                        value={lotData.product}
-                        autoComplete="off"
-                        placeholder="Ingrese el código del producto"
-                    /> */}
                     <ProductEntryBrowser
                         handleSetValue={handleSelectProduct}
                     />
