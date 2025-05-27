@@ -7,6 +7,7 @@ import { ProductsEntryPage } from './pages/productsEntry/ProductsEntry'
 import { ExpiresPage } from './pages/expires/Expires'
 import { SalesPage } from './pages/sales/Sales'
 import { OffersPage } from './pages/offers/Offers'
+import { Loading } from './pages/loading/Loading'
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
         <>
             {
                 loading ? (
-                    <div>Cargando...</div>
+                    <Loading></Loading>
                 ) : (
                     <NavigationBar selectPage={selectPage} >
                         {
