@@ -25,7 +25,7 @@ interface Ingredient {
 }
 
 interface IngredientErrors {
-    error: ""
+    error: string
 }
 
 interface Props {
@@ -35,7 +35,7 @@ interface Props {
 
 export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, changeFoods }, ref) => {
 
-    const { uploadNewFood, getFoods, getCategories } = useGeneralContext()!
+    const { uploadNewFood, getFoods, getCategories, validateIngredientExists } = useGeneralContext()!
 
     const [data, setData] = useState<FoodData>({
         name: "",
@@ -52,7 +52,7 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
         description: "",
         price: ""
     })
-    const [ingredientsErrors, setIngredientsErrors] = useState<Array<IngredientErrors>>([{ error: "" }])
+    const [ingredientsErrors, setIngredientsErrors] = useState<IngredientErrors>({ error: "" })
     const [errorsActive, setErrorsActive] = useState<boolean>(false)
 
     const changeIngredientFlag = () => {
@@ -70,20 +70,30 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
         }
     }
 
-    const validateErrorsData = (data: FoodData): FoodErrors => {
+    const validateErrorsData = (currentData: FoodData): FoodErrors => {
         const currentErrors: FoodErrors = { name: "", category: "", description: "", price: "" }
         
-        if (!data.name.length) currentErrors.name = "El nombre es obligatorio"
-        if (!data.category.length) currentErrors.category = "Debes seleccionar la categoría"
-        if (!data.description.length) currentErrors.description = "La descripcion es obligatoria"
-        if (!data.price) currentErrors.price = "El precio es obligatorio"
-        else if (data.price <= 0) currentErrors.price = "El precio debe ser mayor a 0"
+        if (!currentData.name.length) currentErrors.name = "El nombre es obligatorio"
+        if (!currentData.category.length) currentErrors.category = "Debes seleccionar la categoría"
+        if (!currentData.description.length) currentErrors.description = "La descripcion es obligatoria"
+        if (!currentData.price) currentErrors.price = "El precio es obligatorio"
+        else if (currentData.price <= 0) currentErrors.price = "El precio debe ser mayor a 0"
         
         setFoodErrors(currentErrors)
         return currentErrors
     }
 
-    const validateErrorsIngredients = (data: Array<Ingredient>) => {
+    const validateErrorsIngredients = (currentData: Array<Ingredient>): IngredientErrors => {
+        const currentErrors: IngredientErrors = { error: "" }
+        const ingredientsIds = currentData.map(i => i.id)
+
+        if (currentData.some(i => !i.id.length)) currentErrors.error = "Debes elegir todos los ingredientes"
+        else if (currentData.some(i => !validateIngredientExists(i.id))) currentErrors.error = "Debes seleccionar un ingrediente de las lista desplegable"
+        else if (new Set(ingredientsIds).size !== ingredientsIds.length) currentErrors.error = "No deben haber ingredientes repetidos"
+        else if (currentData.some(i => !i.quantity || i.quantity <= 0)) currentErrors.error = "Las cantidades deben ser mayores a 0"
+        
+        setIngredientsErrors(currentErrors)
+        return currentErrors
 
     }
 
@@ -102,14 +112,19 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
             ...newIngredients[index],
             [e.target.name]: e.target.value
         }
+        validateErrorsIngredients(newIngredients)
         setIngredients(newIngredients)
     }
 
     const handleSubmit = () => {
         const currentErrors = validateErrorsData(data)
+        const currentIngredientError = validateErrorsIngredients(ingredients)
 
         setErrorsActive(true)
-        if (Object.values(currentErrors).every(error => !error.length)) {
+        if (
+            Object.values(currentErrors).every(error => !error.length) &&
+            currentIngredientError.error.length
+        ) {
             const newIngredients = ingredients.map(i => ({ id: i.id, quantity: i.quantity }))
             const newFood = {
                 id: (getFoods().length+1).toString(),
@@ -138,6 +153,7 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
         setData({ name: "", category: "", description: "", price: 0 })
         setIngredients([{ uid: 1, id: "", quantity: 0 }])
         changeIngredientFlag()
+        setErrorsActive(false)
         closeModal()
     }
 
@@ -208,6 +224,10 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
                         ))
                     }
                 </div>
+                {
+                    errorsActive && ingredientsErrors.error.length ?
+                        <span className={styles["error-message"]}>{ingredientsErrors.error}</span> : null
+                }
                 <div className={styles["field-container"]}>
                     <label>Descripción</label>
                     <textarea 

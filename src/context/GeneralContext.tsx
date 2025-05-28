@@ -108,6 +108,7 @@ interface GeneralContextProps {
     deleteOffer: (id: string) => void
     getProductsStock: () => any
     discountProduct: (_itemProducts: Array<ItemSale>) => void
+    validateIngredientExists: (id: string) => boolean
 }
 
 const GeneralContext = createContext<GeneralContextProps | null>(null)
@@ -276,6 +277,10 @@ export const GeneralProvider = ({ children }: Props) => {
         setLots(newLots)
     }
 
+    const validateIngredientExists = (id: string): boolean => {
+        return ingredients.some(ingredient => ingredient.id === id)
+    }
+
     useEffect(() => {
         // TODO : Crear conexión de las categorías con el servidor
         getCategoriesData()
@@ -321,7 +326,8 @@ export const GeneralProvider = ({ children }: Props) => {
             updateOfferPrice,
             deleteOffer,
             getProductsStock, 
-            discountProduct 
+            discountProduct,
+            validateIngredientExists
         }}>
             {children}
         </GeneralContext.Provider>
