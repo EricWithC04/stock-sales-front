@@ -46,6 +46,14 @@
     outline: none;
 }
 
+.field-container select {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #b3b3b353;
+    outline: none;
+}
+
 .ingredient-container-header {
     display: flex;
     align-items: center;

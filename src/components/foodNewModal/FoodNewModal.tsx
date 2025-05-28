@@ -2,6 +2,7 @@ import { forwardRef, useState } from "react"
 import styles from "./FoodNewModal.module.css"
 
 import { useGeneralContext } from "../../context/GeneralContext"
+import { IngredientBrowser } from "./browser/IngredientBrowser"
 
 interface FoodData {
     name: string
@@ -32,6 +33,11 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
         price: 0
     })
     const [ingredients, setIngredients] = useState<Array<Ingredient>>([{ uid: 1, id: "", quantity: 0 }])
+    const [ingredientFlag, setIngredientFlag] = useState<boolean>(false)
+
+    const changeIngredientFlag = () => {
+        setIngredientFlag(!ingredientFlag)
+    }
 
     const addNewIngredient = () => {
         setIngredients([...ingredients, { uid: ingredients[ingredients.length-1].uid+1, id: "", quantity: 0 }])
@@ -79,6 +85,14 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
         setIngredients([{ uid: 1, id: "", quantity: 0 }])
         uploadNewFood(newFood)
         changeFoods()
+        changeIngredientFlag()
+        closeModal()
+    }
+
+    const handleCloseModal = () => {
+        setData({ name: "", category: "", description: "", price: 0 })
+        setIngredients([{ uid: 1, id: "", quantity: 0 }])
+        changeIngredientFlag()
         closeModal()
     }
 
@@ -88,7 +102,13 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
                 <h2>Nueva comida</h2>
                 <div className={styles["field-container"]}>
                     <label>Nombre</label>
-                    <input type="text" name="name" placeholder="Ej: Hamburguesa Completa" onChange={handleChange}/>
+                    <input 
+                        type="text" 
+                        name="name" 
+                        placeholder="Ej: Hamburguesa Completa" 
+                        onChange={handleChange}
+                        value={data.name}
+                    />
                 </div>
                 <div className={styles["field-container"]}>
                     <label>Categoría</label>
@@ -109,12 +129,15 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
                     {
                         ingredients.map((ingredient, index) => (
                             <div className={styles["ingredient-container"]} key={index}>
-                                <input 
-                                    type="text" 
-                                    name="id"
-                                    placeholder="Ingrediente"
-                                    value={ingredients[index].id}
-                                    onChange={(e) => handleChangeIngredient(e, index)}
+                                <IngredientBrowser 
+                                    indexIngredient={index}
+                                    ingredientFlag={ingredientFlag}
+                                    handleSetValue={(id: string, index: number) => 
+                                        handleChangeIngredient({ 
+                                                target: { name: "id", value: id } 
+                                            } as React.ChangeEvent<HTMLInputElement>, 
+                                            index)
+                                    }
                                 />
                                 <input 
                                     type="number"
@@ -134,14 +157,19 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
                 </div>
                 <div className={styles["field-container"]}>
                     <label>Descripción</label>
-                    <textarea name="description" placeholder="Ej: Carne 100g, Lechuga, Tomate y Jamón" onChange={handleChange}/>
+                    <textarea 
+                        name="description" 
+                        placeholder="Ej: Carne 100g, Lechuga, Tomate y Jamón" 
+                        onChange={handleChange}
+                        value={data.description}
+                    />
                 </div>
                 <div className={styles["field-container"]}>
                     <label>Precio</label>
-                    <input type="number" name="price" placeholder="Ej: 5000" onChange={handleChange}/>
+                    <input type="number" value={data.price} name="price" placeholder="Ej: 5000" onChange={handleChange}/>
                 </div>
                 <div className={styles["buttons-container"]}>
-                    <button type="button" onClick={closeModal} className={styles["cancel-button"]}>Cancelar</button>
+                    <button type="button" onClick={handleCloseModal} className={styles["cancel-button"]}>Cancelar</button>
                     <button type="button" onClick={handleSubmit} className={styles["submit-button"]}>Guardar</button>
                 </div>
             </form>
