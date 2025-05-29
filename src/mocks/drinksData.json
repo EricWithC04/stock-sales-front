@@ -1,110 +1,34 @@
 [
-    {
-        "id": "7790895005602",
-        "description": "Coca-Cola PET 250ml",
-        "stock": 20,
-        "price": 1000
-    },
-    {
-        "id": "7790895002656",
-        "description": "Coca-Cola PET 375ml",
-        "stock": 20,
-        "price": 1200
-    },
-    {
-        "id": "7790895000782",
-        "description": "Coca-Cola PET 500ml",
-        "stock": 20,
-        "price": 1400
-    },
-    {
-        "id": "7790895001413",
-        "description": "Coca-Cola PET 1L",
-        "stock": 20,
-        "price": 1700
-    },
-    {
-        "id": "7790895001598",
-        "description": "Coca-Cola Vidrio 1L",
-        "stock": 20,
-        "price": 1700
-    },
-    {
-        "id": "7790895005916",
-        "description": "Coca-Cola Vidrio 1.5L",
-        "stock": 20,
-        "price": 1900
-    },
-    {
-        "id": "7790895067556",
-        "description": "Coca-Cola PET 1.5L",
-        "stock": 20,
-        "price": 1900
-    },
-    {
-        "id": "5449000000286",
-        "description": "Coca-Cola PET 2L",
-        "stock": 20,
-        "price": 2100
-    },
-    {
-        "id": "7790895000997",
-        "description": "Coca-Cola PET 2.25L",
-        "stock": 20,
-        "price": 2300
-    },
-    {
-        "id": "7790895006418",
-        "description": "Coca-Cola PET 3L",
-        "stock": 20,
-        "price": 2500
-    },
-    {
-        "id": "5449000000729",
-        "description": "Sprite Lata 250ml",
-        "stock": 20,
-        "price": 1000
-    },
-    {
-        "id": "9300675008419",
-        "description": "Sprite Lata 375ml",
-        "stock": 20,
-        "price": 1200
-    },
-    {
-        "id": "7790895000829",
-        "description": "Sprite PET 500ml",
-        "stock": 20,
-        "price": 1400
-    },
-    {
-        "id": "7790895005015",
-        "description": "Sprite PET 1L",
-        "stock": 20,
-        "price": 1700
-    },
-    {
-        "id": "7790895000447",
-        "description": "Sprite PET 1.5L",
-        "stock": 20,
-        "price": 1900
-    },
-    {
-        "id": "7790895001000",
-        "description": "Sprite PET 2.25L",
-        "stock": 20,
-        "price": 2300
-    },
-    {
-        "id": "7790895646737",
-        "description": "Jugo Cepita Naranja 1.5L",
-        "stock": 20,
-        "price": 1500
-    },
-    {
-        "id": "7790036002125",
-        "description": "Agua Sabor. Vida Pomelo 1.5L",
-        "stock": 20,
-        "price": 1500
-    }
+{"id":"7790895005916","description":"Coca Cola Vidrio 1.5L","stock":20,"price":1900},
+{"id":"7790895063855","description":"Coca Cola 250ml","stock":20,"price":600},
+{"id":"7790895064203","description":"Coca Cola 330ml","stock":20,"price":1000},
+{"id":"7790895007378","description":"Coca Cola 600ml","stock":20,"price":1400},
+{"id":"7790895006418","description":"Coca Cola 3L","stock":20,"price":3500},
+{"id":"7790895068164","description":"Coca Cola Retornable. 2,5L","stock":20,"price":2800},
+{"id":"7790895000218","description":"Coca Cola Retornable 2L","stock":20,"price":2500},
+{"id":"7790895005374","description":"Coca Cola Retornable 1L","stock":20,"price":1900},
+{"id":"7790895005602","description":"Coca Cola Lata 250ml","stock":20,"price":600},
+{"id":"7790895000232","description":"Coca Cola Lata 354ml","stock":20,"price":1000},
+{"id":"7790895000782","description":"Coca Cola 500ml","stock":20,"price":1300},
+{"id":"7790895646737","description":"Jugo Cepita Naranja 1.5L","stock":20,"price":1500},
+{"id":"7790036002125","description":"Agua Sabor. Vida Pomelo 1.5L","stock":20,"price":1500},
+{"id":"7790895005015","description":"Sprite PET 1L","stock":20,"price":1700},
+{"id":"7790895064128","description":"Sprite 3L","stock":20,"price":3500},
+{"id":"7790895007439","description":"Sprite 600ml","stock":20,"price":1300},
+{"id":"7790895000829","description":"Sprite 500ml","stock":20,"price":1000},
+{"id":"7790895000041","description":"Sprite 2L","stock":20,"price":2500},
+{"id":"7790895006111","description":"Sprite Retornable 1L","stock":20,"price":1700},
+{"id":"7795742084359","description":"Brahma Lata 473ml","stock":20,"price":3000},
+{"id":"7792798007493","description":"Brahma 1L","stock":20,"price":4000},
+{"id":"7792798006489","description":"Brahma Morena 970CC","stock":20,"price":4000},
+{"id":"7792798005871","description":"Brahma Lata 354ml","stock":20,"price":2400},
+{"id":"7793147118600","description":"Budweiser 1L","stock":20,"price":4000},
+{"id":"7793147118600","description":"Budweiser 1L","stock":20,"price":4000},
+{"id":"75032715","description":"Corona 330CC","stock":20,"price":3000},
+{"id":"7501064106859","description":"Corona 710CC","stock":20,"price":4000},
+{"id":"7793147009182","description":"Heineken 354CC","stock":20,"price":2400},
+{"id":"7793147000899","description":"Heineken 970ml","stock":20,"price":4000},
+{"id":"7792798170609","description":"Heineken Lata 354ml","stock":20,"price":2400},
+{"id":"7793147000981","description":"Imperial 1L","stock":20,"price":4000},
+{"id":"7792798006397","description":"Patagonia 625ml","stock":20,"price":3500}
 ]

@@ -41,19 +41,20 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
 
     const { getProducts, getFoods, getOffers } = useGeneralContext()!
 
-    const autoSuggestionTheme = {
-        container: styles["auto-suggestion-container"],
-        input: styles["auto-suggestion-input"],
-        suggestionsContainer: styles["suggestions-container"],
-        suggestion: styles['suggestion'],
-        suggestionHighlighted: styles['suggestionHighlighted']
-    }
-
+    
     const [allProducts, setAllProducts] = useState<Array<Drink | Food | Offer>>([])
     const [displayProducts, setDisplayProducts] = useState<Array<Drink | Food | Offer>>([])
     const [browsedValue, setBrowsedValue] = useState<string>("")
     const [_selectedProduct, setSelectedProduct] = useState<Drink | Food | Offer | null>(null)
-
+    
+    const autoSuggestionTheme = {
+        container: styles["auto-suggestion-container"],
+        input: styles["auto-suggestion-input"],
+        suggestionsContainer: `${styles["suggestions-container"]} ${displayProducts.length ? styles["open"] : ""}`,
+        suggestion: styles['suggestion'],
+        suggestionHighlighted: styles['suggestionHighlighted']
+    }
+    
     useEffect(() => {
         setAllProducts([...getProducts(), ...getFoods(), ...getOffers()])
     }, [])
