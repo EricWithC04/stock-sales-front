@@ -41,28 +41,8 @@
 }
 
 .search-container {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    width: 100%
-}
-
-.search-container input {
-    width: 100%
-}
-
-.add-item-button {
-    padding: 8px 10px;
-    background: linear-gradient(-90deg, #a7217f, #d3216a);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    outline: 1px solid #b3b3b353;
-}
-
-.add-item-button:hover {
-    cursor: pointer;
-    background: linear-gradient(-90deg, #c954af, #f5438c);
+    width: 100%;
+    margin-bottom: 12px;
 }
 
 .quantity-container {

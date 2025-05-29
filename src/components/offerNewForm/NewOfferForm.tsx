@@ -1,10 +1,10 @@
 import React, { forwardRef, useEffect, useState } from "react"
 import DataTable from "react-data-table-component"
-import { Plus } from "lucide-react"
 import styles from "./NewOfferForm.module.css"
 
 import { useGeneralContext } from "../../context/GeneralContext"
 import { Trash2 } from "lucide-react"
+import { ProductBrowserOffer } from "./browser/Browser"
 
 interface Product {
     id: string
@@ -50,7 +50,7 @@ interface Props {
 
 export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal, updateOffers }, ref) => {
 
-    const { getProductById, getOffers, uploadNewOffer } = useGeneralContext()!
+    const { getOffers, uploadNewOffer } = useGeneralContext()!
 
     const [newOfferData, setNewOfferData] = useState<Offer>({
         name: "",
@@ -58,8 +58,6 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal,
         price: ""
     })
     const [selectedProducts, setSelectedProducts] = useState<Array<Product>>([])
-
-    const [productId, setProductId] = useState<string>("")
 
     const [errors, setErrors] = useState<OfferErrors>({
         name: "",
@@ -127,35 +125,25 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal,
         })
     }
 
-    const includeProduct = () => {
-        const product = getProductById(productId) as Drink | Food | "Código Invalido"
-            if (product !== "Código Invalido") {
-                setProductId("")
-                if (selectedProducts.find(p => p.id === product.id)) {
-                    const newSelectedProducts = selectedProducts.map(p => {
-                        if (p.id === product.id) return { ...p, quantity: p.quantity + 1 }
-                        else return p
-                    })
-                    setSelectedProducts(newSelectedProducts)
-                } else {
-                    setSelectedProducts([
-                        ...selectedProducts, 
-                        { 
-                            id: product.id, 
-                            description: product.type === "Bebida" ? product.description : (product as Food).name, 
-                            price: product.price, 
-                            quantity: 1 
-                        }
-                    ])
+    const handleSelectProductToInclude = (product: Drink | Food) => {
+        console.log(product);
+        
+        if (selectedProducts.find(p => p.id === product.id)) {
+            const newSelectedProducts = selectedProducts.map(p => {
+                if (p.id === product.id) return { ...p, quantity: p.quantity + 1 }
+                else return p
+            })
+            setSelectedProducts(newSelectedProducts)
+        } else {
+            setSelectedProducts([
+                ...selectedProducts, 
+                { 
+                    id: product.id, 
+                    description: product.type === "Bebida" ? product.description : (product as Food).name, 
+                    price: product.price, 
+                    quantity: 1 
                 }
-            } else {
-                alert(product)
-            }
-    }
-
-    const handleEnterProduct = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            includeProduct()
+            ])
         }
     }
 
@@ -224,18 +212,9 @@ export const NewOfferForm = forwardRef<HTMLDialogElement, Props> (({ closeModal,
                 <div className={styles["fields-container"]}>
                     <label>Buscar y agregar productos</label>
                     <div className={styles["search-container"]}>
-                        <input 
-                            type="text"
-                            value={productId}
-                            onChange={(e) => setProductId(e.target.value)}
-                            onKeyDown={handleEnterProduct} 
+                        <ProductBrowserOffer 
+                            handleIncludeItem={handleSelectProductToInclude}
                         />
-                        <button type="button" className={styles["add-item-button"]} onClick={includeProduct}>
-                            <Plus 
-                                color="#fff"
-                                size={22}
-                            />
-                        </button>
                     </div>
                 </div>
                 <DataTable 
