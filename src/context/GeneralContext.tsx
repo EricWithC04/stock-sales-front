@@ -249,20 +249,44 @@ export const GeneralProvider = ({ children }: Props) => {
         // TODO : Agregar que el descuento funcione también para las ofertas, solamente funciona para bebidas y comidas
 
         const lotsDiscount: Array<{ id: number, quantity: number }> = []
-        itemProducts.forEach(product => {
-            if (product.type && product.type === "Comida") {
-                const productData = getProductById(product.id)
-                if (productData === "Código Invalido") throw new Error("Error en el manejo de los id");
 
+        const processProduct = (productId: string, quantity: number) => {
+            const productData = getProductById(productId);
+
+            if (productData === "Código Invalido") return
+            if (productData.type && productData.type === "Comida") {
                 (productData as Food).ingredients.forEach(ingredient => {
-                    const ingredientQuantity = ingredient.quantity * product.quantity
+                    const ingredientQuantity = ingredient.quantity * quantity
                     const discountLots = calculateDiscountLots(ingredient.id, ingredientQuantity, lots)
+                    
                     lotsDiscount.push(...discountLots)
+                })
+            } else {
+                const discountLots = calculateDiscountLots(productId, quantity, lots)
+                lotsDiscount.push(...discountLots)
+            }
+        }
+
+        itemProducts.forEach(product => {
+            if (product.type && product.type === "Oferta") {
+                const data = getProductById(product.id)
+
+                const productsWithQuantities: Array<{id: string, quantity: number}> = [];
+                (data as Offer).products.forEach(product => {
+                    const finded = productsWithQuantities.find(p => p.id === product.id)
+                    if (finded) {
+                        finded.quantity += 1 
+                    } else {
+                        productsWithQuantities.push({ id: product.id, quantity: 1 })
+                    }
+                });
+
+                productsWithQuantities.forEach((product) => {
+                    processProduct(product.id, product.quantity)                        
                 })
 
             } else {
-                const discountLots = calculateDiscountLots(product.id, product.quantity, lots)
-                lotsDiscount.push(...discountLots)
+                processProduct(product.id, product.quantity)
             }
 
         })
