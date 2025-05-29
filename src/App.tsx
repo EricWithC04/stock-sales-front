@@ -8,6 +8,7 @@ import { ExpiresPage } from './pages/expires/Expires'
 import { SalesPage } from './pages/sales/Sales'
 import { OffersPage } from './pages/offers/Offers'
 import { Loading } from './pages/loading/Loading'
+import { MobileNotSupported } from './pages/mobileNotSupported/MobileNotSupported'
 
 function App() {
 
@@ -28,6 +29,9 @@ function App() {
     return (
         <>
             {
+                window.innerHeight > window.innerWidth ? (
+                    <MobileNotSupported></MobileNotSupported>
+                ) :
                 loading ? (
                     <Loading></Loading>
                 ) : (
