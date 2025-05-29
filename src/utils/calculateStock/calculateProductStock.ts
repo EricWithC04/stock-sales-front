@@ -50,7 +50,7 @@ export const calculateProductStock = (id: string, lots: Array<Lot>) => {
     return totalStock
 }
 
-export const calculateItemStock = (data: Drink | Food | Offer | "Código Invalido", lots: Array<Lot>, dataProducts: Array<Drink | Ingredient>) => {
+export const calculateItemStock = (data: Drink | Food | Offer | "Código Invalido", foods: Array<Food>, lots: Array<Lot>, dataProducts: Array<Drink | Ingredient>): number => {
     if (data === "Código Invalido") return 0
 
     let stocks: { [key: string]: number } =  {} 
@@ -72,6 +72,85 @@ export const calculateItemStock = (data: Drink | Food | Offer | "Código Invalid
         })
         return totalStock || 0
     }
+
+    if (data.type === "Oferta") {
+        const productsWithQuantities: Array<{id: string, quantity: number}> = [];
+
+        (data as Offer).products.forEach(product => {
+            const finded = productsWithQuantities.find(p => p.id === product.id)
+            if (finded) {
+                finded.quantity += 1 
+            } else {
+                productsWithQuantities.push({ id: product.id, quantity: 1 })
+            }
+        })
+
+        let totalStock: number | null = null;
+
+        productsWithQuantities.forEach((product) => {
+            const productData = [...foods, ...dataProducts].find(p => p.id === product.id)
+            if (!productData) throw new Error("No se ha encontrado el producto buscado")
+            if (productData.type === "Bebida") {
+                totalStock === null ? 
+                totalStock = stocks[product.id] :
+                totalStock = Math.min(totalStock, stocks[product.id]) 
+            }
+            if (productData.type === "Comida") {
+                let stock: number | null = null;
+                (productData as Food).ingredients.forEach((ingredient: { id: string, quantity: number }) => {
+                    if (stock === null) stock = Math.floor(Math.floor(stocks[ingredient.id] / ingredient.quantity) / product.quantity)
+                    else stock = Math.min(stock, Math.floor(Math.floor(stocks[ingredient.id] / ingredient.quantity) / product.quantity))
+                })
+                console.log(stock);
+                
+                totalStock === null ? 
+                totalStock = stock :
+                totalStock = Math.min(totalStock, stock || 0)
+            }
+        })
+
+        return totalStock || 0
+    }
+
     return 0
-    // Ofertas
 }
+
+// export const calculateOfferStock = (data: Offer, lots: Array<Lot>, foods: Array<Food>, dataProducts: Array<Drink | Ingredient>): number => {
+    
+//     const productsWithQuantities: Array<{id: string, quantity: number}> = []
+
+//     data.products.forEach(product => {
+//         const finded = productsWithQuantities.find(p => p.id === product.id)
+//         if (finded) {
+//             finded.quantity += 1 
+//         } else {
+//             productsWithQuantities.push({ id: product.id, quantity: 1 })
+//         }
+//     })
+
+//     let totalStock: number | null = null;
+
+//     productsWithQuantities.forEach((product) => {
+//         const productData = [...foods, ...dataProducts].find(p => p.id === product.id)
+//         if (!productData) throw new Error("No se ha encontrado el producto buscado")
+//         if (productData.type === "Bebida") {
+//             totalStock === null ? 
+//             totalStock = stocks[product.id] :
+//             totalStock = Math.min(totalStock, stocks[product.id]) 
+//         }
+//         if (productData.type === "Comida") {
+//             let stock: number | null = null;
+//             (productData as Food).ingredients.forEach((ingredient: { id: string, quantity: number }) => {
+//                 if (stock === null) stock = Math.floor(Math.floor(stocks[ingredient.id] / ingredient.quantity) / product.quantity)
+//                 else stock = Math.min(stock, Math.floor(Math.floor(stocks[ingredient.id] / ingredient.quantity) / product.quantity))
+//             })
+//             totalStock === null ? 
+//             totalStock = stock || 0 :
+//             totalStock = Math.min(totalStock, stock || 0)
+//         }
+//     })
+    
+//     if (totalStock === null) totalStock = 0
+
+//     return totalStock
+// }

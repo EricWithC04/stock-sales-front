@@ -8,6 +8,8 @@ import { useGeneralContext } from "../../context/GeneralContext"
 import { useEffect, useState } from "react"
 import { customStylesForSales } from "../../styles/customStylesTables"
 
+type TypeProduct = "Bebida" | "Ingrediente" | "Comida" | "Oferta"
+
 interface ItemSale {
     id: string
     description: string
@@ -20,6 +22,34 @@ interface Stock {
         stock: number
         description: string
     }
+}
+
+interface Drink {
+    id: string
+    description: string
+    type?: TypeProduct
+    stock: number
+    price: number
+}
+
+interface Food {
+    id: string
+    name: string
+    description: string
+    type?: TypeProduct
+    category: string
+    ingredients: Array<{ id: string, quantity: number }>
+    price: number
+}
+
+interface Offer {
+    id: string
+    name: string
+    type?: TypeProduct
+    products: Array<{ id: string }>
+    regularPrice: number
+    price: number
+    available: boolean
 }
 
 interface Props {
@@ -37,7 +67,7 @@ export const ProductListSales = ({
     setInsufficientStock, 
     handleDeleteItem }: Props) => {
 
-    const { getLots, getProducts, getIngredients, getProductById } = useGeneralContext()!
+    const { getFoods, getLots, getProducts, getIngredients, getProductById } = useGeneralContext()!
 
     const [stocks, setStocks] = useState<Stock>({})
 
@@ -98,12 +128,12 @@ export const ProductListSales = ({
         if (productsData.length > 0) {
             const newStocks: Stock = {}
             const lots = getLots()
+            const allFoods = getFoods()
             const allDrinks = getProducts()
             const allIngredients = getIngredients()
-            // TODO : Traer los datos de cada producto en cada iteracion
             productsData.forEach(({ id, description }) => newStocks[id] = {
                 description,
-                stock: calculateItemStock(getProductById(id), lots, [...allDrinks, ...allIngredients])
+                stock: calculateItemStock((getProductById(id) as Drink | Food | Offer | "Código Invalido"), allFoods, lots, [...allDrinks, ...allIngredients])
             })
             setStocks(newStocks)
             // Si hay alguno de los productos con stock insufficiente automaticamente se activa el estado
