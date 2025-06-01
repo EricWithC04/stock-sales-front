@@ -4,6 +4,6 @@ export const calculatePercentDiscount = (total: number, price: number) => {
 
 export const calculatePercent = (total: number, quantity: number) => {
     const result = calculatePercentDiscount(total, quantity)
-    if (result) return result
+    if (result) return 100 - result
     else return 0 
 }

@@ -35,11 +35,12 @@ export const NavigationBar = ({ children, selectPage }: Props) => {
     const [pages, setPages] = useState<Array<Pages>>([
         // { id: 1, Icon: ChartLineIcon, SelectedIcon: ChartLineGradientIcon, title: "Estadísticas", selected: true },
         { id: 2, Icon: UtensilsIcon, SelectedIcon: UtensilsGradientIcon, title: "Menú", selected: true },
-        { id: 3, Icon: ReceiptIcon, SelectedIcon: ReceiptGradientIcon, title: "Ventas", selected: false },
-        { id: 4, Icon: StockIcon, SelectedIcon: StockGradientIcon, title: "Inventario", selected: false },
-        { id: 5, Icon: ProductEntryIcon, SelectedIcon: ProductEntryGradientIcon, title: "Ingresos", selected: false },
-        { id: 6, Icon: OfferIcon, SelectedIcon: OfferGradientIcon, title: "Ofertas", selected: false },
-        { id: 7, Icon: ExpiresIcon, SelectedIcon: ExpiresGradientIcon, title: "Vencimientos", selected: false },
+        { id: 3, Icon: UtensilsIcon, SelectedIcon: UtensilsGradientIcon, title: "Mesas", selected: false },
+        { id: 4, Icon: ReceiptIcon, SelectedIcon: ReceiptGradientIcon, title: "Ventas", selected: false },
+        { id: 5, Icon: StockIcon, SelectedIcon: StockGradientIcon, title: "Inventario", selected: false },
+        { id: 6, Icon: ProductEntryIcon, SelectedIcon: ProductEntryGradientIcon, title: "Ingresos", selected: false },
+        { id: 7, Icon: OfferIcon, SelectedIcon: OfferGradientIcon, title: "Ofertas", selected: false },
+        { id: 8, Icon: ExpiresIcon, SelectedIcon: ExpiresGradientIcon, title: "Vencimientos", selected: false },
     ]);
 
     const handleNavigate = (id: number) => {

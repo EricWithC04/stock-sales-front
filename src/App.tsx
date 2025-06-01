@@ -9,6 +9,7 @@ import { SalesPage } from './pages/sales/Sales'
 import { OffersPage } from './pages/offers/Offers'
 import { Loading } from './pages/loading/Loading'
 import { MobileNotSupported } from './pages/mobileNotSupported/MobileNotSupported'
+import { TablesPage } from './pages/tables/Tables'
 
 function App() {
 
@@ -40,14 +41,16 @@ function App() {
                             selectedPage === 2 ? (
                                 <MenuPage></MenuPage>
                             ) : selectedPage === 3 ? (
-                                <SalesPage></SalesPage>
+                                <TablesPage></TablesPage>
                             ) : selectedPage === 4 ? (
-                                <StockPage></StockPage>
+                                <SalesPage></SalesPage>
                             ) : selectedPage === 5 ? (
-                                <ProductsEntryPage></ProductsEntryPage>
+                                <StockPage></StockPage>
                             ) : selectedPage === 6 ? (
-                                <OffersPage></OffersPage>
+                                <ProductsEntryPage></ProductsEntryPage>
                             ) : selectedPage === 7 ? (
+                                <OffersPage></OffersPage>
+                            ) : selectedPage === 8 ? (
                                 <ExpiresPage></ExpiresPage>
                             ) : <h1>Pagina no disponible</h1>
                         }
