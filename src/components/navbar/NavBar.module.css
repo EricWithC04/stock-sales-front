@@ -16,14 +16,14 @@
     align-items: center;
 }
 
-.aside-container img {
+.logo {
     margin-top: 10px;
     max-width: 70%
 }
 
 .navigation-options {
     width: 90%;
-    margin-top: 20px;
+    margin-top: 1%;
 }
 
 .nav-option-container {

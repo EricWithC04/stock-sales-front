@@ -62,7 +62,7 @@ export const NavigationBar = ({ children, selectPage }: Props) => {
     return (
         <div className={styles["main-container"]}>
             <aside className={styles["aside-container"]}>
-                <img src={logo} alt="logo" />
+                <img src={logo} className={styles["logo"]} alt="logo" />
                 <nav className={styles["navigation-options"]}>
                     {
                         pages.map(({ id, Icon, SelectedIcon, title, selected }) => (
