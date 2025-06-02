@@ -7,17 +7,18 @@ interface Order {
     id: number
     status: boolean
     client: string
-    products: Array<{ id: string, name: string, price: number, quantity: number }>
+    products: Array<{ id: string, name: string, type?: string, price: number, quantity: number }>
 }
 
 interface Props {
     selectOrderToChange: (order: Order) => void
     changeTableStatus: (id: number) => void
     removeTable: (id: number) => void
+    successSale: (order: Order) => void
     tables: Array<Order>
 }
 
-export const TablesList = ({ selectOrderToChange, changeTableStatus, removeTable, tables }: Props) => {
+export const TablesList = ({ selectOrderToChange, changeTableStatus, removeTable, successSale, tables }: Props) => {
 
     const columns = [
         {
@@ -70,6 +71,7 @@ export const TablesList = ({ selectOrderToChange, changeTableStatus, removeTable
                         <SquarePen color="#000" size={18}/> Editar
                     </button>
                     <button 
+                        onClick={() => successSale(row)}
                         className={`${styles["sale"]} ${row.status ? styles["unabled"] : ""}`}
                     >
                         <ShoppingCart color="#fff" size={18}/> Vender

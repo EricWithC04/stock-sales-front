@@ -4,6 +4,7 @@ import { TablesList } from "../../components/tablesList/TablesList"
 import { EditOrderModal } from "../../components/editOrderModal/EditOrderModal"
 
 import { useGeneralContext } from "../../context/GeneralContext"
+import { SuccessSaleModal } from "../../components/successSaleModal/SuccessSaleModal"
 
 interface Drink {
     id: string
@@ -27,7 +28,7 @@ interface Order {
     id: number
     status: boolean
     client: string
-    products: Array<{ id: string, name: string, price: number, quantity: number }>
+    products: Array<{ id: string, name: string, type?: string, price: number, quantity: number }>
 }
 
 export const TablesPage = () => {
@@ -35,6 +36,7 @@ export const TablesPage = () => {
     const { getProductById } = useGeneralContext()!
 
     const tableRef = useRef<HTMLDialogElement>(null)
+    const successSaleRef = useRef<HTMLDialogElement>(null)
 
     const [tables, setTables] = useState<Array<Order>>([
         { id: 1, status: true, client: "", products: [] },
@@ -55,6 +57,14 @@ export const TablesPage = () => {
 
     const closeTableModal = () => {
         tableRef.current?.close()
+    }
+
+    const openSuccessModal = () => {
+        successSaleRef.current?.showModal()
+    }
+
+    const closeSuccessModal = () => {
+        successSaleRef.current?.close()
     }
 
     const changeTableStatus = (id: number) => {
@@ -89,13 +99,14 @@ export const TablesPage = () => {
             const newTables = tables.map(table => {
                 if (table.id !== order.id) return table
     
-                const newProducts: Array<{ id: string, name: string, price: number, quantity: number }> = [...table.products]
+                const newProducts: Array<{ id: string, name: string, type?: string, price: number, quantity: number }> = [...table.products]
                 const finded = newProducts.find(product => product.id === productId)
     
                 if (finded) finded.quantity += quantity
                 else newProducts.push({ 
                     id: productId, 
                     price: product.price, 
+                    type: product.type,
                     quantity, 
                     name: product.type === "Bebida" ? (product as Drink).description : (product as Food).name 
                 })
@@ -111,8 +122,42 @@ export const TablesPage = () => {
         setTables(newTables)
     }
 
+    const handleSuccessSale = (order: Order) => {
+        setSelectedOrder(order)
+        openSuccessModal()
+    }
+
+    const handleClearItems = () => {
+        const newTables = tables.map(table => {
+            if (table.id !== selectedOrder!.id) return table
+            else return { ...table, products: [], status: true, client: "" }
+        })
+        setSelectedOrder(null)
+        setTables(newTables)
+        closeSuccessModal()
+    }
+
+    const formatData = (order: Order) => {
+        return [
+            ...order.products.map(product => ({
+                id: product.id,
+                description: product.name,
+                type: product.type,
+                price: product.price,
+                quantity: product.quantity
+            }))
+        ]
+    }
+
+
     return (
         <div className={styles["tables-container"]}>
+            <SuccessSaleModal
+                clearItems={handleClearItems}
+                items={selectedOrder ? formatData(selectedOrder) : []}
+                closeModal={closeSuccessModal}
+                ref={successSaleRef}
+            />
             <EditOrderModal 
                 closeModal={closeTableModal}
                 selectedOrder={selectedOrder}
@@ -131,6 +176,7 @@ export const TablesPage = () => {
                 selectOrderToChange={handleSelectOrder}
                 changeTableStatus={changeTableStatus}
                 removeTable={removeTable}
+                successSale={handleSuccessSale}
                 tables={tables}
             />
         </div>

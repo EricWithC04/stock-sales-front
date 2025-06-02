@@ -7,7 +7,7 @@ interface Order {
     id: number
     status: boolean
     client: string
-    products: Array<{ id: string, name: string, price: number, quantity: number }>
+    products: Array<{ id: string, name: string, type?: string, price: number, quantity: number }>
 }
 
 interface Props {
