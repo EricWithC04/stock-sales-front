@@ -35,9 +35,10 @@ interface Offer {
 
 interface Props {
     handleIncludeItem: (id: string) => void
+    completeWidth?: boolean
 }
 
-export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
+export const ProductBrowserSales = ({ handleIncludeItem, completeWidth }: Props) => {
 
     const { getProducts, getFoods, getOffers } = useGeneralContext()!
 
@@ -106,7 +107,7 @@ export const ProductBrowserSales = ({ handleIncludeItem }: Props) => {
 
     const inputProps = {
         placeholder: "Buscar...",
-        className: styles["browser"],
+        className: `${styles["browser"]} ${completeWidth ? styles["complete-width"] : ""}`,
         value: browsedValue,
         onChange: handleInputChange,
         onKeyDown: (e: any) => {

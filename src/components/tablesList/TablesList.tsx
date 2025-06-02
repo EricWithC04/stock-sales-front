@@ -11,12 +11,13 @@ interface Order {
 }
 
 interface Props {
-    selectOrderToChange: () => void
+    selectOrderToChange: (order: Order) => void
     changeTableStatus: (id: number) => void
+    removeTable: (id: number) => void
     tables: Array<Order>
 }
 
-export const TablesList = ({ selectOrderToChange, changeTableStatus, tables }: Props) => {
+export const TablesList = ({ selectOrderToChange, changeTableStatus, removeTable, tables }: Props) => {
 
     const columns = [
         {
@@ -64,7 +65,7 @@ export const TablesList = ({ selectOrderToChange, changeTableStatus, tables }: P
                 <div className={styles["button-container"]}>
                     <button 
                         className={`${row.status ? styles["unabled"] : ""}`} 
-                        onClick={() => selectOrderToChange()}
+                        onClick={() => selectOrderToChange(row)}
                     >
                         <SquarePen color="#000" size={18}/> Editar
                     </button>
@@ -74,9 +75,10 @@ export const TablesList = ({ selectOrderToChange, changeTableStatus, tables }: P
                         <ShoppingCart color="#fff" size={18}/> Vender
                     </button>
                     <button 
+                        onClick={() => removeTable(row.id)}
                         className={`${styles["remove"]} ${row.status ? "" : styles["unabled"]}`}
                     >
-                        <Trash2 color="#fff" size={18}/> Eliminar
+                        <Trash2 color="#fff" size={18}/> Quitar
                     </button>
                 </div>
             )

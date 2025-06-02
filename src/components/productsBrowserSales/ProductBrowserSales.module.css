@@ -46,3 +46,8 @@
 .open {
     border: 1px solid #b3b3b3;
 }
+
+.complete-width {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
