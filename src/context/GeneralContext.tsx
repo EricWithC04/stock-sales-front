@@ -82,6 +82,7 @@ interface ItemSale {
     // El id del ItemSale es el mismo que el del producto
     id: string
     description: string
+    client: string
     type?: string
     quantity: number
     price: number

@@ -149,7 +149,6 @@ export const TablesPage = () => {
         ]
     }
 
-
     return (
         <div className={styles["tables-container"]}>
             <SuccessSaleModal

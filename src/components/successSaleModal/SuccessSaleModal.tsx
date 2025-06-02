@@ -8,6 +8,7 @@ import { getDateString } from "../../utils/getDateString"
 interface ItemResume {
     id: string
     description: string
+    client: string
     type?: string
     quantity: number
     price: number
@@ -23,6 +24,7 @@ export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, 
 
     const { uploadNewSale, discountProduct } = useGeneralContext()!
 
+    const [client, setClient] = useState<string>("")
     const [discount, setDiscount] = useState<number | null>(null)
     const [discountType, setDiscountType] = useState<string>("1")
     const [subtotal, setSubtotal] = useState<number>(0)
@@ -70,11 +72,12 @@ export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, 
     const handleSubmitSale = () => {
         uploadNewSale({
             date: getDateString(new Date()),
-            client: "",
+            client: client,
             payMethod: method as "Efectivo" | "Transferencia",
             products: items.map(i => ({ id: i.id, quantity: i.quantity })),
             total: handleCalculateTotal(subtotal, discount, discountType)
         })
+        setClient("")
         discountProduct(items)
         setSubtotal(0)
         clearItems()
@@ -85,6 +88,15 @@ export const SuccessSaleModal = forwardRef<HTMLDialogElement, Props> (({ items, 
         <dialog ref={ref} className={styles["success-sale-modal"]}>
             <form className={styles["data-container"]}>
                 <h2>Finalizar Venta</h2>
+                <div className={styles["client"]}>
+                    <h3>Nombre del cliente:</h3>
+                    <input 
+                        type="text" 
+                        placeholder="Nombre..." 
+                        value={client} 
+                        onChange={(e) => setClient(e.target.value)}
+                    />
+                </div>
                 <DataTable 
                     columns={columns}
                     data={items}
