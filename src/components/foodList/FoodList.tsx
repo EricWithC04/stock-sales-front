@@ -1,6 +1,9 @@
 import styles from "./FoodList.module.css"
 import { FoodCard } from "../foodCard/FoodCard"
 import { useEffect, useState } from "react"
+import PanchoImg from "../../assets/food/foto-pancho.jpg"
+import HamburImg from "../../assets/food/foto-hambur.jpg"
+import FritasImg from "../../assets/food/foto-papas-fritas.jpg"
 
 import { useGeneralContext } from "../../context/GeneralContext"
 import { FoodListPagination } from "../foodListPagination/FoodListPagination"
@@ -67,6 +70,7 @@ export const FoodList = ({ selectedCategory, categoryFlag, foodFlag }: Props) =>
                             name={food.name}
                             description={food.description}
                             price={food.price}
+                            image={food.category === "Panchos" ? PanchoImg : food.category === "Hamburguesas" ? HamburImg : FritasImg}
                         />
                     )) : allFoods.length ? (
                         <></>

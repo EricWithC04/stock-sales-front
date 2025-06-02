@@ -6,3 +6,7 @@
     margin-left: 2%;
     margin-bottom: 12px;
 }
+
+.edit:hover {
+    cursor: pointer
+}
