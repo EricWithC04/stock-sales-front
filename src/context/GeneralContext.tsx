@@ -136,7 +136,7 @@ export const GeneralProvider = ({ children }: Props) => {
     }
 
     const getProductById = (id: string) => {
-        const product = [...products, ...foods, ...offers].find(product => product.id === id)
+        const product = [...products, ...foods, ...offers.filter(offer => offer.available)].find(product => product.id === id)
         if (product) return product
         else return "Código Invalido"
     }

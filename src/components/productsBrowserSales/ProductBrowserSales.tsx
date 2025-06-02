@@ -57,7 +57,7 @@ export const ProductBrowserSales = ({ handleIncludeItem, completeWidth }: Props)
     }
     
     useEffect(() => {
-        setAllProducts([...getProducts(), ...getFoods(), ...getOffers()])
+        setAllProducts([...getProducts(), ...getFoods(), ...getOffers().filter(o => o.available)])
     }, [])
 
     const filterProducts = (value: string) => {

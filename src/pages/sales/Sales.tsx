@@ -106,7 +106,7 @@ export const SalesPage = () => {
             <SuccessSaleModal
                 closeModal={closeSuccessModal}
                 items={itemSales.map(item => (
-                    { id: item.id, description: item.description, type: item.type || "", quantity: item.quantity, price: item.price * item.quantity }
+                    { id: item.id, description: item.description, client: "", type: item.type || "", quantity: item.quantity, price: item.price * item.quantity }
                 ))}
                 clearItems={() => setItemSales([])}
                 ref={successRef}
