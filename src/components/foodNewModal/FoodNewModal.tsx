@@ -121,9 +121,10 @@ export const FoodNewModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, 
         const currentIngredientError = validateErrorsIngredients(ingredients)
 
         setErrorsActive(true)
+        
         if (
             Object.values(currentErrors).every(error => !error.length) &&
-            currentIngredientError.error.length
+            !currentIngredientError.error.length
         ) {
             const newIngredients = ingredients.map(i => ({ id: i.id, quantity: i.quantity }))
             const newFood = {
