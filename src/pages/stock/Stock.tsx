@@ -10,6 +10,8 @@ import { StockNewProductModal } from '../../components/stockNewProductModal/Stoc
 
 import { useGeneralContext } from '../../context/GeneralContext';
 import { customStylesWithPagination } from '../../styles/customStylesTables';
+import { SquarePen } from 'lucide-react';
+import { EditProductModal } from '../../components/editProductModal/EditProductModal';
 
 interface ItemStock {
     id: string;
@@ -19,12 +21,40 @@ interface ItemStock {
     price?: number;
 }
 
+interface ProductDataEdit {
+    id: string;
+    description: string;
+    category: "Bebida" | "Ingrediente";
+    price?: number;
+}
+
 export const StockPage = () => {
 
     const { getProducts, getIngredients, getLots } = useGeneralContext()!
 
+    const [editProduct, setEditProduct] = useState<ProductDataEdit | null>(null) 
+
     const notFoundProductRef = useRef<HTMLDialogElement>(null)
     const newProductRef = useRef<HTMLDialogElement>(null)
+    const editProductRef = useRef<HTMLDialogElement>(null)
+
+    const openEditProductModal = () => {
+        editProductRef.current?.showModal()
+    }
+
+    const closeEditProductModal = () => {
+        editProductRef.current?.close()
+    }
+
+    const handleEditProduct = (product: ItemStock) => {
+        setEditProduct({
+            id: product.id,
+            description: product.description,
+            category: product.type,
+            price: product.price
+        })
+        openEditProductModal()
+    }
 
     const columnsDrinks = [
         {
@@ -43,6 +73,16 @@ export const StockPage = () => {
         {
             name: 'Precio',
             selector: (row: ItemStock) => row.price!,
+        },
+        {
+            name: 'Acciones',
+            cell: (row: ItemStock) => (
+                <div className={styles["actions-row"]}>
+                    <div className={styles["edit"]} onClick={() => handleEditProduct(row)}>
+                        <SquarePen color={"#000"} />
+                    </div>
+                </div>
+            )
         }
     ]
 
@@ -133,6 +173,11 @@ export const StockPage = () => {
 
     return (
         <div className={styles["stock-container"]}>
+            <EditProductModal
+                closeModal={closeEditProductModal}
+                ref={editProductRef}
+                productToEdit={editProduct}
+            />
             <StockProductModal
                 ref={notFoundProductRef}
                 closeModal={closeNotFoundModal}

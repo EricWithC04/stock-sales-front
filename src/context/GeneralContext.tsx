@@ -104,6 +104,8 @@ interface GeneralContextProps {
     uploadNewLot: (lot: Lot) => void
     uploadNewOffer: (offer: Offer) => void
     uploadNewSale: (sale: Sale) => void
+    updateProduct: (id: string, data: Drink) => void
+    updateIngredient: (id: string, data: Ingredient) => void
     updateOfferStatus: (id: string) => void
     updateOfferPrice: (id: string, newPrice: number) => void
     deleteOffer: (id: string) => void
@@ -205,6 +207,30 @@ export const GeneralProvider = ({ children }: Props) => {
     const uploadNewSale = (newSale: Sale) => {
         // TODO : Agregar conexión con el servidor "CREAR VENTA"
         setSales([...sales, {...newSale, id: sales.length+1}])
+    }
+
+    const updateProduct = (id: string, data: Drink) => {
+        const newProducts: Array<Drink> = []
+        products.forEach(product => {
+            if (product.id === id) {
+                newProducts.push({ ...data })
+            } else {
+                newProducts.push(product)
+            }
+        })
+        setProducts(newProducts as Array<Drink>)
+    }
+
+    const updateIngredient = (id: string, data: Ingredient) => {
+        const newProducts: Array<Ingredient> = []
+        products.forEach(product => {
+            if (product.id === id) {
+                newProducts.push({ ...data })
+            } else {
+                newProducts.push(product)
+            }
+        })
+        setIngredients(newProducts as Array<Ingredient>)
     }
 
     // Cuando se activa o inactiva una oferta
@@ -347,6 +373,8 @@ export const GeneralProvider = ({ children }: Props) => {
             uploadNewLot, 
             uploadNewOffer,
             uploadNewSale,
+            updateProduct,
+            updateIngredient,
             updateOfferStatus,
             updateOfferPrice,
             deleteOffer,
