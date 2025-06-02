@@ -137,7 +137,7 @@ export const TablesPage = () => {
         closeSuccessModal()
     }
 
-    const formatData = (order: Order) => {
+    const formatData = (order: Order): any => {
         return [
             ...order.products.map(product => ({
                 id: product.id,
@@ -165,7 +165,7 @@ export const TablesPage = () => {
                 ref={tableRef}
             />
             <h1 className={styles["title"]}>Gestión de Mesas</h1>
-            <div>
+            <div className={styles["actions"]}>
                 <button onClick={() => setTables([
                     ...tables, 
                     { id: tables[tables.length-1].id + 1, status: true, client: "", products: [] }

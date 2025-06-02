@@ -1,0 +1,32 @@
+.tables-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.title {
+    margin-left: 2%;
+    margin-top: 1%;
+}
+
+.actions {
+    display: flex;
+    width: 96%;
+    margin-left: 2%;
+    justify-content: flex-end;
+}
+
+.actions button {
+    padding: 12px 16px;
+    font-size: 16px;
+    background: linear-gradient(-90deg, #a7217f, #d3216a);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    outline: 1px solid #b3b3b353;
+}
+
+.actions button:hover {
+    cursor: pointer;
+    background: linear-gradient(-90deg, #c954af, #f5438c);
+}

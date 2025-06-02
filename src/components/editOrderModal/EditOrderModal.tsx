@@ -89,7 +89,7 @@ export const EditOrderModal = forwardRef<HTMLDialogElement, Props>(({ closeModal
                         </div>
                         <div className={styles["buttons-container"]}>
                             <button className={styles["cancel-button"]} onClick={closeModal}>Cancelar</button>
-                            <button className={styles["submit-button"]}>Guardar</button>
+                            <button className={styles["submit-button"]} onClick={closeModal}>Guardar</button>
                         </div> 
                     </div>
                 ) : (
