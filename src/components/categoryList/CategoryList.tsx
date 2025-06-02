@@ -8,6 +8,7 @@ import All from "../../assets/food/all.png"
 import HotDog from "../../assets/food/hot-dog.png"
 import Burguer from "../../assets/food/hamburger.png"
 import FriedPotatoes from "../../assets/food/fried-potatoes.png"
+import Sandwich from "../../assets/food/sandwich.png"
 
 type CategoryName = 'Todo' | 'Panchos' | 'Hamburguesas' | 'Papas Fritas';
 
@@ -31,7 +32,8 @@ export const CategoryList = ({ setSelectedCategory, changeCategory }: Props) => 
         "Todo": All,
         "Panchos": HotDog,
         "Hamburguesas": Burguer,
-        "Papas Fritas": FriedPotatoes
+        "Papas Fritas": FriedPotatoes,
+        "Sanguches": Sandwich
     }
 
     const [categories, setCategories] = useState<Array<ICategoryCard>>([

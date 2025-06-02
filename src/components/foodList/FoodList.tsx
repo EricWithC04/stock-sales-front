@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useGeneralContext } from "../../context/GeneralContext"
 import { FoodListPagination } from "../foodListPagination/FoodListPagination"
 import { LoadingSpinner } from "../loadingSpinner/LoadingSpinner"
+import EmptyAlert from "./emptyAlert/EmptyAlert"
 
 interface Food {
     id: string
@@ -61,20 +62,26 @@ export const FoodList = ({ selectedCategory, categoryFlag, foodFlag }: Props) =>
         <>
             <div className={styles["food-list"]}>
                 {
-                    foods.length ? foods.slice(firstItem, lastItem).map(food => (
+                    allFoods.length && foods.length ? foods.slice(firstItem, lastItem).map(food => (
                         <FoodCard
                             name={food.name}
                             description={food.description}
                             price={food.price}
                         />
-                    )) : <LoadingSpinner />
+                    )) : allFoods.length ? (
+                        <></>
+                    ) : <LoadingSpinner />
                 }
             </div>
-            <FoodListPagination 
-                pagesQuantity={Math.ceil(foods.length / itemsPerPage)}
-                handleSelectPage={handleSelectPage}
-                currentPage={currentPage}
-            />
+            {
+                foods.length ? (
+                    <FoodListPagination 
+                        pagesQuantity={Math.ceil(foods.length / itemsPerPage)}
+                        handleSelectPage={handleSelectPage}
+                        currentPage={currentPage}
+                    />
+                ) : <EmptyAlert />
+            }
         </>
     )
 }
