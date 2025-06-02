@@ -24,7 +24,7 @@ interface Props {
 
 export const EditProductModal = forwardRef<HTMLDialogElement, Props> (({ closeModal, notifyNewProduct, productToEdit }, ref) => {
 
-    const { getProducts, updateProduct, updateIngredient } = useGeneralContext()!
+    const { updateProduct, updateIngredient } = useGeneralContext()!
 
     const [editProductData, setEditProductData] = useState<ProductData | null>(null)
     const [errors, setErrors] = useState<NewProductDataErrors>({
@@ -42,7 +42,6 @@ export const EditProductModal = forwardRef<HTMLDialogElement, Props> (({ closeMo
         const currentErrors: NewProductDataErrors = { id: "", description: "", price: "" }
 
         if (!data.id.length) currentErrors.id = "Debes cargar el codigo del producto"
-        else if (getProducts().find(product => product.id === data.id)) currentErrors.id = "Ya hay un producto con este codigo"
         if (!data.description.length) currentErrors.description = "Debes cargar la descripción del producto"
         if (!data.price) currentErrors.price = "Debes cargar el precio del producto"
         else if (data.price <= 0) currentErrors.price = "El precio debe ser mayor a 0"
@@ -72,19 +71,21 @@ export const EditProductModal = forwardRef<HTMLDialogElement, Props> (({ closeMo
 
         if (!errors.id.length && !errors.description.length && !errors.price.length) {
             if (editProductData!.category === "Bebida") {
-                updateProduct(editProductData!.id, { 
+                updateProduct(productToEdit!.id, { 
                     id: editProductData!.id, 
                     description: editProductData!.description, 
+                    type: editProductData!.category,
                     price: editProductData!.price!, 
                     stock: 0 
                 })
             } else {
-                updateIngredient(editProductData!.id, { 
+                updateIngredient(productToEdit!.id, { 
                     id: editProductData!.id, 
-                    description: editProductData!.description 
+                    description: editProductData!.description,
+                    type: editProductData!.category
                 })
             }
-            setEditProductData(null)
+            // setEditProductData(null)
             setErrorsActive(false)
             notifyNewProduct!()
             closeModal()

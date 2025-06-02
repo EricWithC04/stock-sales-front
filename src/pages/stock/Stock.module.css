@@ -67,6 +67,6 @@
     margin-top: 12px;
 }
 
-.actions-row {
-    
+.actions-row .edit {
+    cursor: pointer
 }

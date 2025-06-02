@@ -53,7 +53,9 @@ export const StockPage = () => {
             category: product.type,
             price: product.price
         })
-        openEditProductModal()
+        setTimeout(() => {
+            openEditProductModal()
+        }, 1)
     }
 
     const columnsDrinks = [
@@ -175,6 +177,7 @@ export const StockPage = () => {
         <div className={styles["stock-container"]}>
             <EditProductModal
                 closeModal={closeEditProductModal}
+                notifyNewProduct={notifyNewProduct}
                 ref={editProductRef}
                 productToEdit={editProduct}
             />
