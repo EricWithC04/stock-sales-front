@@ -14,11 +14,17 @@ interface Props {
     closeModal: () => void
     selectedOrder: Order | null
     addProductOrder: (order: Order, productId: string, quantity?: number) => void
+    removeProductOrder: (id: number, productId: string) => void 
 }
 
-export const EditOrderModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, selectedOrder, addProductOrder }, ref) => {
+export const EditOrderModal = forwardRef<HTMLDialogElement, Props>(({ closeModal, selectedOrder, addProductOrder, removeProductOrder }, ref) => {
 
     const [quantity, setQuantity] = useState<number>(1)
+    const [flag, setFlag] = useState<boolean>(false)
+
+    const changeFlag = () => {
+        setFlag(!flag)
+    }
 
     const handleIncludeItem = (productId: string) => {
         addProductOrder(selectedOrder!, productId, quantity)
@@ -27,6 +33,11 @@ export const EditOrderModal = forwardRef<HTMLDialogElement, Props>(({ closeModal
 
     const changeQuantity = (q: string) => {
         setQuantity(parseInt(q))
+    }
+
+    const handleRemoveProduct = (productId: string) => {
+        removeProductOrder(selectedOrder!.id, productId)
+        changeFlag()
     }
 
     return (
@@ -44,7 +55,7 @@ export const EditOrderModal = forwardRef<HTMLDialogElement, Props>(({ closeModal
                                             <h3>{order.name}</h3>
                                             <h3 className={styles["secondary"]}>x{order.quantity} - ${order.price * order.quantity}</h3>
                                         </div>
-                                        <div className={styles["remove"]}>
+                                        <div className={styles["remove"]} onClick={() => handleRemoveProduct(order.id)}>
                                             <Trash2 color="#fff" size={18} />
                                         </div>
                                     </div>

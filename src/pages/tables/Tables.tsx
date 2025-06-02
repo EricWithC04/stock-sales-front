@@ -67,6 +67,22 @@ export const TablesPage = () => {
         openTableModal()
     }
 
+    const handleRemoveProduct = (id: number, productId: string) => {
+        const newTables = tables.map(table => {
+            if (table.id !== id) return table
+            else {
+                const newProducts: Array<{ id: string, name: string, price: number, quantity: number }> = 
+                    table.products.filter(product => product.id !== productId)
+                setSelectedOrder({ ...table, products: newProducts })
+                return {
+                    ...table,
+                    products: newProducts
+                }
+            }
+        })
+        setTables(newTables)
+    }
+
     const handleAddProductOrder = (order: Order, productId: string, quantity:number = 1) => {
         const product = getProductById(productId)
         if (product !== "Código Invalido") {
@@ -83,6 +99,7 @@ export const TablesPage = () => {
                     quantity, 
                     name: product.type === "Bebida" ? (product as Drink).description : (product as Food).name 
                 })
+                setSelectedOrder({ ...table, products: newProducts })
                 return { ...table, products: newProducts }
             })
             setTables(newTables)
@@ -100,6 +117,7 @@ export const TablesPage = () => {
                 closeModal={closeTableModal}
                 selectedOrder={selectedOrder}
                 addProductOrder={handleAddProductOrder}
+                removeProductOrder={handleRemoveProduct}
                 ref={tableRef}
             />
             <h1 className={styles["title"]}>Gestión de Mesas</h1>
