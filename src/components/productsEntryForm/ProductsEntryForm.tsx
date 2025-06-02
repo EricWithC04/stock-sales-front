@@ -108,17 +108,17 @@ export const ProductsEntryForm = ({ entryProducts, openModal }: Props) => {
         e.preventDefault()
 
         const entryProduct = {
-            id: lotData.product,
+            productId: lotData.product,
             quantity: +lotData.quantity,
             expiresDate: lotData.expiresDate
         }
         
-        if (validateIdExists(entryProduct.id) || lotData.product.length === 0) {
+        if (validateIdExists(entryProduct.productId) || lotData.product.length === 0) {
             setErrorsActive(true)
             const currentErrors = validateFormErrors(lotData)
             if (!currentErrors.product.length && !currentErrors.quantity.length && !currentErrors.expiresDate.length) {
                 entryProducts(entryProduct)
-                uploadNewLot({ ...entryProduct, id: Date.now(), productId: entryProduct.id })
+                uploadNewLot({ ...entryProduct, id: Date.now(), productId: entryProduct.productId })
         
                 setErrorsActive(false)
                 setLotData({

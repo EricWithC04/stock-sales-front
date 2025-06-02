@@ -11,7 +11,7 @@ export const ProductsEntryList = ({ entriesData }: Props) => {
     const columns = [
         {
             name: 'Producto',
-            selector: (row: any) => row.id,
+            selector: (row: any) => row.productId,
         },
         {
             name: 'Cantidad',
@@ -29,7 +29,7 @@ export const ProductsEntryList = ({ entriesData }: Props) => {
 
     return (
         <div className={styles["products-entry-list-container"]}>
-            <h1>Lotes a Ingresar</h1>
+            <h1>Lotes Ingresados</h1>
             <DataTable 
                 columns={columns}
                 data={entriesData}
