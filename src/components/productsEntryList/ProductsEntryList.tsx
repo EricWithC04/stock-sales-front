@@ -1,9 +1,17 @@
 import DataTable from "react-data-table-component"
 import styles from "./ProductsEntryList.module.css"
 import { customStylesWithPagination } from "../../styles/customStylesTables"
+import { SquarePen, Trash2 } from "lucide-react"
+
+interface Lot {
+    id: number,
+    productId: string
+    quantity: number,
+    expiresDate: string | null
+}
 
 interface Props {
-    entriesData: Array<any>
+    entriesData: Array<Lot>
 }
 
 export const ProductsEntryList = ({ entriesData }: Props) => {
@@ -11,19 +19,28 @@ export const ProductsEntryList = ({ entriesData }: Props) => {
     const columns = [
         {
             name: 'Producto',
-            selector: (row: any) => row.productId,
+            selector: (row: Lot) => row.productId,
         },
         {
             name: 'Cantidad',
-            selector: (row: any) => row.quantity,
+            selector: (row: Lot) => row.quantity,
         },
         {
             name: 'Vencimiento',
-            selector: (row: any) => row.expiresDate, 
+            selector: (row: Lot) => row.expiresDate ? row.expiresDate : "", 
         },
         {
-            name: 'Eliminar',
-            selector: (row: any) => row.expiresDate,
+            name: 'Acciones',
+            cell: (row: Lot) => (
+                <div className={styles["buttons-container"]}>
+                    <div className={styles["edit"]}>
+                        <SquarePen color="#000" />
+                    </div>
+                    <div className={styles["delete"]}>
+                        <Trash2 color="#fff" />
+                    </div>
+                </div>
+            )
         }
     ]
 
