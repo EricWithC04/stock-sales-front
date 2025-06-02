@@ -19,6 +19,8 @@ import {
 } from "../../utils/icons";
 import styles from "./NavBar.module.css";
 
+import logo from "../../assets/imageBackground.png"
+
 interface Props {
     children: React.ReactNode
     selectPage: (id: number) => void
@@ -60,6 +62,7 @@ export const NavigationBar = ({ children, selectPage }: Props) => {
     return (
         <div className={styles["main-container"]}>
             <aside className={styles["aside-container"]}>
+                <img src={logo} alt="logo" />
                 <nav className={styles["navigation-options"]}>
                     {
                         pages.map(({ id, Icon, SelectedIcon, title, selected }) => (
