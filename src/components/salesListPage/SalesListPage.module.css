@@ -35,3 +35,44 @@
     cursor: pointer;
     background-color: #f5f5f5;
 }
+
+.info-sale {
+    background-color: #f5f5f5;
+    padding: 12px;
+}
+
+.info-sale p {
+    color: #7b7b7b
+}
+
+.info-sale-header {
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.info-sale-header-row {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.total {
+    margin-left: 3%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 96%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.total span {
+    font-size: 20px;
+    font-weight: 600
+}

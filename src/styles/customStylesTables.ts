@@ -183,3 +183,30 @@ export const customStylesForSales = {
         },
     }
 }
+
+export const customStylesForSalesDetails = {
+    table: {
+        style: {
+            backgroundColor: "#f5f5f5 !important",
+        }
+    },
+    headRow: {
+        style: {
+            fontWeight: 'bold',
+            fontSize: '16px',
+            color: "#7d7d7d",
+            backgroundColor: "#f5f5f5 !important",
+        },
+    },
+    headCell: {
+        style: {
+            backgroundColor: "#f5f5f5 !important",
+        }
+    },
+    cells: {
+        style: {
+            backgroundColor: "#f5f5f5 !important",
+            fontSize: "16px"
+        }
+    }
+}

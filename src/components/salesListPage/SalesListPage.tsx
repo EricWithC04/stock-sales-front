@@ -4,7 +4,7 @@ import { ChartColumnIncreasing, ChevronDown, Download, Printer } from "lucide-re
 import { useEffect, useRef, useState } from "react";
 
 import { useGeneralContext } from "../../context/GeneralContext";
-import { customStylesWithPagination } from "../../styles/customStylesTables";
+import { customStylesForSalesDetails, customStylesWithPagination } from "../../styles/customStylesTables";
 import { SalesResumeModal } from "../salesResumeModal/SalesResumeModal";
 
 interface Sale {
@@ -33,11 +33,18 @@ const ExpandedComponent = ({ data }: { data: Sale }) => {
         },
         {
             name: "Cantidad",
+            right: true,
             selector: (row: ProductInfo) => row.quantity
         },
         {
             name: "Precio",
+            right: true,
             selector: (row: ProductInfo) => row.price
+        },
+        {
+            name: "Total",
+            right: true,
+            selector: (row: ProductInfo) => row.price * row.quantity
         }
     ]
 
@@ -58,13 +65,13 @@ const ExpandedComponent = ({ data }: { data: Sale }) => {
         <div className={styles["info-sale"]}>
             <p>Información de la venta</p>
             <div className={styles["info-sale-header"]}>
-                <div>
+                <div className={styles["info-sale-header-row"]}>
                     <h3>Metodo de pago:</h3>
-                    <p>{data.payMethod}</p>
+                    <span>{data.payMethod}</span>
                 </div>
-                <div>
+                <div className={styles["info-sale-header-row"]}>
                     <h3>Fecha:</h3>
-                    <p>{data.date}</p>
+                    <span>{data.date}</span>
                 </div>
                 <hr />
             </div>
@@ -72,7 +79,12 @@ const ExpandedComponent = ({ data }: { data: Sale }) => {
             <DataTable 
                 columns={columns}
                 data={formatInfoProducts(data.products)}
+                customStyles={customStylesForSalesDetails}
             />
+            <div className={styles["total"]}>
+                <h3>Total: </h3>
+                <span>${data.total}</span>
+            </div>
         </div>
     )
 };
