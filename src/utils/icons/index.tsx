@@ -12,3 +12,5 @@ export { ExpiresIcon } from "./normals/ExpiresIcon";
 export { ExpiresGradientIcon } from "./gradients/ExpiresGradientIcon";
 export { OfferIcon } from "./normals/OfferIcon";
 export { OfferGradientIcon } from "./gradients/OfferGradientIcon";
+export { TableIcon } from "./normals/TableIcon";
+export { TableGradientIcon } from "./gradients/TableGradientIcon";
