@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useGeneralContext } from "../../context/GeneralContext";
 import { customStylesForSalesDetails, customStylesWithPagination } from "../../styles/customStylesTables";
 import { SalesResumeModal } from "../salesResumeModal/SalesResumeModal";
+import { exportOrPrint } from "../pdfList/exportOrPrint";
 
 interface Sale {
     id: number
@@ -155,7 +156,7 @@ export const SalesListPage = () => {
                 <div className={styles["actions-container"]}>
                     <button onClick={openResumeModal}><ChartColumnIncreasing size={18}/> Resumen</button>
                     <button><Printer size={18}/> Imprimir</button>
-                    <button><Download size={18} /> Exportar</button>
+                    <button onClick={() => exportOrPrint(listSales)} ><Download size={18}/> Exportar</button>
                 </div>
             </div>
             <DataTable
